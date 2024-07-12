@@ -1,0 +1,18 @@
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s, backdrop-filter 0.3s;
+  }
+  
+  .header.scrolled {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+  }
+  
+  .navbar-nav .nav-link {
+    transition: transform 0.2s;
+  }
+  
