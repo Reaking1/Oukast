@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './teams.css';
+import gsap from 'gsap';
 
 const players = [
     'Player1',

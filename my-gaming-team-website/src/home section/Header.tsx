@@ -16,8 +16,6 @@ const Header: React.FC = () => {
             }
          };
 
-
-
          window.addEventListener('scroll', handleScroll);
 
 
@@ -28,46 +26,42 @@ const Header: React.FC = () => {
 
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        gsap.to(e.currentTarget, { scale: 1.1, duration: 0.2})
-    }
-
-    const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        gsap.to(e.currentTarget, {scale: 1, duration: 0.2});
-    };
-
+        gsap.to(e.currentTarget, { opacity: 1, duration: 0.3 });
+      };
+    
+      const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        gsap.to(e.currentTarget, { opacity: 0.8, duration: 0.3 });
+      };
+    
+    
 
     return (
-        <head className="header">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navnar-brand" to="/">OutKast</Link>
-                 <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                 </button>
-                 <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ml-auto">
+        <header className="header">
+            <nav className="navbar">
+            <Link className="navbar-brand" to="/">Outkast</Link>
+                    <ul className="navbar-nav">
                         <li className="nav-item">
                             <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Home</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Teams Info</Link>
+                            <Link className="nav-link"  to="/teams" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Teams Info</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
+                            <Link className="nav-link"  to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Contact</Link>
+                            <Link className="nav-link"  to="/contact" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Contact</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Up comming Events</Link>
+                            <Link className="nav-link"  to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Up comming Events</Link>
                         </li>
                     </ul>
-                 </div>
             </nav>
-        </head>
+        </header>
     )
 
 }

@@ -1,18 +1,44 @@
+/* Header.css */
 .header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: background-color 0.3s, backdrop-filter 0.3s;
-  }
-  
-  .header.scrolled {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-  }
-  
-  .navbar-nav .nav-link {
-    transition: transform 0.2s;
-  }
-  
+  background: rgba(51, 51, 51, 0.8); /* Semi-transparent background */
+  backdrop-filter: blur(5px); /* Blur effect */
+  -webkit-backdrop-filter: blur(5px); /* For Safari */
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-left: 20px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 1; /* No blur, just an opacity change */
+}

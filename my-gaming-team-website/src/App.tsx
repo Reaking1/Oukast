@@ -5,10 +5,13 @@ import Teams from "./Teams/teams";
 import About from "./About/about";
 import Contact from "./Contact/contact";
 import UpcomingSessions from "./Upcoming/upcomingsessions";
+import Header from "./home section/Header";
+import './App.css'
 
 const App: React.FC = () => {
   return (
     <Router>
+      <Header />
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
