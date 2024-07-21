@@ -1,12 +1,35 @@
 import React from 'react';
 import './Footer.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faInstagram, faTwitch, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+
 
 const Footer: React.FC = () => {
   return (
-    <div className="section">
-     <h1>This just a plain section fro niow</h1>
+   <footer className="footer">
+    <div className="footer-map">
+      <h2>Our location</h2>
+   
     </div>
-  
+    <div className="footer-teams">
+      <h2>Teams</h2>
+      <ul>
+        <li>Apex Legends</li>
+        <li>FC24</li>
+        <li>Mortal Kombat 1</li>
+        <li>Call of Duty</li>
+      </ul>
+    </div>
+    <div className="footer-socails">
+      <h2>Follow US</h2>
+      <div className="social-icons">
+        <FontAwesomeIcon icon={faTwitter} />
+        <FontAwesomeIcon icon={faInstagram} />
+        <FontAwesomeIcon icon={faYoutube} />
+        <FontAwesomeIcon icon={faTwitch} />
+      </div>
+    </div>
+   </footer>
   );
 };
 
