@@ -2,6 +2,7 @@
 .home {
     text-align: center;
     font-family: Arial, sans-serif;
+    padding: -40px;
   }
   
   .scrolling-background {
@@ -9,7 +10,7 @@
     width: 100%;
     height: 200px; /* Adjust the height as needed */
     overflow: hidden;
-    background: #000; /* Background color to contrast the images */
+    background: #716d6d; /* Background color to contrast the images */
    margin-top: 20px;
   }
   
@@ -26,26 +27,28 @@
   }
   
   main {
-    position: relative;
-    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
-  .intro-section {
-    margin: 40px auto;
-    max-width: 800px;
+  .intro-section,
+  .events-section {
+    text-align: center;
+    margin: 40px 0;
+    background-color: #f0f0f0; /* Same background color for consistency */
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    border-radius: 8px;
   }
   
-  .intro-section h1 {
+  .intro-section h2,
+  .events-section h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
   }
   
-  .intro-section p {
+  .intro-section p,
+  .events-section p {
     font-size: 1.2em;
     margin-bottom: 20px;
   }
