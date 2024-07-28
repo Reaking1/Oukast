@@ -8,7 +8,7 @@ const MapComponent: React.FC = () => {
     const position: LatLngExpression = [-26.107220,28.096382]  
 
     return (
-   <MapContainer center={position} zoom={13}  style={{height: "200px", width: "100%"}}>
+   <MapContainer center={position} zoom={13}  style={{height: "300px", width: "100%"}}>
        <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

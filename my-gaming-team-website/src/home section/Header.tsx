@@ -1,70 +1,81 @@
-import React, { useEffect } from "react";
-import './Header.css'
+import React, { useEffect, useState } from "react";
+import './Header.css';
 import gsap from "gsap";
 import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
-    useEffect (() => {
-         const header = document.querySelector('.header') as HTMLElement;
-         
-         const handleScroll = () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+  useEffect(() => {
+    const header = document.querySelector('.header') as HTMLElement;
 
-            } else {
-                header.classList.remove('scrolled')
-            }
-         };
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
 
-         window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
-         return () => {
-            window.removeEventListener('scroll', handleScroll)
-         };
-    }, []);
+  const [isTeamsDropdownVisible, setTeamsDropdownVisible] = useState(false);
 
+  const handleTeamsMouseEnter = () => {
+    setTeamsDropdownVisible(true);
+  };
 
-    const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        gsap.to(e.currentTarget, { opacity: 1, duration: 0.3 });
-      };
-    
-      const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        gsap.to(e.currentTarget, { opacity: 0.8, duration: 0.3 });
-      };
-    
-    
+  const handleTeamsMouseLeave = () => {
+    setTeamsDropdownVisible(false);
+  };
 
-    return (
-        <header className="header">
-            <nav className="navbar">
-            <Link className="navbar-brand" to="/">Outkast</Link>
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link className="nav-link"  to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Home</Link>
-                        </li>
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    gsap.to(e.currentTarget, { opacity: 1, duration: 0.3 });
+  };
 
-                        <li className="nav-item">
-                            <Link className="nav-link"  to="/teams" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Teams Info</Link>
-                        </li>
+  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    gsap.to(e.currentTarget, { opacity: 0.8, duration: 0.3 });
+  };
 
-                        <li className="nav-item">
-                            <Link className="nav-link"  to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
-                        </li>
+  return (
+    <header className="header">
+      <nav className="navbar">
+        <Link className="navbar-brand" to="/">Outkast</Link>
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Home</Link>
+          </li>
+          <li
+            className="nav-item"
+            onMouseEnter={handleTeamsMouseEnter}
+            onMouseLeave={handleTeamsMouseLeave}
+          >
+            <span className="nav-link">Teams Info</span>
+            {isTeamsDropdownVisible && (
+              <ul className="dropdown-menu">
+                <li><Link to="/teams/apex">Apex Legends</Link></li>
+                <li><Link to="/teams/cod">Call of Duty Warzone</Link></li>
+                <li><Link to="/teams/fc24">FC24</Link></li>
+                <li><Link to="/teams/mk">Mortal Kombat</Link></li>
+              </ul>
+            )}
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/contact" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Contact</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Upcoming Events</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
 
-                        <li className="nav-item">
-                            <Link className="nav-link"  to="/contact" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Contact</Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link className="nav-link"  to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Up comming Events</Link>
-                        </li>
-                    </ul>
-            </nav>
-        </header>
-    )
-
-}
-
-
-export default Header
+export default Header;

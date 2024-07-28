@@ -1,6 +1,7 @@
 /* Footer.css */
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
   padding: 20px;
@@ -9,11 +10,13 @@
   font-family: Arial, sans-serif;
 }
 
-.footer-map, .footer-teams, .footer-socials {
+.footer-map, .footer-teams, .footer-socials, .footer-contact {
   margin: 20px;
+  flex: 1;
+  min-width: 200px;
 }
 
-.footer-map h2, .footer-teams h2, .footer-socials h2 {
+.footer-map h2, .footer-teams h2, .footer-socials h2, .footer-contact h2 {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
@@ -23,7 +26,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Increased gap between team links */
+  gap: 10px;
 }
 
 .footer-teams li a {
@@ -36,11 +39,10 @@
   color: #ddd;
 }
 
-
 .footer-socials .social-icons {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Increased gap between social icons */
+  gap: 10px;
 }
 
 .footer-socials .social-icons a {
@@ -52,4 +54,20 @@
 
 .footer-socials .social-icons a:hover {
   color: #ddd;
+}
+
+.footer-contact p, .footer-contact a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-contact a:hover {
+  color: #ddd;
+}
+
+.footer-map {
+  width: 100%;
+  max-width: 400px; /* Adjust this as needed for your layout */
+  aspect-ratio: 4 / 3; /* This makes the map rectangular */
 }
