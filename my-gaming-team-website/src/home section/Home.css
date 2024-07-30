@@ -1,66 +1,75 @@
 /* Home.css */
 .home {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    padding: -40px;
-  }
-  
-  .scrolling-background {
-    position: relative;
-    width: 100%;
-    height: 200px; /* Adjust the height as needed */
-    overflow: hidden;
-    background: #716d6d; /* Background color to contrast the images */
-   margin-top: 20px;
-  }
-  
-  .scrolling-images {
-    display: flex;
-    width: 200%; /* Adjust width to allow smooth scrolling */
-    position: absolute;
-  }
-  
-  .scrolling-images img {
-    width: 16.67%; /* Adjust width of each image for seamless effect */
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  main {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .intro-section,
-  .events-section {
-    text-align: center;
-    margin: 40px 0;
-    background-color: #f0f0f0; /* Same background color for consistency */
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .intro-section h2,
-  .events-section h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  
-  .intro-section p,
-  .events-section p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-  }
-  
-  .read-more-link {
-    display: inline-block;
-    font-size: 1.2em;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .read-more-link:hover {
-    text-decoration: underline;
-  }
+  text-align: center;
+  font-family: 'Noto Serif JP', serif; /* Japanese-inspired serif font */
+  padding: 20px;
+  background-color: #0f1e2d; /* Dark Blue Background */
+  color: #faf3e0; /* Light Beige Text */
+}
+
+.scrolling-background {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #282828; /* Dark Grey Background */
+  margin-top: 20px;
+}
+
+.scrolling-images {
+  display: flex;
+  width: 200%;
+  position: absolute;
+}
+
+.scrolling-images img {
+  width: 16.67%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.intro-section,
+.events-section,
+.team-section {
+  text-align: center;
+  margin: 40px 0;
+  background-color: #faf3e0; /* Light Beige Background */
+  padding: 20px;
+  border-radius: 8px;
+  color: #0f1e2d; /* Dark Text for contrast */
+}
+
+.intro-section h2,
+.events-section h2,
+.team-section h2{
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #e63946; /* Japanese Red Headings */
+}
+
+.intro-section p,
+.events-section p ,
+.team-section p{
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #0f1e2d; /* Dark Text */
+}
+
+.read-more-link {
+  display: inline-block;
+  font-size: 1.2em;
+  color: #a8dadc; /* Soft Blue-Green Link */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more-link:hover {
+  text-decoration: underline;
+  color: #e63946; /* Japanese Red Hover */
+}

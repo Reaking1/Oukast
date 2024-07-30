@@ -58,6 +58,14 @@ const scrollingRef = useRef<HTMLDivElement>(null)
           </p>
           <Link to="/events" className="read-more-link">Learn More</Link>
         </section>
+
+        <section className="team-section">
+          <h2>Meet the Team</h2>
+          <p>
+            Get to know the talented members of the OutKast Gaming Team. Each player brings unique skills and dedication to the team, making us a formidable force in the gaming world.
+          </p>
+          <Link to="/team" className="read-more-link">Meet the Team</Link>
+        </section>
       </main>
 
       <div className="footer">
