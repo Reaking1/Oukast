@@ -40,6 +40,17 @@ const Header: React.FC = () => {
     gsap.to(e.currentTarget, { opacity: 0.8, duration: 0.3 });
   };
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    gsap.to('.dropdown-menu', {
+      duration: 0.3,
+      height: menuOpen ? 0 : 'auto',
+      opacity: menuOpen ? 0 : 1,
+    });
+  };
+
   return (
     <header className="header">
       <nav className="navbar">
@@ -71,6 +82,13 @@ const Header: React.FC = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Upcoming Events</Link>
+          </li>
+          <li className="nav-item three-dot-menu" onClick={toggleMenu}>
+            &#x22EE; {/* Unicode for vertical ellipsis */}
+            <div className={`three-dot-dropdown ${menuOpen ? 'show' : ''}`}>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log In</Link>
+            </div>
           </li>
         </ul>
       </nav>
