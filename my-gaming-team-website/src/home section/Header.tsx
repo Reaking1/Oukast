@@ -10,8 +10,10 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
         header.classList.add('scrolled');
+        gsap.to(header, { duration: 0.3, backgroundColor: "rgba(15, 30, 45, 0.9)" });
       } else {
         header.classList.remove('scrolled');
+        gsap.to(header, { duration: 0.3, backgroundColor: "rgba(15, 30, 45, 0.8)" });
       }
     };
 
@@ -26,10 +28,12 @@ const Header: React.FC = () => {
 
   const handleTeamsMouseEnter = () => {
     setTeamsDropdownVisible(true);
+    gsap.to('.dropdown-menu', { duration: 0.3, height: 'auto', opacity: 1 });
   };
 
   const handleTeamsMouseLeave = () => {
     setTeamsDropdownVisible(false);
+    gsap.to('.dropdown-menu', { duration: 0.3, height: 0, opacity: 0 });
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,7 +48,7 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    gsap.to('.dropdown-menu', {
+    gsap.to('.three-dot-dropdown', {
       duration: 0.3,
       height: menuOpen ? 0 : 'auto',
       opacity: menuOpen ? 0 : 1,
@@ -83,14 +87,12 @@ const Header: React.FC = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Upcoming Events</Link>
           </li>
-          <li className="nav-item three-dot-menu" onClick={toggleMenu}>
-            &#x22EE; {/* Unicode for vertical ellipsis */}
-            <div className={`three-dot-dropdown ${menuOpen ? 'show' : ''}`}>
-              <Link to="/signup">Sign Up</Link>
-              <Link to="/login">Log In</Link>
-            </div>
-          </li>
         </ul>
+        <div className="three-dot-menu" onClick={toggleMenu}>⋮</div>
+        <div className={`three-dot-dropdown ${menuOpen ? 'show' : ''}`}>
+          <Link to="/signup" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Sign Up</Link>
+          <Link to="/login" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Log In</Link>
+        </div>
       </nav>
     </header>
   );

@@ -1,7 +1,6 @@
-/* Header.css */
 .header {
-  background-color: rgba(15, 30, 45, 0.8); /* Darker, muted background */
-  backdrop-filter: blur(5px); /* Blur effect */
+  background-color: rgba(15, 30, 45, 0.8);
+  backdrop-filter: blur(5px);
   padding: 10px 20px;
   position: sticky;
   top: 0;
@@ -12,11 +11,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .navbar-brand {
-  font-family: 'Noto Serif JP', serif; /* Japanese-inspired serif font */
-  color: #faf3e0; /* Light Beige Text */
+  font-family: 'Noto Serif JP', serif;
+  color: #faf3e0;
   text-decoration: none;
   font-size: 1.5em;
 }
@@ -26,6 +26,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-direction: row; /* Default direction */
 }
 
 .nav-item {
@@ -34,7 +35,7 @@
 }
 
 .nav-link {
-  color: #e63946; /* Japanese Red Links */
+  color: #e63946;
   text-decoration: none;
   font-family: 'Noto Serif JP', serif;
   transition: opacity 0.3s ease;
@@ -42,40 +43,7 @@
 
 .nav-link:hover {
   opacity: 1;
-  color: #a8dadc; /* Soft Blue-Green Hover */
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: rgba(15, 30, 45, 0.9); /* Dark Background with Transparency */
-  backdrop-filter: blur(5px); /* Blur effect */
-  padding: 10px 0;
-  list-style: none;
-  margin: 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  font-family: 'Noto Serif JP', serif;
-}
-
-.dropdown-menu li {
-  margin: 0;
-  padding: 0;
-}
-
-.dropdown-menu li a {
-  color: #faf3e0; /* Light Beige Text */
-  text-decoration: none;
-  display: block;
-  padding: 10px 20px;
-  transition: background 0.3s ease;
-}
-
-.dropdown-menu li a:hover {
-  background: rgba(255, 255, 255, 0.1); /* Slight hover effect */
-  color: #e63946; /* Japanese Red Hover */
+  color: #a8dadc;
 }
 
 /* Three-Dot Icon Styles */
@@ -83,7 +51,7 @@
   cursor: pointer;
   font-size: 24px;
   padding-left: 15px;
-  color: #faf3e0; /* Light Beige */
+  color: #faf3e0;
   position: relative;
 }
 
@@ -91,8 +59,8 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: rgba(15, 30, 45, 0.9); /* Dark Background with Transparency */
-  backdrop-filter: blur(5px); /* Blur effect */
+  background-color: rgba(15, 30, 45, 0.9);
+  backdrop-filter: blur(5px);
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -106,7 +74,7 @@
 }
 
 .three-dot-dropdown a {
-  color: #faf3e0; /* Light Beige Text */
+  color: #faf3e0;
   text-decoration: none;
   padding: 10px 20px;
   transition: background 0.3s ease;
@@ -114,7 +82,116 @@
 }
 
 .three-dot-dropdown a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Slight hover effect */
-  color: #e63946; /* Japanese Red Hover */
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e63946;
   border-radius: 10px;
+}
+
+/* Styles for the Teams Info Dropdown */
+.nav-item {
+  position: relative; /* Ensures the dropdown is positioned relative to its parent */
+  cursor: pointer;
+}
+
+/* The span that holds "Teams Info" */
+.nav-link {
+  color: #e63946; /* Japanese Red Links */
+  text-decoration: none;
+  font-family: 'Noto Serif JP', serif;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+/* Hover state for the Teams Info link */
+.nav-link:hover {
+  color: #a8dadc; /* Soft Blue-Green Hover */
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(15, 30, 45, 0.9); /* Dark Background with Transparency */
+  backdrop-filter: blur(5px); /* Blur effect */
+  padding: 10px 0;
+  list-style: none;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  font-family: 'Noto Serif JP', serif;
+  min-width: 200px;
+}
+
+/* Ensure the dropdown appears on hover */
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  height: auto;
+}
+
+/* Dropdown menu item styles */
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Links inside the dropdown menu */
+.dropdown-menu li a {
+  color: #faf3e0; /* Light Beige Text */
+  text-decoration: none;
+  display: block;
+  padding: 10px 20px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-menu li a:hover {
+  background: rgba(255, 255, 255, 0.1); /* Slight hover effect */
+  color: #e63946; /* Japanese Red Hover */
+  border-radius: 5px;
+}
+/* Header.css */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Allow horizontal scrolling if necessary */
+  }
+
+  .navbar-brand {
+    font-size: 1.2em; /* Smaller text on mobile */
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    white-space: nowrap;
+  }
+
+  .nav-item {
+    margin-left: 10px; /* Adjust spacing */
+  }
+
+  .three-dot-menu {
+    font-size: 20px; /* Slightly smaller icon size */
+  }
+
+  .three-dot-dropdown a {
+    font-size: 0.9em; /* Smaller font for dropdown */
+  }
+
+  .dropdown-menu {
+    left: auto;
+    right: 0;
+    width: 100%; /* Ensure dropdown takes full width on smaller screens */
+    text-align: center; /* Center the text */
+  }
+
+  .dropdown-menu li a {
+    padding: 10px 0;
+  }
 }

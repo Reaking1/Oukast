@@ -1,34 +1,47 @@
-/* About.css */
 .about {
-    text-align: center;
-    font-family: 'Noto Serif JP', serif;
-    padding: 40px 20px;
-    background-color: #1e3a5f; /* Dark Blue Background */
-    color: #d1d5db; /* Light Grey Text */
+  text-align: center;
+  font-family: 'Noto Serif JP', serif;
+  padding: 40px 20px;
+  background-color: #1e3a5f;
+  color: #d1d5db;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 100%; /* Make logo responsive */
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.about-heading {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #fa8072;
+}
+
+.about-paragraph {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #d1d5db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about {
+    padding: 20px;
   }
-  
-  .logo-container {
-    margin-bottom: 20px;
-  
-  }
-  
-  .logo {
-    width: 200px;
-    height: auto;
-    border-radius: 10px
-  }
-  
+
   .about-heading {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #fa8072; /* Light Salmon Color */
+    font-size: 2em;
   }
-  
+
   .about-paragraph {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.2em;
-    line-height: 1.6;
-    color: #d1d5db; /* Light Grey Text */
+    font-size: 1em;
   }
-  
+}

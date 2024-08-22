@@ -71,5 +71,33 @@ main {
 
 .read-more-link:hover {
   text-decoration: underline;
-  color: #e63946; /* Japanese Red Hover */
+  color: #e63946;
+}
+
+/* Home.css */
+@media (max-width: 768px) {
+  .home {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .intro-section h2,
+  .events-section h2,
+  .team-section h2 {
+    font-size: 1.8em; /* Smaller headings */
+  }
+
+  .intro-section p,
+  .events-section p,
+  .team-section p {
+    font-size: 1em; /* Adjust paragraph font size */
+    padding: 0 5px; /* Reduce side padding */
+  }
+
+  .scrolling-background {
+    height: 150px; /* Reduce height of scrolling background */
+  }
+
+  .scrolling-images img {
+    width: 20%; /* Ensure images fit horizontally */
+  }
 }
