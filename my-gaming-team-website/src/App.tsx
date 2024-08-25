@@ -7,6 +7,7 @@ import Contact from "./Contact/contact";
 import UpcomingSessions from "./Upcoming/upcomingsessions";
 import Header from "./home section/Header";
 import './App.css'
+import SignUp from "./Upcoming/Signup/signup";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/upcomingsessions" element={<UpcomingSessions />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

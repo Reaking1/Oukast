@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
       <div className="footer-contract">
         <h2>Contact Us</h2>
         <p>Email: madilengramoswane03@gmail.com</p>
-        <p>Phone: put any phone number ther</p>
+        <p>Phone:+27673802503</p>
         <Link to="/privacy-policy">Privacy Policy</Link>
       </div>
    </footer>

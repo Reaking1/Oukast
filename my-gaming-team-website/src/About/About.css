@@ -2,7 +2,7 @@
   text-align: center;
   font-family: 'Noto Serif JP', serif;
   padding: 40px 20px;
-  background-color: #1e3a5f;
+  background-color: #05407a;
   color: #d1d5db;
 }
 
@@ -20,7 +20,7 @@
 .about-heading {
   font-size: 2.5em;
   margin-bottom: 20px;
-  color: #fa8072;
+  color: #fbfbfb;
 }
 
 .about-paragraph {
@@ -28,7 +28,7 @@
   margin: 0 auto;
   font-size: 1.2em;
   line-height: 1.6;
-  color: #d1d5db;
+  color: #fbfbfb;
 }
 
 /* Responsive Design */

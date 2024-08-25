@@ -1,5 +1,5 @@
 import React from "react";
-import LogoImage from '../assets/9.png'
+import LogoImage from '../assets/logo for outkast.webp'
 
 const Logo: React.FC = () => {
     return (
