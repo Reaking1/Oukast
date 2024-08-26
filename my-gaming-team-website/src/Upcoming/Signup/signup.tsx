@@ -5,6 +5,9 @@ import './Signup.css'
 const SignUp = () => {
     const [formData, setFormData] = useState({
         email: '',
+        name: '',
+        surname: '',
+        dateofbirth: '',
         password: '',
         confirmPassword: '',
         role: 'admin', // default role is admin
@@ -18,10 +21,14 @@ const SignUp = () => {
         });
     };
 
-        // Added type for the event
+        //Handle form submission
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //Handle form submisson here
+       if(formData.password !== formData.confirmPassword) {
+        alert("Passswords do not match!")
+        return;
+       }
+       // Handle form submission here (e.g., send to server)
         console.log(formData)
     };
 
@@ -32,6 +39,18 @@ const SignUp = () => {
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" name="email" id="email"  value={formData.email} onChange={handleCahange} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" name="name" id="name"  value={formData.name} onChange={handleCahange} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="surname">Surname</label>
+                    <input type="text" name="surname" id="surname"  value={formData.surname} onChange={handleCahange} required/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="dateofbirth">Date of Birth</label>
+                    <input type="date" name="dateofbirth" id="dateofbirth"  value={formData.dateofbirth} onChange={handleCahange} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
