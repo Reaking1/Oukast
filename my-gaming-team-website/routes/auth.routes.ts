@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import Admin, { IAdmin } from '../models/admin.model';
 
 const router = express.Router();
@@ -7,13 +8,19 @@ const secretKey = process.env.JWT_SECRET || 'yourSecretKey';
 
 // Login Route
 router.post('/login', async (req: Request, res: Response) => {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     try {
         const admin = await Admin.findOne({ email }) as IAdmin;
 
         if (!admin) {
             return res.status(404).json({ message: 'Admin not found' });
+        }
+
+        // Password verification
+        const isMatch = await bcrypt.compare(password, admin.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
 
         const token = jwt.sign({ id: admin._id, role: admin.role }, secretKey, { expiresIn: '1h' });
@@ -40,7 +47,18 @@ router.post('/signup', async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'Invalid date format for dateOfBirth' });
         }
 
-        const newAdmin = new Admin({ email, name, surname, dateOfBirth: dob, role, password });
+        // Hash the password before saving it to the database
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newAdmin = new Admin({
+            email,
+            name,
+            surname,
+            dateOfBirth: dob,
+            role,
+            password: hashedPassword,
+        });
+
         await newAdmin.save();
 
         const token = jwt.sign({ id: newAdmin._id, role: newAdmin.role }, secretKey, { expiresIn: '1h' });

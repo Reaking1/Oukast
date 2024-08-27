@@ -11,7 +11,12 @@ var authenticateJWT = function (req, res, next) {
     }
     try {
         var decoded = jsonwebtoken_1.default.verify(token, secretKey);
-        req.user = decoded;
+        if (typeof decoded === 'object' && 'id' in decoded && 'role' in decoded) {
+            req.user = decoded;
+        }
+        else {
+            return res.status(401).json({ message: 'Invaild token structure' });
+        }
         next();
     }
     catch (error) {

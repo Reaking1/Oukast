@@ -21,7 +21,13 @@ export const authenticateJWT = (req: AuthenticatedRequest, res: Response, next: 
 
     try {
         const decoded = jwt.verify(token, secretKey);
-        req.user = decoded;
+        if (typeof decoded ===  'object' && 'id' in decoded && 'role' in decoded) {
+            req.user = decoded as User;
+        } else {
+            return res.status(401).json({ message: 'Invaild token structure'})
+            
+        }
+     
         next();
     } catch (error) {
         res.status(401).json({ message: 'Invalid token' });

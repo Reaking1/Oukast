@@ -8,6 +8,8 @@ import UpcomingSessions from "./Upcoming/upcomingsessions";
 import Header from "./home section/Header";
 import './App.css'
 import SignUp from "./Upcoming/Signup/signup";
+import Login from "./Upcoming/Login/Login";
+import Admin from "./Upcoming/Admin/admin";
 
 const App: React.FC = () => {
   return (
@@ -20,7 +22,9 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/upcomingsessions" element={<UpcomingSessions />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </Router>

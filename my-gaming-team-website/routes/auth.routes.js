@@ -38,46 +38,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var jsonwebtoken_1 = require("jsonwebtoken");
+var bcrypt_1 = require("bcrypt");
 var admin_model_1 = require("../models/admin.model");
 var router = express_1.Router();
 var secretKey = process.env.JWT_SECRET || 'yourSecretKey';
 // Login Route
 router.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, admin, token, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, email, password, admin, isMatch, token, err_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                email = req.body.email;
-                _a.label = 1;
+                _a = req.body, email = _a.email, password = _a.password;
+                _b.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _b.trys.push([1, 4, , 5]);
                 return [4 /*yield*/, admin_model_1.default.findOne({ email: email })];
             case 2:
-                admin = _a.sent();
+                admin = _b.sent();
                 if (!admin) {
                     return [2 /*return*/, res.status(404).json({ message: 'Admin not found' })];
                 }
+                return [4 /*yield*/, bcrypt_1.default.compare(password, admin.password)];
+            case 3:
+                isMatch = _b.sent();
+                if (!isMatch) {
+                    return [2 /*return*/, res.status(400).json({ message: 'Invalid credentials' })];
+                }
                 token = jsonwebtoken_1.default.sign({ id: admin._id, role: admin.role }, secretKey, { expiresIn: '1h' });
                 res.json({ token: token });
-                return [3 /*break*/, 4];
-            case 3:
-                err_1 = _a.sent();
+                return [3 /*break*/, 5];
+            case 4:
+                err_1 = _b.sent();
                 res.status(500).json({ error: err_1.message });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
 // Signup Route
 router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, name, surname, dateOfBirth, role, password, existingAdmin, dob, newAdmin, token, err_2;
+    var _a, email, name, surname, dateOfBirth, role, password, existingAdmin, dob, hashedPassword, newAdmin, token, err_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.body, email = _a.email, name = _a.name, surname = _a.surname, dateOfBirth = _a.dateOfBirth, role = _a.role, password = _a.password;
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 4, , 5]);
+                _b.trys.push([1, 5, , 6]);
                 return [4 /*yield*/, admin_model_1.default.findOne({ email: email })];
             case 2:
                 existingAdmin = _b.sent();
@@ -88,18 +95,28 @@ router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, vo
                 if (isNaN(dob.getTime())) {
                     return [2 /*return*/, res.status(400).json({ error: 'Invalid date format for dateOfBirth' })];
                 }
-                newAdmin = new admin_model_1.default({ email: email, name: name, surname: surname, dateOfBirth: dob, role: role, password: password });
-                return [4 /*yield*/, newAdmin.save()];
+                return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
             case 3:
+                hashedPassword = _b.sent();
+                newAdmin = new admin_model_1.default({
+                    email: email,
+                    name: name,
+                    surname: surname,
+                    dateOfBirth: dob,
+                    role: role,
+                    password: hashedPassword,
+                });
+                return [4 /*yield*/, newAdmin.save()];
+            case 4:
                 _b.sent();
                 token = jsonwebtoken_1.default.sign({ id: newAdmin._id, role: newAdmin.role }, secretKey, { expiresIn: '1h' });
                 res.status(201).json({ token: token, admin: newAdmin });
-                return [3 /*break*/, 5];
-            case 4:
+                return [3 /*break*/, 6];
+            case 5:
                 err_2 = _b.sent();
                 res.status(500).json({ error: err_2.message });
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); });
