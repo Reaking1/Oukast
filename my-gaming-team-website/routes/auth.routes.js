@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var jsonwebtoken_1 = require("jsonwebtoken");
-var bcrypt_1 = require("bcrypt");
+var bcryptjs_1 = require("bcryptjs");
 var admin_model_1 = require("../models/admin.model");
 var router = express_1.Router();
 var secretKey = process.env.JWT_SECRET || 'yourSecretKey';
@@ -58,7 +58,7 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 if (!admin) {
                     return [2 /*return*/, res.status(404).json({ message: 'Admin not found' })];
                 }
-                return [4 /*yield*/, bcrypt_1.default.compare(password, admin.password)];
+                return [4 /*yield*/, bcryptjs_1.default.compare(password, admin.password)];
             case 3:
                 isMatch = _b.sent();
                 if (!isMatch) {
@@ -77,27 +77,36 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
 }); });
 // Signup Route
 router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, name, surname, dateOfBirth, role, password, existingAdmin, dob, hashedPassword, newAdmin, token, err_2;
+    var _a, email, name, surname, dateOfBirth, role, password, existingAdmin, dob, salt, hashedPassword, newAdmin, token, err_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
+                console.log('Signup route hit');
                 _a = req.body, email = _a.email, name = _a.name, surname = _a.surname, dateOfBirth = _a.dateOfBirth, role = _a.role, password = _a.password;
+                console.log('Request body:', req.body);
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 5, , 6]);
+                _b.trys.push([1, 6, , 7]);
                 return [4 /*yield*/, admin_model_1.default.findOne({ email: email })];
             case 2:
                 existingAdmin = _b.sent();
+                console.log('Existing admin check:', existingAdmin);
                 if (existingAdmin) {
                     return [2 /*return*/, res.status(400).json({ message: 'Email is already in use' })];
                 }
                 dob = new Date(dateOfBirth);
+                console.log('Date of Birth:', dob);
                 if (isNaN(dob.getTime())) {
                     return [2 /*return*/, res.status(400).json({ error: 'Invalid date format for dateOfBirth' })];
                 }
-                return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
+                console.log('About to hash password...');
+                return [4 /*yield*/, bcryptjs_1.default.genSalt(10)];
             case 3:
+                salt = _b.sent();
+                return [4 /*yield*/, bcryptjs_1.default.hash(password, salt)];
+            case 4:
                 hashedPassword = _b.sent();
+                console.log('Password hashed successfully');
                 newAdmin = new admin_model_1.default({
                     email: email,
                     name: name,
@@ -107,16 +116,18 @@ router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, vo
                     password: hashedPassword,
                 });
                 return [4 /*yield*/, newAdmin.save()];
-            case 4:
+            case 5:
                 _b.sent();
+                console.log('New admin saved:', newAdmin);
                 token = jsonwebtoken_1.default.sign({ id: newAdmin._id, role: newAdmin.role }, secretKey, { expiresIn: '1h' });
                 res.status(201).json({ token: token, admin: newAdmin });
-                return [3 /*break*/, 6];
-            case 5:
+                return [3 /*break*/, 7];
+            case 6:
                 err_2 = _b.sent();
+                console.error('Error occurred:', err_2.message);
                 res.status(500).json({ error: err_2.message });
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });

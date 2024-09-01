@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import Admin, { IAdmin } from '../models/admin.model';
 
 const router = express.Router();
@@ -33,22 +33,29 @@ router.post('/login', async (req: Request, res: Response) => {
 
 // Signup Route
 router.post('/signup', async (req: Request, res: Response) => {
+    console.log('Signup route hit');
     const { email, name, surname, dateOfBirth, role, password } = req.body;
+    console.log('Request body:', req.body);
 
     try {
         const existingAdmin = await Admin.findOne({ email });
+        console.log('Existing admin check:', existingAdmin);
+
         if (existingAdmin) {
             return res.status(400).json({ message: 'Email is already in use' });
         }
 
-        // Convert dateOfBirth to Date object
         const dob = new Date(dateOfBirth);
+        console.log('Date of Birth:', dob);
+
         if (isNaN(dob.getTime())) {
             return res.status(400).json({ error: 'Invalid date format for dateOfBirth' });
         }
 
-        // Hash the password before saving it to the database
-        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('About to hash password...');
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        console.log('Password hashed successfully');
 
         const newAdmin = new Admin({
             email,
@@ -60,12 +67,15 @@ router.post('/signup', async (req: Request, res: Response) => {
         });
 
         await newAdmin.save();
+        console.log('New admin saved:', newAdmin);
 
         const token = jwt.sign({ id: newAdmin._id, role: newAdmin.role }, secretKey, { expiresIn: '1h' });
         res.status(201).json({ token, admin: newAdmin });
     } catch (err) {
+        console.error('Error occurred:', err.message);
         res.status(500).json({ error: err.message });
     }
 });
+
 
 export default router;
