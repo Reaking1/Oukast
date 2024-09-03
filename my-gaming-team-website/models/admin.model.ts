@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt'
 export interface IAdmin extends Document {
     email: string;
     name: string;
@@ -24,8 +24,8 @@ AdminSchema.pre('save', async function (next) {
     
     if (!admin.isModified('password')) return next();
 
-    const salt = await bcrypt.genSalt(10);
-    admin.password =  await bcrypt.hash(admin.password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    admin.password =  bcrypt.hashSync(admin.password, salt);
 
     next()
 })

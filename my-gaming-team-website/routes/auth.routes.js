@@ -38,10 +38,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var jsonwebtoken_1 = require("jsonwebtoken");
-var bcryptjs_1 = require("bcryptjs");
+var bcrypt = require("bcrypt");
 var admin_model_1 = require("../models/admin.model");
 var router = express_1.Router();
-var secretKey = process.env.JWT_SECRET || 'yourSecretKey';
+var secretKey = process.env.JWT_SECRET;
 // Login Route
 router.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, email, password, admin, isMatch, token, err_1;
@@ -58,7 +58,7 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 if (!admin) {
                     return [2 /*return*/, res.status(404).json({ message: 'Admin not found' })];
                 }
-                return [4 /*yield*/, bcryptjs_1.default.compare(password, admin.password)];
+                return [4 /*yield*/, bcrypt.compare(password, admin.password)];
             case 3:
                 isMatch = _b.sent();
                 if (!isMatch) {
@@ -86,7 +86,7 @@ router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, vo
                 console.log('Request body:', req.body);
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 6, , 7]);
+                _b.trys.push([1, 4, , 5]);
                 return [4 /*yield*/, admin_model_1.default.findOne({ email: email })];
             case 2:
                 existingAdmin = _b.sent();
@@ -100,12 +100,8 @@ router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, vo
                     return [2 /*return*/, res.status(400).json({ error: 'Invalid date format for dateOfBirth' })];
                 }
                 console.log('About to hash password...');
-                return [4 /*yield*/, bcryptjs_1.default.genSalt(10)];
-            case 3:
-                salt = _b.sent();
-                return [4 /*yield*/, bcryptjs_1.default.hash(password, salt)];
-            case 4:
-                hashedPassword = _b.sent();
+                salt = bcrypt.genSaltSync(10);
+                hashedPassword = bcrypt.hashSync(password, salt);
                 console.log('Password hashed successfully');
                 newAdmin = new admin_model_1.default({
                     email: email,
@@ -116,18 +112,18 @@ router.post('/signup', function (req, res) { return __awaiter(void 0, void 0, vo
                     password: hashedPassword,
                 });
                 return [4 /*yield*/, newAdmin.save()];
-            case 5:
+            case 3:
                 _b.sent();
                 console.log('New admin saved:', newAdmin);
                 token = jsonwebtoken_1.default.sign({ id: newAdmin._id, role: newAdmin.role }, secretKey, { expiresIn: '1h' });
                 res.status(201).json({ token: token, admin: newAdmin });
-                return [3 /*break*/, 7];
-            case 6:
+                return [3 /*break*/, 5];
+            case 4:
                 err_2 = _b.sent();
                 console.error('Error occurred:', err_2.message);
                 res.status(500).json({ error: err_2.message });
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });

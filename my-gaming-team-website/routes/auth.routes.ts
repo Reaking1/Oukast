@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import Admin, { IAdmin } from '../models/admin.model';
 
 const router = express.Router();
-const secretKey = process.env.JWT_SECRET || 'yourSecretKey';
+const secretKey = process.env.JWT_SECRET!;
 
 // Login Route
 router.post('/login', async (req: Request, res: Response) => {
@@ -53,8 +53,9 @@ router.post('/signup', async (req: Request, res: Response) => {
         }
 
         console.log('About to hash password...');
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+     
         console.log('Password hashed successfully');
 
         const newAdmin = new Admin({

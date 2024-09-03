@@ -46,7 +46,7 @@ const SignUp: React.FC = () => {
         } catch (error) {
             console.error('Sign-up failed:', error);
         }
-    };
+    }; 
 
     return (
         <div className="signup-container">

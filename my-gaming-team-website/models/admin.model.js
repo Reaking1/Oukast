@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var bcrypt_1 = require("bcrypt");
+var bcrypt = require("bcrypt");
 var AdminSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -49,23 +49,15 @@ var AdminSchema = new mongoose_1.Schema({
 // hash the password before saving
 AdminSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function () {
-        var admin, salt, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    admin = this;
-                    if (!admin.isModified('password'))
-                        return [2 /*return*/, next()];
-                    return [4 /*yield*/, bcrypt_1.default.genSalt(10)];
-                case 1:
-                    salt = _b.sent();
-                    _a = admin;
-                    return [4 /*yield*/, bcrypt_1.default.hash(admin.password, salt)];
-                case 2:
-                    _a.password = _b.sent();
-                    next();
-                    return [2 /*return*/];
-            }
+        var admin, salt;
+        return __generator(this, function (_a) {
+            admin = this;
+            if (!admin.isModified('password'))
+                return [2 /*return*/, next()];
+            salt = bcrypt.genSaltSync(10);
+            admin.password = bcrypt.hashSync(admin.password, salt);
+            next();
+            return [2 /*return*/];
         });
     });
 });
