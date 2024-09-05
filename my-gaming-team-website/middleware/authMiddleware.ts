@@ -1,6 +1,9 @@
+import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+
+dotenv.config();
 const secretKey = process.env.JWT_SECRET!;
 
 interface User {
@@ -21,15 +24,17 @@ export const authenticateJWT = (req: AuthenticatedRequest, res: Response, next: 
 
     try {
         const decoded = jwt.verify(token, secretKey);
-        if (typeof decoded ===  'object' && 'id' in decoded && 'role' in decoded) {
+        if (typeof decoded === 'object' && 'id' in decoded && 'role' in decoded) {
             req.user = decoded as User;
         } else {
-            return res.status(401).json({ message: 'Invaild token structure'})
-            
+            return res.status(401).json({message: 'Inavid token structre'})
         }
-     
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
+       if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Token expired'})
+       } else {
+        return res.status(401).json({ message: 'Invail token'})
+       }
     }
 };

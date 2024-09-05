@@ -52,15 +52,18 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 4, , 5]);
+                console.log('Login request received:', email);
                 return [4 /*yield*/, admin_model_1.default.findOne({ email: email })];
             case 2:
                 admin = _b.sent();
+                console.log('Admin found:', admin);
                 if (!admin) {
                     return [2 /*return*/, res.status(404).json({ message: 'Admin not found' })];
                 }
                 return [4 /*yield*/, bcrypt.compare(password, admin.password)];
             case 3:
                 isMatch = _b.sent();
+                console.log('Password match:', isMatch);
                 if (!isMatch) {
                     return [2 /*return*/, res.status(400).json({ message: 'Invalid credentials' })];
                 }
@@ -69,6 +72,7 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 return [3 /*break*/, 5];
             case 4:
                 err_1 = _b.sent();
+                console.error('Error during login:', err_1.message);
                 res.status(500).json({ error: err_1.message });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];

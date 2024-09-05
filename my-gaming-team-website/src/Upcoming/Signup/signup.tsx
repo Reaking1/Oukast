@@ -60,7 +60,7 @@ const SignUp: React.FC = () => {
                         id="email" 
                         value={formData.email} 
                         onChange={handleChange} 
-                        autoComplete="new-password" 
+                        autoComplete="email" 
                         required 
                     />
                 </div>

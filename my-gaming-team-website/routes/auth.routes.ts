@@ -11,14 +11,16 @@ router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
+        console.log('Login request received:', email);
         const admin = await Admin.findOne({ email }) as IAdmin;
-
+        console.log('Admin found:', admin);
         if (!admin) {
             return res.status(404).json({ message: 'Admin not found' });
         }
 
         // Password verification
         const isMatch = await bcrypt.compare(password, admin.password);
+        console.log('Password match:', isMatch);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
@@ -27,6 +29,7 @@ router.post('/login', async (req: Request, res: Response) => {
         res.json({ token });
 
     } catch (err) {
+        console.error('Error during login:', err.message);
         res.status(500).json({ error: err.message });
     }
 });

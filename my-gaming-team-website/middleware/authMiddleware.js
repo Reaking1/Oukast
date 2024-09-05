@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateJWT = void 0;
+var dotenv_1 = require("dotenv");
 var jsonwebtoken_1 = require("jsonwebtoken");
+dotenv_1.config();
 var secretKey = process.env.JWT_SECRET;
 var authenticateJWT = function (req, res, next) {
     var _a;
@@ -15,12 +17,17 @@ var authenticateJWT = function (req, res, next) {
             req.user = decoded;
         }
         else {
-            return res.status(401).json({ message: 'Invaild token structure' });
+            return res.status(401).json({ message: 'Inavid token structre' });
         }
         next();
     }
     catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Token expired' });
+        }
+        else {
+            return res.status(401).json({ message: 'Invail token' });
+        }
     }
 };
 exports.authenticateJWT = authenticateJWT;

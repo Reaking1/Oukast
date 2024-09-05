@@ -17,30 +17,38 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('http://localhost:5000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
+    
+            // Ensure the response has content before attempting to parse JSON
+            const data = response.headers.get('content-type')?.includes('application/json')
+                ? await response.json()
+                : {};
+    
+            if (!response.ok) {
+                // This is the error block, handle the error here
+                const errorData = data;
+                console.log('Error Data:', errorData);  // Logs detailed error
+                alert(errorData.message || 'Login failed');
+            } else {
+                // This is the success block
                 // Save token to local storage or state management
                 localStorage.setItem('token', data.token);
-
+    
                 // Redirect to the admin page
                 window.location.href = '/admin';
-            } else {
-                // Handle login error
-                alert(data.message);
             }
         } catch (error) {
             console.error('Login failed:', error);
+            alert('Login failed. Please try again later.');
         }
     };
+    
 
     return (
         <div className="login-container">
@@ -65,6 +73,7 @@ const Login = () => {
                         id="password"
                         value={formData.password}
                         onChange={handleChange}
+                        autoComplete='password'
                         required
                     />
                 </div>
