@@ -105,7 +105,7 @@ const SignUp: React.FC = () => {
                         id="password" 
                         value={formData.password} 
                         onChange={handleChange} 
-                        autoComplete="new-password" 
+                        autoComplete="password" 
                         required 
                     />
                 </div>
@@ -117,7 +117,7 @@ const SignUp: React.FC = () => {
                         id="confirmPassword" 
                         value={formData.confirmPassword} 
                         onChange={handleChange} 
-                        autoComplete="new-password" 
+                        autoComplete="password" 
                         required 
                     />
                 </div>

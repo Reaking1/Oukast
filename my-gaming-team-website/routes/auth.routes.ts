@@ -12,20 +12,28 @@ router.post('/login', async (req: Request, res: Response) => {
 
     try {
         console.log('Login request received:', email);
+        
+        // Find admin by email
         const admin = await Admin.findOne({ email }) as IAdmin;
         console.log('Admin found:', admin);
+
         if (!admin) {
             return res.status(404).json({ message: 'Admin not found' });
         }
 
-        // Password verification
+        // Verify password
+        console.log('Attempting password match...');
         const isMatch = await bcrypt.compare(password, admin.password);
-        console.log('Password match:', isMatch);
+        console.log('Password match result:', isMatch);
+
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
+        // Generate JWT
         const token = jwt.sign({ id: admin._id, role: admin.role }, secretKey, { expiresIn: '1h' });
+        console.log('Token generated:', token);
+
         res.json({ token });
 
     } catch (err) {
@@ -33,6 +41,7 @@ router.post('/login', async (req: Request, res: Response) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // Signup Route
 router.post('/signup', async (req: Request, res: Response) => {

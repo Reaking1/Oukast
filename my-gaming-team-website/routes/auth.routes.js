@@ -60,14 +60,17 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 if (!admin) {
                     return [2 /*return*/, res.status(404).json({ message: 'Admin not found' })];
                 }
+                // Verify password
+                console.log('Attempting password match...');
                 return [4 /*yield*/, bcrypt.compare(password, admin.password)];
             case 3:
                 isMatch = _b.sent();
-                console.log('Password match:', isMatch);
+                console.log('Password match result:', isMatch);
                 if (!isMatch) {
                     return [2 /*return*/, res.status(400).json({ message: 'Invalid credentials' })];
                 }
                 token = jsonwebtoken_1.default.sign({ id: admin._id, role: admin.role }, secretKey, { expiresIn: '1h' });
+                console.log('Token generated:', token);
                 res.json({ token: token });
                 return [3 /*break*/, 5];
             case 4:

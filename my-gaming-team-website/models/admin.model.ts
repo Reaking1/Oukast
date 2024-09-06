@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import * as bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 export interface IAdmin extends Document {
     email: string;
     name: string;

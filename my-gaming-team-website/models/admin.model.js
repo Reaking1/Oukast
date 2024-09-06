@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var bcrypt = require("bcrypt");
+var bcrypt_1 = require("bcrypt");
 var AdminSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -54,8 +54,8 @@ AdminSchema.pre('save', function (next) {
             admin = this;
             if (!admin.isModified('password'))
                 return [2 /*return*/, next()];
-            salt = bcrypt.genSaltSync(10);
-            admin.password = bcrypt.hashSync(admin.password, salt);
+            salt = bcrypt_1.default.genSaltSync(10);
+            admin.password = bcrypt_1.default.hashSync(admin.password, salt);
             next();
             return [2 /*return*/];
         });
