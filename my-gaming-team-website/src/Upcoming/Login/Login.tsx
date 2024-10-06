@@ -1,85 +1,54 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import useAuth from '@/hooks/useAuth';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //import './Login.css';
 
-const Login = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
+const Login: React.FC = () => {
+    
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [error,setError] = useState('');
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            // Ensure the response has content before attempting to parse JSON
-            const data = response.headers.get('content-type')?.includes('application/json')
-                ? await response.json()
-                : {};
-    
-            if (!response.ok) {
-                // This is the error block, handle the error here
-                const errorData = data;
-                console.log('Error Data:', errorData);  // Logs detailed error
-                alert(errorData.message || 'Login failed');
-            } else {
-                // This is the success block
-                // Save token to local storage or state management
-                localStorage.setItem('token', data.token);
-    
-                // Redirect to the admin page
-                window.location.href = '/admin';
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-            alert('Login failed. Please try again later.');
+            await login(email,password);
+            navigate('/admin');
+        } catch (err: any) {
+         console.error('login failed', err);
+         setError(err.response?.data.message || 'Invail credentails')   
         }
-    };
-    
+    }
 
     return (
         <div className="login-container">
-            <h2 className="login-heading">Admin Login</h2>
             <form onSubmit={handleSubmit} className="login-form">
+                <h2>Login</h2>
+                {error && <p className='error'>{error}</p>}
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                         type="email"
-                        name="email"
                         id="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password:</label>
                     <input
                         type="password"
-                        name="password"
                         id="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        autoComplete='password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit" className="login-button">
-                    Login
-                </button>
+                <button type="submit">Login</button>
             </form>
         </div>
     );

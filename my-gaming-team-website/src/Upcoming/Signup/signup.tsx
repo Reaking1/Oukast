@@ -1,140 +1,87 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { useState } from "react";
+import {signup as signupService} from '../../services/auth'
 import './Signup.css';
+import { useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        name: '',
-        surname: '',
-        dateOfBirth: '', // Make sure the case matches with the backend
-        password: '',
-        confirmPassword: '',
-        role: 'admin', // default role is admin
-    });
+  const navigate = useNavigate();
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value || '', // Ensure the value is never undefined
-        });
-    };
+  const [name, setName] = useState('');
+  const [surname,setSurname] = useState('');
+  const [email,setEmail] = useState('');
+  const [dateOfBirth,setDateOfBirth] = useState('');
+  const [password,setPassword] = useState('');
+  const [error, setError] = useState('');
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
 
-        try {
-            const response = await fetch('http://localhost:5000/api/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    dateOfBirth: new Date(formData.dateOfBirth).toISOString().split('T')[0], // Format date as YYYY-MM-DD
-                }),
-            });
-
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                throw new Error(errorMessage);
-            }
-
-            const data = await response.json();
-            console.log('Sign-up successful:', data);
-            localStorage.setItem('token', data.token);
-            window.location.href = '/admin';
-        } catch (error) {
-            console.error('Sign-up failed:', error);
-        }
-    }; 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+        await signupService({ name, surname, email, dateOfBirth,password, role:'admin'});
+        navigate('/login');
+    } catch (err:any) {
+        console.error('Signup failed', err);
+        setError(err.response?.data?.message || 'Signup failed')
+    }
+  };
 
     return (
         <div className="signup-container">
-            <h2 className="signup-heading">Admin Sign Up</h2>
             <form onSubmit={handleSubmit} className="signup-form">
+                <h2>Signup</h2>
+                {error && <p className="error">{error}</p>}
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="name">Name:</label>
                     <input 
-                        type="email" 
-                        name="email" 
+                        type="text" 
+                        id="name" 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                        required 
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="surname">Surname:</label>
+                    <input 
+                        type="text" 
+                        id="surname" 
+                        value={surname} 
+                        onChange={(e) => setSurname(e.target.value)} 
+                        required 
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        type="email"  
                         id="email" 
-                        value={formData.email} 
-                        onChange={handleChange} 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
                         autoComplete="email" 
                         required 
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input 
-                        type="text" 
-                        name="name" 
-                        id="name" 
-                        value={formData.name} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="surname">Surname</label>
-                    <input 
-                        type="text" 
-                        name="surname" 
-                        id="surname" 
-                        value={formData.surname} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="dateOfBirth">Date of Birth</label>
+                    <label htmlFor="dateOfBirth">Date of Birth:</label>
                     <input 
                         type="date" 
-                        name="dateOfBirth" 
                         id="dateOfBirth" 
-                        value={formData.dateOfBirth} 
-                        onChange={handleChange} 
+                        value={dateOfBirth} 
+                        onChange={(e) => setDateOfBirth(e.target.value)} 
                         required 
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password:</label>
                     <input 
-                        type="password" 
-                        name="password" 
+                        type="password"  
                         id="password" 
-                        value={formData.password} 
-                        onChange={handleChange} 
-                        autoComplete="password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
                         required 
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        name="confirmPassword" 
-                        id="confirmPassword" 
-                        value={formData.confirmPassword} 
-                        onChange={handleChange} 
-                        autoComplete="password" 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="role">Role</label>
-                    <select 
-                        name="role" 
-                        id="role" 
-                        value={formData.role} 
-                        onChange={handleChange} 
-                        required
-                    >
-                        <option value="admin">Admin</option>
-                        <option value="super admin">Super Admin</option>
-                    </select>
-                </div>
-                <button type="submit" className="signup-button">Sign Up</button>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
     );
