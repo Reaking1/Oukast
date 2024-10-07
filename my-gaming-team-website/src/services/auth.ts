@@ -1,8 +1,11 @@
-import api from "./api";
+// src/services/auth.ts
+
+import api from './api';
+import { Admin, LoginResponse } from '../types';
 
 interface LoginData {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 interface SignupData {
@@ -14,15 +17,12 @@ interface SignupData {
   role: string;
 }
 
+export const login = async (data: LoginData): Promise<LoginResponse> => {
+  const response = await api.post<LoginResponse>('/auth/login', data);
+  return response.data;
+};
 
-export const login = async (data: LoginData) => {
-    const response = await api.post('/auth/login', data); // Adjust endpoint if necessary
-    return response.data;
-}
-
-export const signup =async (data: SignupData) => {
-    const response = await api.post('/auth/signup', data);
-    return response.data;
-}
-
-// Similarly, create functions for events and admin operations
+export const signup = async (data: SignupData): Promise<Admin> => {
+  const response = await api.post<Admin>('/auth/signup', data);
+  return response.data;
+};

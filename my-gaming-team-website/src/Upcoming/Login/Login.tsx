@@ -1,4 +1,5 @@
-import useAuth from '@/hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import './Login.css';
@@ -17,9 +18,14 @@ const Login: React.FC = () => {
         try {
             await login(email,password);
             navigate('/admin');
-        } catch (err: any) {
-         console.error('login failed', err);
-         setError(err.response?.data.message || 'Invail credentails')   
+        } catch (err: unknown) {
+        if (axios.isAxiosError(err) && err.response) {
+            console.error('Login failed', err.response.data);
+            setError(err.response.data.message || 'Invail credentails')
+        } else {
+            console.error('Login failed', err);
+            setError('An unexpected errror occurred')
+        }
         }
     }
 

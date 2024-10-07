@@ -1,21 +1,20 @@
 // src/Upcoming/Admin/AdminPage.tsx
+
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { Admin } from '../../types';
-import './AdminPage.css'; // Your CSS file
+import './admin.css'; // Your CSS file
 
 const AdminPage: React.FC = () => {
-  const [admins, setAdmins] = useState<Admin[]>([]);
-  const [error, setError] = useState('');
+  const [admins, setAdmins] = useState<Admin[]>([]); // Fixed: Replace any[] with Admin[]
 
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await api.get('/admins');
+        const response = await api.get<Admin[]>('/admins');
         setAdmins(response.data);
-      } catch (err: any) {
+      } catch (err: unknown) { // Replace any with unknown
         console.error('Failed to fetch admins', err);
-        setError(err.response?.data?.message || 'Failed to fetch admins');
       }
     };
 
@@ -25,7 +24,6 @@ const AdminPage: React.FC = () => {
   return (
     <div className="admin-page">
       <h2>Admins</h2>
-      {error && <p className="error">{error}</p>}
       <table>
         <thead>
           <tr>
@@ -37,7 +35,7 @@ const AdminPage: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin) => (
+          {admins.map((admin: Admin) => ( // Fixed: Replace any with Admin
             <tr key={admin._id}>
               <td>{admin.name}</td>
               <td>{admin.surname}</td>
