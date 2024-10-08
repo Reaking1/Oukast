@@ -1,10 +1,8 @@
-// AuthContext.tsx
-
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { Admin } from '../types';
 import { login as loginService } from '../services/auth';
 
-export interface AuthContextType {  // <- Export this interface
+export interface AuthContextType {
     isAuthenticated: boolean;
     token: string | null;
     admin: Admin | null;
@@ -27,8 +25,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         if (token) {
             localStorage.setItem('access_token', token);
-            const payload = JSON.parse(atob(token.split('.')[1])) as { id: string; role: string };
-            setAdmin({ _id: payload.id, email: '', role: payload.role } as Admin);
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1])) as { id: string; role: string; email?: string };
+                setAdmin({ _id: payload.id, email: payload.email || '', role: payload.role } as Admin);
+            } catch (error) {
+                console.error('Failed to parse JWT token:', error);
+                setToken(null);
+                setAdmin(null);
+            }
         } else {
             localStorage.removeItem('access_token');
             setAdmin(null);
@@ -36,11 +40,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, [token]);
 
     const login = async (email: string, password: string) => {
-        const data = await loginService({ email, password });
-        setToken(data.access_token);
+        try {
+            const data = await loginService({ email, password });
+            console.log('Login response data:', data); // Debugging line
+            if (data && data.token) {
+                setToken(data.token);
 
-        const payload = JSON.parse(atob(data.access_token.split('.')[1]));
-        setAdmin({ _id: payload.id, email: payload.email, role: payload.role } as Admin);
+                const payload = JSON.parse(atob(data.token.split('.')[1])) as { id: string; role: string; email?: string };
+                setAdmin({ _id: payload.id, email: payload.email || '', role: payload.role } as Admin);
+            } else {
+                throw new Error('Token not found in response');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+            throw error; // Propagate the error to be caught in Login.tsx
+        }
     };
 
     const logout = () => {
