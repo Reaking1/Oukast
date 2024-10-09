@@ -14,14 +14,22 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState('');
 
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
         await signupService({ name, surname, email, dateOfBirth,password, role:'admin'});
         navigate('/login');
-    } catch (err:any) {
+    } catch (err:unknown) {
         console.error('Signup failed', err);
-        setError(err.response?.data?.message || 'Signup failed')
+         
+        if (err instanceof Error) {
+            //Check if the errro object has a response property
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const messsge = (err as any).response?.data?.message || err.message || 'Signup failed';
+            setError(messsge);
+        } else {
+            setError('Signup failed');
+        }
     }
   };
 

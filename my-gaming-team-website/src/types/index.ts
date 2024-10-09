@@ -11,7 +11,7 @@ export interface Admin {
 }
 
 export interface LoginResponse {
-  access_token: string;
+  token: string;
 }
 
 export interface LoginData {

@@ -1,0 +1,4 @@
+# Frontend .eslintignore
+
+node_modules/
+dist/
