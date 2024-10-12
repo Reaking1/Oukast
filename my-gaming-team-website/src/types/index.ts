@@ -10,6 +10,15 @@ export interface Admin {
   __v?: number;
 }
 
+
+export interface Event {
+  id: string;
+  name: string;
+  date: string;
+  logo: string; // URL to the logo image
+  // Add other relevant fields
+}
+
 export interface LoginResponse {
   token: string;
 }

@@ -1,47 +1,45 @@
 // src/Upcoming/Admin/AdminPage.tsx
 
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import api from '../../services/api'; // Import the configured Axios instance
 import { Admin } from '../../types';
-import './admin.css'; // Your CSS file
 
 const AdminPage: React.FC = () => {
-  const [admins, setAdmins] = useState<Admin[]>([]); // Fixed: Replace any[] with Admin[]
+  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    const fetchAdmins = async () => {
-      try {
-        const response = await api.get<Admin[]>('/admins');
-        setAdmins(response.data);
-      } catch (err: unknown) { // Replace any with unknown
-        console.error('Failed to fetch admins', err);
-      }
-    };
-
     fetchAdmins();
   }, []);
 
+  const fetchAdmins = async () => {
+    try {
+      const response = await api.get('/admins'); // Ensure this endpoint exists in your backend
+      setAdmins(response.data);
+    } catch (err) {
+      console.error('Failed to fetch admins', err);
+      setError('Failed to fetch admins.');
+    }
+  };
+
   return (
     <div className="admin-page">
-      <h2>Admins</h2>
+      <h1>Admin Dashboard</h1>
+      {error && <p className="error">{error}</p>}
       <table>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Surname</th>
             <th>Email</th>
-            <th>Date of Birth</th>
-            <th>Role</th>
+            {/* Add other headers as needed */}
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin: Admin) => ( // Fixed: Replace any with Admin
+          {admins.map(admin => (
             <tr key={admin._id}>
               <td>{admin.name}</td>
-              <td>{admin.surname}</td>
               <td>{admin.email}</td>
-              <td>{new Date(admin.dateOfBirth).toLocaleDateString()}</td>
-              <td>{admin.role}</td>
+              {/* Add other data as needed */}
             </tr>
           ))}
         </tbody>

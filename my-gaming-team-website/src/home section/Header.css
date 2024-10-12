@@ -155,6 +155,23 @@
   color: #e63946; /* Japanese Red Hover */
   border-radius: 5px;
 }
+
+/* Header.css */
+
+.logout-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
 /* Header.css */
 @media (max-width: 768px) {
   .navbar {

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './Header.css';
 import gsap from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from '../hooks/useAuth'; // Import the useAuth hook
 
 const Header: React.FC = () => {
+  const { isAuthenticated, logout } = useAuth(); // Destructure necessary values from useAuth
+
   useEffect(() => {
     const header = document.querySelector('.header') as HTMLElement;
 
@@ -55,6 +58,13 @@ const Header: React.FC = () => {
     });
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const navigate = useNavigate(); // Import useNavigate for navigation
+
   return (
     <header className="header">
       <nav className="navbar">
@@ -90,8 +100,17 @@ const Header: React.FC = () => {
         </ul>
         <div className="three-dot-menu" onClick={toggleMenu}>⋮</div>
         <div className={`three-dot-dropdown ${menuOpen ? 'show' : ''}`}>
-          <Link to="/signup" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Sign Up</Link>
-          <Link to="/login" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Log In</Link>
+          {!isAuthenticated ? (
+            <>
+              <Link to="/signup" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Sign Up</Link>
+              <Link to="/login" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Log In</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/admin" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Admin Dashboard</Link>
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            </>
+          )}
         </div>
       </nav>
     </header>

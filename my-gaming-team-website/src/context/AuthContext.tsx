@@ -1,69 +1,60 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
-import { Admin } from '../types';
-import { login as loginService } from '../services/auth';
+import React, { createContext, useContext, useState } from 'react';
+import axios from 'axios';
 
-export interface AuthContextType {
-    isAuthenticated: boolean;
-    token: string | null;
-    admin: Admin | null;
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => void;
+// Define the type for the user (replace with your actual user type)
+interface User {
+    role: string;
+    id: string;
+    name: string;
+    email: string;
+    // Add other user properties as needed
 }
 
-export const AuthContext = createContext<AuthContextType>({
-    isAuthenticated: false,
-    token: null,
-    admin: null,
-    login: async () => {},
-    logout: () => {},
-});
+// Define the type for the context
+export type AuthContextType = {
+    user: User | null; // Set the user type to User or null
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => void;
+};
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem('access_token'));
-    const [admin, setAdmin] = useState<Admin | null>(null);
+// Create the context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-    useEffect(() => {
-        if (token) {
-            localStorage.setItem('access_token', token);
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1])) as { id: string; role: string; email?: string };
-                setAdmin({ _id: payload.id, email: payload.email || '', role: payload.role } as Admin);
-            } catch (error) {
-                console.error('Failed to parse JWT token:', error);
-                setToken(null);
-                setAdmin(null);
-            }
-        } else {
-            localStorage.removeItem('access_token');
-            setAdmin(null);
-        }
-    }, [token]);
+// AuthProvider component
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [user, setUser] = useState<User | null>(null); // Define user state as User or null
 
+    // Login function
     const login = async (email: string, password: string) => {
         try {
-            const data = await loginService({ email, password });
-            console.log('Login response data:', data); // Debugging line
-            if (data && data.token) {
-                setToken(data.token);
-
-                const payload = JSON.parse(atob(data.token.split('.')[1])) as { id: string; role: string; email?: string };
-                setAdmin({ _id: payload.id, email: payload.email || '', role: payload.role } as Admin);
-            } else {
-                throw new Error('Token not found in response');
-            }
+            const response = await axios.post('http://localhost:5000/auth/login', { email, password });
+            setUser(response.data.user); // Ensure this aligns with your API response
         } catch (error) {
-            console.error('Login failed:', error);
-            throw error; // Propagate the error to be caught in Login.tsx
+            console.error('Login failed', error);
+            throw error; // Rethrow error for handling in Login component
         }
     };
 
+    // Logout function
     const logout = () => {
-        setToken(null);
+        setUser(null); // Clear user state on logout
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated: !!token, token, admin, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
+
+// Custom hook to use AuthContext
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};
+
+export default AuthContext;

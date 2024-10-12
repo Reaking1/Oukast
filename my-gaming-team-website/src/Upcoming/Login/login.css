@@ -1,0 +1,52 @@
+/* Login Form Container */
+.login-container {
+    max-width: 400px; /* Set max width for the form */
+    margin: 50px auto; /* Center the form on the page */
+    padding: 20px; /* Add padding inside the form */
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #ffffff; /* White background */
+}
+
+/* Form Title */
+.login-container h2 {
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Space below the title */
+    color: #333; /* Dark text color */
+}
+
+/* Input Fields */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the input */
+    margin: 10px 0; /* Space around the input */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+}
+
+/* Input Focus State */
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Submit Button */
+.login-container button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the button */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+/* Button Hover State */
+.login-container button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}

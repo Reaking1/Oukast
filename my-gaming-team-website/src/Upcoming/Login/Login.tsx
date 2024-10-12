@@ -2,38 +2,37 @@ import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import './Login.css';
+import './login.css';
 
 const Login: React.FC = () => {
-    
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [error,setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await login(email,password);
-            navigate('/admin');
+            await login(email, password); // Call the login method from context
+            navigate('/admin'); // Navigate to the admin page after successful login
         } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.response) {
-            console.error('Login failed', err.response.data);
-            setError(err.response.data.message || 'Invail credentails')
-        } else {
-            console.error('Login failed', err);
-            setError('An unexpected errror occurred')
+            if (axios.isAxiosError(err) && err.response) {
+                console.error('Login failed', err.response.data);
+                setError(err.response.data.message || 'Invalid credentials');
+            } else {
+                console.error('Login failed', err);
+                setError('An unexpected error occurred');
+            }
         }
-        }
-    }
+    };
 
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
                 <h2>Login</h2>
-                {error && <p className='error'>{error}</p>}
+                {error && <p className="error">{error}</p>}
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
                     <input
@@ -42,6 +41,7 @@ const Login: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        autoComplete="email" // This is suitable for email inputs
                     />
                 </div>
                 <div className="form-group">
@@ -52,6 +52,7 @@ const Login: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        autoComplete="current-password" // Use 'current-password' for security and accessibility
                     />
                 </div>
                 <button type="submit">Login</button>
