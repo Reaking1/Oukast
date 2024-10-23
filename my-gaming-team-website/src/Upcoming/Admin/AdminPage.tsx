@@ -36,7 +36,7 @@ const AdminPage: React.FC = () => {
         </thead>
         <tbody>
           {admins.map(admin => (
-            <tr key={admin._id}>
+            <tr key={admin._id}> 
               <td>{admin.name}</td>
               <td>{admin.email}</td>
               {/* Add other data as needed */}
