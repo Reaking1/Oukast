@@ -8,7 +8,7 @@ import {jwtDecode} from 'jwt-decode';
 interface User {
     role: string;
     id: string;
-    name: string;
+    name?: string;
     email: string;
     // Add other user properties as needed
 }
@@ -16,9 +16,12 @@ interface User {
 interface DecodedToken {
     id: string;
     role: string;
+    email: string; // Add this if your token includes the user's email
+    name?: string;  // Make the name optional in case it is not provided in the token
     iat: number;
     exp: number;
 }
+
 
 // Define the type for the context
 export type AuthContextType = {
@@ -49,7 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setUser({
                     id: decodedToken.id,
                     role: decodedToken.role,
-                    name: decodedToken.name || "Default Name", // Assuming name is in the token
+                    name: decodedToken.name || "", // Assuming name is in the token
                     email: email,  
                 });
                 

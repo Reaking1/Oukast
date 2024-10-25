@@ -1,12 +1,12 @@
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import './login.css';
 //Testing will begin in the moring
 const Login: React.FC = () => {
     const { login } = useAuth();
-    const navigate = useNavigate();
+   
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +16,6 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             await login(email, password); // Call the login method from context
-            navigate('/admin'); // Navigate to the admin page after successful login
         } catch (err: unknown) {
             if (axios.isAxiosError(err) && err.response) {
                 console.error('Login failed', err.response.data);
