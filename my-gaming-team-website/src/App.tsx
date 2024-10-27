@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import EventPage from './Upcoming/Events/EventPage';
 import AdminDashboard from './Upcoming/Admin/pages/AdminDashboard/AdminDashboard';
 import './App.css';
+import SuperAdminDashboard from './Upcoming/Admin/pages/SuperAdminDashboard/SuperAdminDashBoard';
 
 const App: React.FC = () => {
   return (
@@ -27,8 +28,12 @@ const App: React.FC = () => {
           <Route path="/upcomingsessions" element={<UpcomingSessions />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+
+           {/* Admin and Super Admin Protected Routes */}
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/super-admin" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
+          
           <Route path="/events" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
