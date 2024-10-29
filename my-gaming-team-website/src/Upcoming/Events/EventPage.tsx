@@ -43,7 +43,7 @@ const EventPage: React.FC = () => {
 
   return (
     <div className="event-page">
-      <h1>Upcoming Events</h1>
+        <h1>Upcoming Events</h1>
       {loading ? (
         <p>Loading events...</p>
       ) : error ? (
@@ -52,9 +52,15 @@ const EventPage: React.FC = () => {
         <div className="events-grid">
           {events.map(event => (
             <div key={event.id} className="event-card">
-              <img src={event.logo} alt={`${event.name} logo`} className="event-logo" />
+              {event.image ? (
+                <img src={event.image} alt={`${event.name} logo`} className="event-logo" />
+              ) : (
+                <div className="placeholder-logo">No Image Available</div>
+              )}
               <h3>{event.name}</h3>
               <p>{new Date(event.date).toLocaleDateString()}</p>
+              <p>{event.description}</p>
+              <p>Location: {event.location}</p>
             </div>
           ))}
         </div>

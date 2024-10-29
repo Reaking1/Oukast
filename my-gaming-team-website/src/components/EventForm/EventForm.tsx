@@ -13,7 +13,7 @@ interface EventFormProps {
 const EventForm: React.FC<EventFormProps> = ({ onClose, onSubmit, initialData }) => {
   const [name, setName] = useState(initialData?.name || '');
   const [date, setDate] = useState(initialData?.date.slice(0, 10) || ''); // Format date for input[type="date"]
-  const [logo, setLogo] = useState(initialData?.logo || '');
+  const [logo, setLogo] = useState(initialData?.image || '');
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +22,7 @@ const EventForm: React.FC<EventFormProps> = ({ onClose, onSubmit, initialData })
       setError('All fields are required.');
       return;
     }
-    onSubmit({ name, date, logo }, initialData?.id);
+    onSubmit({ name, date,  }, initialData?.id);
   };
 
   return (

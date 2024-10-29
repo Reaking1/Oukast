@@ -14,8 +14,11 @@ export interface Admin {
 export interface Event {
   id: string;
   name: string;
-  date: string;
-  logo: string; // URL to the logo image
+  date: Date | string;
+  description: string;
+  image?: string;
+  location: string;
+  // URL to the logo image
   // Add other relevant fields
 }
 
