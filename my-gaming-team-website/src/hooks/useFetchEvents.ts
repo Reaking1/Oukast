@@ -1,11 +1,12 @@
 import { getEvents } from "@/services/eventService";
+import { CustomEvent } from "@/types";
 import { useEffect, useState } from "react"
 
 
 
 
 export const useFetchEvents = () => {
-    const [events, setEvents] = useState<Event[]>([]);
+    const [events, setEvents] = useState<CustomEvent[]>([]);
     const [loading, setLoading] = useState<boolean>();
     const [error, setError] = useState<string>('');
 

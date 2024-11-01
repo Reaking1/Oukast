@@ -11,7 +11,7 @@ export interface Admin {
 }
 
 
-export interface Event {
+export interface CustomEvent {
   id: string;
   name: string;
   date: Date | string;
