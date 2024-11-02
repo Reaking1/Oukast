@@ -10,8 +10,7 @@ export interface Admin {
   __v?: number;
 }
 
-
-export interface CustomEvent {
+export interface Event {
   id: string;
   name: string;
   date: Date | string;

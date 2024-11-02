@@ -10,7 +10,12 @@ interface EventFormProps {
 
 const EventForm: React.FC<EventFormProps> = ({ onClose, onSubmit, initialData }) => {
   const [name, setName] = useState(initialData?.name || '');
-  const [date, setDate] = useState(initialData?.date.slice(0, 10) || '');
+  const [date, setDate] = useState(typeof initialData?.date === 'string'
+    ? initialData.date.slice(0, 10)
+    : initialData?.date instanceof Date
+    ?  initialData.date.toISOString().slice(0,10)
+    : ''
+  );
   const [description, setDescription] = useState(initialData?.description || '');
   const [location, setLocation] = useState(initialData?.location || '');
   const [image, setImageUrl] = useState(initialData?.image || '');

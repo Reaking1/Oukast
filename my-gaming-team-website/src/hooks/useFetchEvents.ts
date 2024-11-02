@@ -1,5 +1,5 @@
 import { getEvents } from "@/services/eventService";
-import { CustomEvent } from "@/types";
+import {Event as CustomEvent } from "@/types";
 import { useEffect, useState } from "react"
 
 

@@ -29,7 +29,7 @@ const EventManagement: React.FC = () => {
             formData.append('location', eventName);
             if(image) formData.append('image', image)
             await axios.post('/api/events/create', {
-                eventName, date, description, location,image,
+                'Content-Type': 'multipart/form-data'
             });
             alert('Event created successfully')
         } catch (error) {
