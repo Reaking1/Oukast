@@ -73,7 +73,6 @@ const AdminDashboard: React.FC = () => {
       <table className="events-table">
         <thead>
           <tr>
-            <th>Logo</th>
             <th>Name</th>
             <th>Date</th>
             <th>Actions</th>
@@ -82,7 +81,7 @@ const AdminDashboard: React.FC = () => {
         <tbody>
           {events.map(event => (
             <tr key={event.id}>
-              <td><img src={event.logo} alt={`${event.name} logo`} className="event-logo" /></td>
+              <td><img src={event.image} alt={`${event.name} logo`} className="event-logo" /></td>
               <td>{event.name}</td>
               <td>{new Date(event.date).toLocaleDateString()}</td>
               <td>

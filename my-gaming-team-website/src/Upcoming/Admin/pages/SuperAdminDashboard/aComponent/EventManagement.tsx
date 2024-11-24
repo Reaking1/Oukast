@@ -23,14 +23,16 @@ const EventManagement: React.FC = () => {
     const handleCreateEvent = async () => {
         try {
             const formData = new FormData();
-            formData.append('name', eventName);
-            formData.append('date', eventName);
-            formData.append('description', eventName);
-            formData.append('location', eventName);
-            if(image) formData.append('image', image)
-            await axios.post('/api/events/create', {
-                'Content-Type': 'multipart/form-data'
-            });
+          formData.append('eventName', eventName);
+         formData.append('date',date);
+         formData.append("description",description);
+         formData.append("location",location);
+         if(image) formData.append('imahe', image);
+         await axios.post('http://localhost:5000/events', formData, {
+            headers: {
+                'Content-Type': 'mulipart/form-data'
+            },
+         });
             alert('Event created successfully')
         } catch (error) {
             console.error('Failed to create event');
