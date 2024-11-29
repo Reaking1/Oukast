@@ -21,7 +21,7 @@ export const useFetchEvents = () => {
                 setError('Faild to load events');
                 setLoading(false)
             }
-        };
+        }; 
         fetchEvents();
     }, []);
 

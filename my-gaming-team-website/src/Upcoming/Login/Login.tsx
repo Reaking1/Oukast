@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import './login.css';
 //Testing will begin in the moring
-const Login: React.FC = () => {
+const Login: React.FC = () => { 
     const { login } = useAuth();
    
 

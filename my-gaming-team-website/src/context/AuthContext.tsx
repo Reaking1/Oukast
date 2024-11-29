@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [user, setUser] = useState<User | null>(null); // Define user state as User or null
     const navigate = useNavigate();
 
-    //Computed property for authentican status
+    //Computed property for authentican status 
     const isAuthenticated = user !== null
 
     // Login function
