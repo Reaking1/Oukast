@@ -31,7 +31,7 @@
     "paths": {
       "@config/*": ["src/config/*"],
       "@/*": ["src/*"],
-      "@upcoming/*": ["src/Upcoming/*"]  // <-- New alias for the upcoming sessions
+      "@upcoming/*": ["src/Dash/*"]  // <-- New alias for the upcoming sessions
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
