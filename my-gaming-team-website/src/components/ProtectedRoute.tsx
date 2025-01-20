@@ -1,28 +1,23 @@
 // src/components/ProtectedRoute.tsx
 
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-interface ProtectedRouteProps {
-  children: JSX.Element;
-  role?: string
-}
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, role }) => {
-  const {isAuthenticated ,user } = useAuth();
-  const location = useLocation();
+const ProtectedRoute: React.FC<{ roles?: string[]}> = ({roles}) => {
+        const {isAuthenticated, user} = useAuth();
 
-  if (!isAuthenticated) {
-     return <Navigate to="/login" state={{ from: location}} replace />
-  }
+        if(!isAuthenticated) {
+          return <Navigate to="/login" />
+        }
 
-  // Check if the user is authenticated and has the 'admin' role
-  if (role && user?.role !== role) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <>{children}</>;
+        if(roles && !roles.includes(user?.role)) {
+          
+          return <Navigate to="/unauthorized"/>
+        }
+        return <Outlet />;
 };
 
 export default ProtectedRoute;
+

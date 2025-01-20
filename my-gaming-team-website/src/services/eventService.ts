@@ -1,28 +1,94 @@
 // src/services/eventService.ts
 
-import axios from 'axios';
-import { Event } from '../types';
+import { AuthAPI } from "./api"
 
-const api = axios.create({
-  baseURL: 'http://localhost:5000', // Replace with your backend API URL
-  withCredentials: true, // If using cookies for auth
-});
 
-export const getEvents = async (): Promise<Event[]> => {
-  const response = await api.get('/events');
-  return response.data;
-};
+export const EventService = {
+   /**
+   * Fetches all events from the backend.
+   * @returns A list of events.
+   */
 
-export const addEvent = async (eventData: Omit<Event, 'id'>): Promise<Event> => {
-  const response = await api.post('/events', eventData);
-  return response.data;
-};
+   fetchEvents: async (): Promise<any[]> => {
+    try {
+      const response = await AuthAPI.get('/events');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch events', error);
+      throw new Error('Unable to fethc events.')
+    }
+   },
 
-export const updateEvent = async (id: string, eventData: Omit<Event, 'id'>): Promise<Event> => {
-  const response = await api.put(`/events/${id}`, eventData);
-  return response.data;
-};
+   
+ /**
+   * Creates a new event.
+   * @param eventData - Data for the new event.
+   */
 
-export const deleteEvent = async (id: string): Promise<void> => {
-  await api.delete(`/events/${id}`);
-};
+ createEvent: async (eventData: {
+  name: string;
+    description: string;
+    date: string;
+    location: string;
+    image?: File;
+ }): Promise<void> => {
+  try {
+    const formData = new FormData();
+    Object.entries(eventData).forEach(([key, value]) => {
+      if(value !==undefined) formData.append(key, value as string | Blob);
+    });
+
+    await AuthAPI.post('/events', formData, {
+      headers: { 'Content-Type': 'multipart/form-data'},
+    });
+  } catch (error) {
+    console.error('Failed to create event:', error);
+    throw new Error('Unable to create event.');
+  }
+ },
+
+   /**
+   * Updates an existing event.
+   * @param eventId - ID of the event to update.
+   * @param eventData - Updated event data.
+   */
+
+   updateEvent: async (
+    eventId: string,
+    eventData: {
+      name?: string;
+      description?: string;
+      date?: string;
+      location?: string;
+      image?: File;
+    }
+   ): Promise<void> => {
+    try {
+      const formData = new FormData();
+      Object.entries(eventData).forEach(([key, value]) => {
+        if( value !== undefined) formData.append(key, value as string | Blob)
+      });
+
+      await AuthAPI.put(`/events/${eventId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data'},
+      });
+    } catch (error) {
+      console.error('Failed to update event:', error);
+      throw new Error('Unable to update event')
+    }
+   },
+
+    /**
+   * Deletes an event by ID.
+   * @param eventId - ID of the event to delete.
+   */
+
+    deleteEvent: async (eventId: string): Promise<void> => {
+      try {
+        await AuthAPI.delete(`/events/${eventId}`)
+      } catch (error) {
+        console.error('Failed to delete event:', error);
+        throw new Error('Unable to delete event');
+      }
+    }
+}
