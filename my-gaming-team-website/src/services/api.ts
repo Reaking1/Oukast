@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AdminData, UpdateAdminData } from "@/Types/Admin";
+import { Admin, LoginCredentials } from "@/Types/Auth";
+import { Event, CreateEventData, EventUpdateData } from "@/Types/Event";
 import axios from "axios"
 
 const BASE_URL ='http://localhost:5000';
@@ -27,45 +30,39 @@ api.interceptors.request.use(
 
 //Auth API endpoints
 export const AuthAPI = {
-  login: (credentials: {email: string; password: string}) => 
-    api.post('/auth/login', credentials),
+  login: (credentials: LoginCredentials) => 
+    api.post<{token: string; admin: Admin}>('/auth/login', credentials),
   logout: () => {
     localStorage.removeItem('authToken'); // Clear Token
     return Promise.resolve();
   },
-  fetchCurrentAdmin: () => api.get('/auth/me'), // Fetch details of logged-in admin
+  fetchCurrentAdmin: () => api.get<Admin>('/auth/me'), // Fetch details of logged-in admin
 
 };
 
 
 //Event Api endpoints
 export const EventAPI = {
-  getAllEvents: () => api.get('/events'),
-  createEvent: (eventData: FormData) =>
-    api.post('/events', eventData, {
+  getAllEvents: () => api.get<Event[]>('/events'),
+  createEvent: (eventData: CreateEventData ) =>
+    api.post<Event>('/events', eventData, {
       headers: { 'Content-Type': 'multipart/form-data'}, //For uploading files
     }),
 
-    updateEvent: (id: string, eventData: FormData) => 
-      api.put(`/events/${id}`, eventData, {
+    updateEvent: (id: string, eventData: EventUpdateData) => 
+      api.put<Event>(`/events/${id}`, eventData, {
         headers: {'Content-Type': 'multipart/form-data'},
       }),
-      deleteEvent:(id: string) => api.delete(`/events/${id}`),
+      deleteEvent:(id: string) => api.delete<void>(`/events/${id}`),
 };
 
 
 //Admins API endpoints
 export const AdminAPI = {
-  getAllAdmins: () => api.get('/admins'),
-  createAdmin: (adminData: {
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-    role: string;
-  }) => api.post('/admins', adminData),
-  updateAdmin: (id: string, adminData: any) => api.put(`/admins/${id}`, adminData),
-  deleteAdmin: (id: string) => api.delete(`/admins/${id}`),
+  getAllAdmins: () => api.get<Admin[]>('/admins'),
+  createAdmin: (adminData: AdminData) => api.post<Admin>('/admins', adminData),
+  updateAdmin: (id: string, adminData: UpdateAdminData) => api.put<Admin>(`/admins/${id}`, adminData),
+  deleteAdmin: (id: string) => api.delete<void>(`/admins/${id}`),
 };
 
 

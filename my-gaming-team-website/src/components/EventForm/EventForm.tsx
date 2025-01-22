@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './EventForm.css';
 import { toast } from 'react-toastify';
-import { updateEvent } from '@/services/eventService';
+import { updateEvent } from '../../services/eventService';
 
 
 type EventFormProps = {

@@ -1,5 +1,6 @@
 // src/services/auth.ts
 
+import { Admin, LoginCredentials } from "@/Types/Auth";
 import { AuthAPI } from "./api"
 
 
@@ -12,7 +13,8 @@ export const AuthService = {
 
   login: async (email: string, password: string): Promise <void> => {
     try {
-      const response = await AuthAPI.login({ email, password});
+      const credentials: LoginCredentials = {email,password};
+      const response = await AuthAPI.login(credentials);
       const {token} = response.data;
 
       //Save the token in localStorage
@@ -41,10 +43,10 @@ export const AuthService = {
    * @returns Admin details object.
    */
 
-    fetchCurrentAdmin: async (): Promise<any> => {
+    fetchCurrentAdmin: async (): Promise<Admin> => {
       try {
         const response = await AuthAPI.fetchCurrentAdmin();
-        return response.data;
+        return response.data as Admin;
       } catch (error) {
         console.error('Fetching admin details failed:', error);
         throw new Error('Unable to fetch admin details.')

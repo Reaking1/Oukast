@@ -1,6 +1,7 @@
 // src/services/eventService.ts
 
-import { AuthAPI } from "./api"
+import { CreateEventData, Event, EventUpdateData } from "@/Types/Event";
+import { EventAPI } from "./api"
 
 
 export const EventService = {
@@ -9,9 +10,9 @@ export const EventService = {
    * @returns A list of events.
    */
 
-   fetchEvents: async (): Promise<any[]> => {
+   fetchEvents: async (): Promise<Event[]> => {
     try {
-      const response = await AuthAPI.get('/events');
+      const response = await EventAPI.getAllEvents();
       return response.data;
     } catch (error) {
       console.error('Failed to fetch events', error);
@@ -25,22 +26,10 @@ export const EventService = {
    * @param eventData - Data for the new event.
    */
 
- createEvent: async (eventData: {
-  name: string;
-    description: string;
-    date: string;
-    location: string;
-    image?: File;
- }): Promise<void> => {
+ createEvent: async (eventData: CreateEventData): Promise<Event> => {
   try {
-    const formData = new FormData();
-    Object.entries(eventData).forEach(([key, value]) => {
-      if(value !==undefined) formData.append(key, value as string | Blob);
-    });
-
-    await AuthAPI.post('/events', formData, {
-      headers: { 'Content-Type': 'multipart/form-data'},
-    });
+   const response = await EventAPI.createEvent(eventData);
+    return response.data;
   } catch (error) {
     console.error('Failed to create event:', error);
     throw new Error('Unable to create event.');
@@ -55,23 +44,11 @@ export const EventService = {
 
    updateEvent: async (
     eventId: string,
-    eventData: {
-      name?: string;
-      description?: string;
-      date?: string;
-      location?: string;
-      image?: File;
-    }
-   ): Promise<void> => {
+    eventData: EventUpdateData
+   ): Promise<Event> => {
     try {
-      const formData = new FormData();
-      Object.entries(eventData).forEach(([key, value]) => {
-        if( value !== undefined) formData.append(key, value as string | Blob)
-      });
-
-      await AuthAPI.put(`/events/${eventId}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data'},
-      });
+    const response = await EventAPI.updateEvent(eventId, eventData);
+    return response.data;
     } catch (error) {
       console.error('Failed to update event:', error);
       throw new Error('Unable to update event')
@@ -85,7 +62,7 @@ export const EventService = {
 
     deleteEvent: async (eventId: string): Promise<void> => {
       try {
-        await AuthAPI.delete(`/events/${eventId}`)
+        await EventAPI.deleteEvent(eventId)
       } catch (error) {
         console.error('Failed to delete event:', error);
         throw new Error('Unable to delete event');
