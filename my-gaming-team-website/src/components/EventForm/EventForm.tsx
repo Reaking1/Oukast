@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './EventForm.css';
 import { toast } from 'react-toastify';
-import {  } from '../../services/eventService';
+import { EventService } from '@/services/eventService';
+
 
 
 type EventFormProps = {
@@ -46,10 +47,10 @@ const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
     setIsSubmitting(true);
     try {
       if (event) {
-        await update(event.id, formData);
+        await EventService.updateEvent(event.id, formData);
         toast.success('Event updated successfully!');
       } else {
-        await create(formData);
+        await EventService.createEvent(formData);
         toast.success('Event added successfully!');
       }
 

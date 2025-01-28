@@ -4,12 +4,13 @@ const SERVER_URL = "http://localhost:5000";
 
 let socket: Socket | null = null;
 
+// SocketEvents Interface
 interface SocketEvents {
+  [key: string]: unknown; // All keys are guaranteed to be strings
   message: { text: string; userId: string };
   userJoined: { userId: string; username: string };
-  [key: string]: unknown; // Allows flexibility for additional events
+  userLeft: { userId: string };
 }
-
 /**
  * Initializes a socket connection.
  */
@@ -54,7 +55,7 @@ export const onSocketEvent = <K extends keyof SocketEvents>(
  * @param event - The event name.
  * @param data - The data to emit.
  */
-export const emitSocketEvent = <K extends keyof SocketEvents>(
+export const emitSocketEvent = <K extends Extract<keyof SocketEvents, string>>(
   event: K,
   data: SocketEvents[K]
 ): void => {

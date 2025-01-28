@@ -12,7 +12,7 @@ export interface Event {
     description: string;
     location: string;
     date: string;
-    image?: File; // Optional file property
+    image?: File | null; // Optional file property
   }
   
   export interface EventUpdateData {
@@ -20,5 +20,5 @@ export interface Event {
     description?: string;
     date?: string;
     location?: string;
-    image?: File;
+    image?: File | null;
   }
