@@ -11,7 +11,7 @@ export const AuthService = {
    * @param password - Admin's password.
    */
 
-  login: async (email: string, password: string): Promise <void> => {
+  login: async (email: string, password: string): Promise<string> => {
     try {
       const credentials: LoginCredentials = {email,password};
       const response = await AuthAPI.login(credentials);
@@ -19,6 +19,9 @@ export const AuthService = {
 
       //Save the token in localStorage
       localStorage.setItem('authToken', token);
+
+      return token;
+      
     } catch (error) {
       console.error('Login failed', error);
       throw new Error('Invaild credentials or server error')
@@ -60,7 +63,7 @@ export const AuthService = {
 
   isAuthenticated: (): boolean => {
     const token = localStorage.getItem('authToken');
-    return !!token; // Returns true if token exists
+    return Boolean(token); // Returns true if token exists
   },
 
 
