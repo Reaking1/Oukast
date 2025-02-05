@@ -1,4 +1,4 @@
-export interface Event {
+export interface EventData {
     id: string;
     name: string;
     description: string;
@@ -16,6 +16,7 @@ export interface Event {
   }
   
   export interface EventUpdateData {
+    id: string;
     name?: string; // All fields optional for partial updates
     description?: string;
     date?: string;

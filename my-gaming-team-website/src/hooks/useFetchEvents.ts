@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
-import { getEvents } from '../services/eventService';
-import { Event } from '../types/event';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { fecth } from "../services/eventService";
+import { EventData } from "../Types/Event"; // Import renamed type
+import { toast } from "react-toastify";
 
-/**
- * Custom hook for fetching events.
- * @returns Object containing events, loading state, and error (if any).
- */
 const useFetchEvents = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -16,13 +12,13 @@ const useFetchEvents = () => {
     const fetchEvents = async () => {
       try {
         setLoading(true);
-        const response = await getEvents();
+        const response: EventData[] = await fetchEvents(); // Ensure response is typed
         setEvents(response);
-        setError(null); // Reset error state on successful fetch
-      } catch (err: any) {
-        console.error('Failed to fetch events:', err);
-        setError(err?.message || 'Failed to fetch events.');
-        toast.error('Error fetching events. Please try again.');
+        setError(null);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+        setError(error.message || "Failed to fetch events.");
+        toast.error("Error fetching events. Please try again.");
       } finally {
         setLoading(false);
       }

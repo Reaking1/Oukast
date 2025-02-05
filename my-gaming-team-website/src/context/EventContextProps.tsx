@@ -1,61 +1,107 @@
+import { EventService } from '../services/eventService';
+import { CreateEventData, EventData, EventUpdateData } from '../Types/Event';
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { fetchEvents, createEvent, updateEvent, deleteEvent } from '../services/eventService';
-import { Event, EventContextType, CreateEventPayload, UpdateEventPayload } from '../types/event';
+
 import { toast } from 'react-toastify';
+
+
+/**
+ * Defines the shape of the events context
+ */
+
+interface EventContextType {
+ events: EventData[];
+ loading: boolean;
+ fetchAllEvents: () => Promise<void>;
+ addEvent: (newEvent: CreateEventData) => Promise<void>;
+ editEvent: (eventId: string, updatedEvent: EventUpdateData) => Promise<void>;
+ removeEvent: (eventId: string) => Promise<void>;
+}
+
 
 const EventContext = createContext<EventContextType | null>(null);
 
 export const EventProvider = ({ children }: { children: ReactNode }) => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchAllEvents = async () => {
+
+  /**
+   * Fetch all events from the backend and update state.
+   */
+  const fetchAllEvents = async (): Promise<void> => {
     setLoading(true);
     try {
-      const data = await fetchEvents();
+      const data: EventData[] = await EventService.fetchEvents();
       setEvents(data);
-    } catch (error: any) {
+    } catch (error) {
+      if(error instanceof Error){
       console.error('Failed to fetch events:', error);
       toast.error('Failed to load events. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const addEvent = async (newEvent: CreateEventPayload) => {
+  /**
+   * Add a new event to the list
+   * @param newEvent - The event data to create
+   */
+
+  const addEvent = async (newEvent: CreateEventData): Promise<void> => {
     try {
-      const event = await createEvent(newEvent);
+      const event = await EventService.createEvent(newEvent);
       setEvents((prevEvents) => [...prevEvents, event]);
       toast.success('Event added successfully!');
-    } catch (error: any) {
+    } catch (error) {
+      if(error instanceof Error) {
       console.error('Failed to add event:', error);
       toast.error('Failed to add event. Please try again.');
+      }
       throw error;
     }
   };
 
-  const editEvent = async (updatedEvent: UpdateEventPayload) => {
+
+  /**
+   * Edit an existing event.
+   * @param eventId- The ID of the event to update
+   * @param updatedEvent - the updated event data
+   */
+
+  const editEvent = async (eventId: string, updatedEvent: EventUpdateData): Promise<void> => {
     try {
-      const event = await updateEvent(updatedEvent);
+      const event: EventData = await EventService.updateEvent(eventId,updatedEvent);
       setEvents((prevEvents) =>
         prevEvents.map((ev) => (ev.id === updatedEvent.id ? event : ev))
       );
       toast.success('Event updated successfully!');
-    } catch (error: any) {
+    } catch (error) {
+      if(error instanceof Error) {
       console.error('Failed to update event:', error);
       toast.error('Failed to update event. Please try again.');
+      }
       throw error;
     }
+  
   };
 
-  const removeEvent = async (eventId: string) => {
+  /**
+   * Remove an event from the list.
+   * @param eventId - The ID of the event to remove.
+   */
+
+  const removeEvent = async (eventId: string): Promise<void> => {
     try {
-      await deleteEvent(eventId);
+      await EventService.deleteEvent(eventId);
       setEvents((prevEvents) => prevEvents.filter((ev) => ev.id !== eventId));
       toast.success('Event deleted successfully!');
-    } catch (error: any) {
+    } catch (error) {
+      if(error instanceof Error) {
       console.error('Failed to delete event:', error);
       toast.error('Failed to delete event. Please try again.');
+      }
       throw error;
     }
   };

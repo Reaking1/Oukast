@@ -1,6 +1,6 @@
 // src/services/eventService.ts
 
-import { CreateEventData, Event, EventUpdateData } from "@/Types/Event";
+import { CreateEventData, EventData, EventUpdateData } from "@/Types/Event";
 import { EventAPI } from "./api"
 
 
@@ -10,7 +10,7 @@ export const EventService = {
    * @returns A list of events.
    */
 
-   fetchEvents: async (): Promise<Event[]> => {
+   fetchEvents: async (): Promise<EventData[]> => {
     try {
       const response = await EventAPI.getAllEvents();
       return response.data;
@@ -26,7 +26,7 @@ export const EventService = {
    * @param eventData - Data for the new event.
    */
 
- createEvent: async (eventData: CreateEventData): Promise<Event> => {
+ createEvent: async (eventData: CreateEventData): Promise<EventData> => {
   try {
    const response = await EventAPI.createEvent(eventData);
     return response.data;
