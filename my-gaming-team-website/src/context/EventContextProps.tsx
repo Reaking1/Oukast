@@ -112,7 +112,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <EventContext.Provider
-      value={{
+      value={{ 
         events,
         loading,
         fetchAllEvents,
