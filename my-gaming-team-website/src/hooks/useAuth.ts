@@ -5,20 +5,21 @@
  * Hook for accessing authentication-related context and utilities.
  */
 
-import AuthContext from "@/context/AuthContext"
+import {AuthContext} from "@/context/AuthContext"
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const useAuth = () => {
-    const {
-        isAuthenticated,
-        user,
-        login,
-        logout,
-        isAdmin,
-        isSuperAdmin,
-        setAuthToken,
-    } = useContext(AuthContext);
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
+// ✅ Ensure context is not null before accessing properties
+if (!auth) {
+    throw new Error("useAuth must be used within an AuthProvider.");
+}
+
+const { isAuthenticated, user, handleLogin,handleLogout} = auth;
+
 
     /**
    * Handles user login and sets authentication context.
@@ -33,12 +34,16 @@ const useAuth = () => {
     ): Promise<boolean> => {
         
         try {
-            const response: LoginResponse = await login(email,password);
+            const response = await login(email,password);
             setAuthToken(response.token);
             toast.success('Login successful!');
             return true
-        } catch (error: any) {
-            toast.error(error?.message ||  'Login failed. Please try again');
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                toast.error(error.message || "Login failed. Please try again.");
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
             return false;
         }
     };
@@ -48,16 +53,13 @@ const useAuth = () => {
    */
 
     const handleLogout = () => {
-        logout();
-        toast.info('Logged out successfully')
+      
     }
 
 
     return {
         isAuthenticated,
         user,
-        isAdmin,
-        isSuperAdmin,
         handleLogin,
         handleLogout,
     }

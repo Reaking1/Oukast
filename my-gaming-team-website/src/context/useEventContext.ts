@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { EventContext } from './EventContextProps';
-import type { EventContextType } from './EventContextProps';
+import { EventContext, EventContextType } from '../context/EventContextProps';
 
 /**
  * Custom hook to access the EventContext.

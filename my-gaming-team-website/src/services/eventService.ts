@@ -45,7 +45,7 @@ export const EventService = {
    updateEvent: async (
     eventId: string,
     eventData: EventUpdateData
-   ): Promise<Event> => {
+   ): Promise<EventData> => {
     try {
     const response = await EventAPI.updateEvent(eventId, eventData);
     return response.data;

@@ -1,6 +1,6 @@
 import { EventService } from '../services/eventService';
 import { CreateEventData, EventData, EventUpdateData } from '../Types/Event';
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import  { createContext, useState, useEffect, ReactNode } from 'react';
 
 import { toast } from 'react-toastify';
 
@@ -19,7 +19,7 @@ interface EventContextType {
 }
 
 
-const EventContext = createContext<EventContextType | null>(null);
+export const EventContext = createContext<EventContextType | null>(null);
 
 export const EventProvider = ({ children }: { children: ReactNode }) => {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -32,7 +32,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
   const fetchAllEvents = async (): Promise<void> => {
     setLoading(true);
     try {
-      const data: EventData[] = await EventService.fetchEvents();
+      const data = await EventService.fetchEvents();
       setEvents(data);
     } catch (error) {
       if(error instanceof Error){
@@ -72,20 +72,18 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 
   const editEvent = async (eventId: string, updatedEvent: EventUpdateData): Promise<void> => {
     try {
-      const event: EventData = await EventService.updateEvent(eventId,updatedEvent);
+      const event = await EventService.updateEvent(eventId, updatedEvent); // ✅ Use EventData
       setEvents((prevEvents) =>
         prevEvents.map((ev) => (ev.id === updatedEvent.id ? event : ev))
       );
       toast.success('Event updated successfully!');
     } catch (error) {
-      if(error instanceof Error) {
       console.error('Failed to update event:', error);
       toast.error('Failed to update event. Please try again.');
-      }
       throw error;
     }
-  
   };
+  
 
   /**
    * Remove an event from the list.
@@ -126,12 +124,4 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useEventContext = (): EventContextType => {
-  const context = useContext(EventContext);
-
-  if (!context) {
-    throw new Error('useEventContext must be used within an EventProvider');
-  }
-
-  return context;
-};
+export type {EventContextType}
