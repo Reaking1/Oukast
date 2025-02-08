@@ -28,23 +28,21 @@ const { isAuthenticated, user, handleLogin,handleLogout} = auth;
    * @returns Promise resolving with a success flag.
    */
 
-    const handleLogin = async (
+    const login = async (
         email: string,
         password: string,
-    ): Promise<boolean> => {
+    ) => {
         
         try {
-            const response = await login(email,password);
-            setAuthToken(response.token);
-            toast.success('Login successful!');
-            return true
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                toast.error(error.message || "Login failed. Please try again.");
-            } else {
-                toast.error("An unexpected error occurred.");
-            }
-            return false;
+          await handleLogin(email,password);
+
+          if(auth.user?.role === "superadmin") {
+            navigate("/superadmin-dashboard");
+          } else {
+            navigate("/admin-dashboard");
+          }
+        } catch (error) {
+           toast.error('Login failed. Please try again.');
         }
     };
 
@@ -52,16 +50,17 @@ const { isAuthenticated, user, handleLogin,handleLogout} = auth;
    * Handles user logout and resets authentication context.
    */
 
-    const handleLogout = () => {
-      
+    const logout = () => {
+       handleLogout();
+       navigate("/login");
     }
 
 
     return {
         isAuthenticated,
         user,
-        handleLogin,
-        handleLogout,
+        login,
+        logout,
     }
 
 

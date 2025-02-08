@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fecth } from "../services/eventService";
+import { EventService } from "../services/eventService";
 import { EventData } from "../Types/Event"; // Import renamed type
 import { toast } from "react-toastify";
 
@@ -9,22 +9,22 @@ const useFetchEvents = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchEventData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        const response: EventData[] = await fetchEvents(); // Ensure response is typed
+        const response: EventData[] = await EventService.fetchEvents(); //Correct function call
         setEvents(response);
-        setError(null);
+        setError(null)
       } catch (error) {
-        console.error("Failed to fetch events:", error);
-        setError(error.message || "Failed to fetch events.");
+        console.error("Failed to fetch events", error);
+        setError(error instanceof Error ? error.message: "Failed to fetch events.");
         toast.error("Error fetching events. Please try again.");
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     };
 
-    fetchEvents();
+    fetchEventData();
   }, []);
 
   return { events, loading, error };
