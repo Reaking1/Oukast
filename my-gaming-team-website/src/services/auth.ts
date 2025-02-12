@@ -1,6 +1,6 @@
 // src/services/auth.ts
 
-import { Admin, LoginCredentials } from "@/Types/Auth";
+import { Admin, LoginCredentials } from "../Types/Auth";
 import { AuthAPI } from "./api"
 
 

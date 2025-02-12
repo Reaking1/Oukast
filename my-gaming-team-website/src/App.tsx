@@ -29,7 +29,7 @@ const App: React.FC = () => {
        
            {/* Admin and Super Admin Protected Routes */}
       
-          <Route path="/events" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
+          <Route path="/events" element={<ProtectedRoute roles={["admin", "superadmin"]}><EventPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import './EventForm.css';
 import { toast } from 'react-toastify';
-import { EventService } from '@/services/eventService';
+import { EventService } from '../../services/eventService';
+import { CreateEventData, EventData, EventUpdateData } from '../../Types/Event';
 
 
 
 type EventFormProps = {
-  event?: {
-    id: string;
-    name: string;
-    description: string;
-    location: string;
-    date: string;
-    image?: File;
-  };
+  event?: EventData
+    
   onSubmitSuccess: () => void;
 };
 
 const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CreateEventData>({
     name: event?.name || '',
     description: event?.description || '',
     location: event?.location || '',
@@ -45,10 +40,20 @@ const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     try {
       if (event) {
-        await EventService.updateEvent(event.id, formData);
-        toast.success('Event updated successfully!');
+       const updatedEventData: EventUpdateData = {
+        id: event.id,
+        name: formData.name,
+        description: formData.description,
+        location: formData.location,
+        date: formData.date,
+        image: formData.image
+       };
+
+       await EventService.updateEvent(event.id, updatedEventData);
+       toast.success('Event update successfully')
       } else {
         await EventService.createEvent(formData);
         toast.success('Event added successfully!');

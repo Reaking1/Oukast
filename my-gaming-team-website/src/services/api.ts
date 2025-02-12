@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AdminData, UpdateAdminData } from "@/Types/Admin";
-import { Admin, LoginCredentials } from "@/Types/Auth";
-import { Event, CreateEventData, EventUpdateData } from "@/Types/Event";
+import { AdminData, UpdateAdminData } from "../Types/Admin";
+import { Admin, LoginCredentials } from "../Types/Auth";
+import { EventData, CreateEventData, EventUpdateData } from "../Types/Event";
 import axios from "axios"
 
 const BASE_URL ='http://localhost:5000';
@@ -43,14 +43,14 @@ export const AuthAPI = {
 
 //Event Api endpoints
 export const EventAPI = {
-  getAllEvents: () => api.get<Event[]>('/events'),
+  getAllEvents: () => api.get<EventData[]>('/events'),
   createEvent: (eventData: CreateEventData ) =>
-    api.post<Event>('/events', eventData, {
+    api.post<EventData>('/events', eventData, {
       headers: { 'Content-Type': 'multipart/form-data'}, //For uploading files
     }),
 
     updateEvent: (id: string, eventData: EventUpdateData) => 
-      api.put<Event>(`/events/${id}`, eventData, {
+      api.put<EventData>(`/events/${id}`, eventData, {
         headers: {'Content-Type': 'multipart/form-data'},
       }),
       deleteEvent:(id: string) => api.delete<void>(`/events/${id}`),

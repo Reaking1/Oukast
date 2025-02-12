@@ -5,7 +5,7 @@
  * Hook for accessing authentication-related context and utilities.
  */
 
-import {AuthContext} from "@/context/AuthContext"
+import {AuthContext} from "../context/AuthContext"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

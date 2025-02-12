@@ -1,6 +1,6 @@
 // src/services/eventService.ts
 
-import { CreateEventData, EventData, EventUpdateData } from "@/Types/Event";
+import { CreateEventData, EventData, EventUpdateData } from "../Types/Event";
 import { EventAPI } from "./api"
 
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './EventPage.css';
-import { getEvents } from '../../services/eventService';
-import { Event } from '../../types';
 import io from 'socket.io-client'; // Importing socket.io-client
+import { EventService } from '../../services/eventService';
+import { EventData } from '@/Types/Event';
+import './EventPage.css'
 
 const socket = io('http://localhost:5000'); // Initialize the socket connection (adjust the URL as per your server)
 
 const EventPage: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
@@ -31,7 +32,7 @@ const EventPage: React.FC = () => {
 
   const fetchEvents = async () => {
     try {
-      const data = await getEvents();
+      const data = await EventService.fetchEvents();
       setEvents(data);
       setLoading(false);
     } catch (err) {
@@ -43,28 +44,31 @@ const EventPage: React.FC = () => {
 
   return (
     <div className="event-page">
-        <h1>Upcoming Events</h1>
-      {loading ? (
-        <p>Loading events...</p>
-      ) : error ? (
-        <p className="error">{error}</p>
-      ) : (
-        <div className="events-grid">
+       <h1 className="event-title">Unpcoming Events</h1>
+
+       {loading ? (
+        <p className="loading-text">Loading events...</p>
+       ) : error ?(
+        <p className="error-message">{error}</p>
+       ):(
+        <div className="event-container">
           {events.map(event => (
             <div key={event.id} className="event-card">
               {event.image ? (
-                <img src={event.image} alt={`${event.name} logo`} className="event-logo" />
+                <img src={URL.createObjectURL(event.image)} alt={event.name} className='event-image' />
               ) : (
-                <div className="placeholder-logo">No Image Available</div>
+                <div className="placeholder-image">No Image Available</div>
               )}
-              <h3>{event.name}</h3>
-              <p>{new Date(event.date).toLocaleDateString()}</p>
-              <p>{event.description}</p>
-              <p>Location: {event.location}</p>
+              <div className="event-info">
+                <h3 className="event-name">{event.name}</h3>
+                <p className="event-date">{new Date(event.date).toLocaleDateString()}</p>
+                <p className="event-description">{event.description}</p>
+                <p className="event-location">📍{event.location}</p>
+              </div>
             </div>
           ))}
         </div>
-      )}
+       )}
     </div>
   );
 };

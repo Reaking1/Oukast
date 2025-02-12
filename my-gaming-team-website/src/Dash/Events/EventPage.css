@@ -1,56 +1,106 @@
-/* src/pages/EventPage/EventPage.css */
-
+/* Event Page Styles */
 .event-page {
-    padding: 2rem;
-    background-color: #f0f2f5;
-    min-height: 100vh;
-  }
-  
-  .event-page h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #0f1e2d;
-  }
-  
-  .events-grid {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: white;
+  overflow-y: auto; /* Enables scrolling */
+}
+
+.event-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Event Cards Container */
+.events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Event Card */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  background: #2b2b2b;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+/* Event Image */
+.event-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Placeholder for Missing Image */
+.placeholder-image {
+  width: 100%;
+  height: 200px;
+  background: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+  font-size: 1rem;
+}
+
+/* Event Info */
+.event-info {
+  padding: 15px;
+}
+
+.event-name {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.event-date,
+.event-location {
+  font-size: 1rem;
+  color: #bbb;
+}
+
+.event-description {
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* Loading & Error Messages */
+.loading-text,
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: red;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .events-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
-  
+
   .event-card {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    flex-direction: column;
   }
-  
-  .event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 1024px) {
+  .events-container {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .event-logo {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-  }
-  
-  .event-card h3 {
-    margin-bottom: 0.5rem;
-    color: #0f1e2d;
-  }
-  
-  .event-card p {
-    color: #555;
-  }
-  
-  .error {
-    color: red;
-    text-align: center;
-  }
-  
+}

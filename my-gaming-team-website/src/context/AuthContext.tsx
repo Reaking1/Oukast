@@ -1,5 +1,5 @@
-import { AuthService } from '@/services/auth';
-import { Admin } from '@/Types/Auth';
+import { AuthService } from '../services/auth';
+import { Admin } from '../Types/Auth';
 import { createContext, useState, useEffect, ReactNode } from 'react';
 
 import { toast } from 'react-toastify';
