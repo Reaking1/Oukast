@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roles, children}) => {
   }
 
   //fix this
-  if (roles && !roles.includes(user?.role)) {
+  if (roles && (!user?.role || !roles.includes(user.role))) {
     return <Navigate to="/unauthorized" /> ;
   }
 

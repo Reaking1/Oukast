@@ -26,8 +26,6 @@ const App: React.FC = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/upcomingsessions" element={<UpcomingSessions />} />
           <Route path="/login" element={<Login />} />
-       
-           {/* Admin and Super Admin Protected Routes */}
       
           <Route path="/events" element={<ProtectedRoute roles={["admin", "superadmin"]}><EventPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
