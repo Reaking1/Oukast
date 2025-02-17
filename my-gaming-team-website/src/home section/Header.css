@@ -1,214 +1,165 @@
 .header {
-  background-color: rgba(15, 30, 45, 0.8);
-  backdrop-filter: blur(5px);
-  padding: 10px 20px;
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
+  left: 0;
+  background: rgba(15, 30, 45, 0.8);
+  padding: 10px 20px; /* Reduced padding for better spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   z-index: 1000;
+  transition: background 0.3s ease-in-out;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  width: 100%;
+  justify-content: space-between;
 }
 
 .navbar-brand {
-  font-family: 'Noto Serif JP', serif;
-  color: #faf3e0;
+  font-size: 22px; /* Slightly smaller for better balance */
+  font-weight: bold;
+  color: #fff;
   text-decoration: none;
-  font-size: 1.5em;
 }
 
 .navbar-nav {
   display: flex;
   list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-direction: row; /* Default direction */
+  padding-right: 90px;
+  gap: 20px; /* Ensure even spacing between items */
+  margin-left: auto;
 }
 
 .nav-item {
-  margin-left: 20px;
   position: relative;
 }
 
 .nav-link {
-  color: #e63946;
+  color: #fff;
   text-decoration: none;
-  font-family: 'Noto Serif JP', serif;
-  transition: opacity 0.3s ease;
+  font-size: 16px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .nav-link:hover {
   opacity: 1;
-  color: #a8dadc;
 }
 
-/* Three-Dot Icon Styles */
-.three-dot-menu {
-  cursor: pointer;
-  font-size: 24px;
-  padding-left: 15px;
-  color: #faf3e0;
-  position: relative;
-}
-
-.three-dot-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: rgba(15, 30, 45, 0.9);
-  backdrop-filter: blur(5px);
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  display: none;
-  flex-direction: column;
-  z-index: 999;
-}
-
-.three-dot-dropdown.show {
-  display: flex;
-}
-
-.three-dot-dropdown a {
-  color: #faf3e0;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: background 0.3s ease;
-  font-family: 'Noto Serif JP', serif;
-}
-
-.three-dot-dropdown a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #e63946;
-  border-radius: 10px;
-}
-
-/* Styles for the Teams Info Dropdown */
-.nav-item {
-  position: relative; /* Ensures the dropdown is positioned relative to its parent */
-  cursor: pointer;
-}
-
-/* The span that holds "Teams Info" */
-.nav-link {
-  color: #e63946; /* Japanese Red Links */
-  text-decoration: none;
-  font-family: 'Noto Serif JP', serif;
-  padding: 10px;
-  transition: color 0.3s ease;
-}
-
-/* Hover state for the Teams Info link */
-.nav-link:hover {
-  color: #a8dadc; /* Soft Blue-Green Hover */
-}
-
-/* Dropdown menu styles */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: rgba(15, 30, 45, 0.9); /* Dark Background with Transparency */
-  backdrop-filter: blur(5px); /* Blur effect */
-  padding: 10px 0;
+  background: rgba(15, 30, 45, 0.95);
   list-style: none;
-  margin: 0;
+  padding: 10px 0;
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  z-index: 999;
   opacity: 0;
   height: 0;
   overflow: hidden;
-  transition: all 0.3s ease;
-  font-family: 'Noto Serif JP', serif;
-  min-width: 200px;
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-/* Ensure the dropdown appears on hover */
-.nav-item:hover .dropdown-menu {
-  opacity: 1;
-  height: auto;
-}
-
-/* Dropdown menu item styles */
 .dropdown-menu li {
-  margin: 0;
-  padding: 0;
-}
-
-/* Links inside the dropdown menu */
-.dropdown-menu li a {
-  color: #faf3e0; /* Light Beige Text */
-  text-decoration: none;
-  display: block;
   padding: 10px 20px;
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Hover effect for dropdown links */
-.dropdown-menu li a:hover {
-  background: rgba(255, 255, 255, 0.1); /* Slight hover effect */
-  color: #e63946; /* Japanese Red Hover */
+.dropdown-menu li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+}
+.close-menu li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+
+/* ✅ Improved Menu Icon Placement */
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: absolute;
+  right: 60px; /* Keeps it closer to the navbar */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.menu-icon span {
+  background: white;
+  height: 3px;
+  width: 28px; /* Slightly smaller for a modern look */
+  margin: 4px 0;
+  transition: 0.3s ease-in-out;
+}
+
+/* ✅ Modern Sidebar Menu */
+.modern-menu {
+  position: fixed;
+  top: 0;
+  right: -90%;
+  width: 250px;
+  height: 50vh;
+  background: rgba(15, 30, 45, 0.98);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.modern-menu.open {
+  right: 0;
+}
+
+.close-menu {
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.logout-button {
+  margin-top: 20px;
+  padding: 8px 20px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  cursor: pointer;
   border-radius: 5px;
 }
 
-/* Header.css */
-
-.logout-button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-}
-
-.logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-/* Header.css */
-@media (max-width: 768px) {
-  .navbar {
-    flex-wrap: nowrap; /* Prevent wrapping */
-    overflow-x: auto; /* Allow horizontal scrolling if necessary */
-  }
-
-  .navbar-brand {
-    font-size: 1.2em; /* Smaller text on mobile */
-  }
-
+/* ✅ Responsive Design Fixes */
+@media (max-width: 1024px) {
   .navbar-nav {
-    flex-direction: row;
-    overflow-x: auto; /* Allow horizontal scrolling */
-    white-space: nowrap;
+    gap: 15px; /* Adjust spacing for tablets */
+  }
+  
+  .menu-icon {
+    right: 15px; /* Adjusts closer on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    display: none; /* Hide navbar links on mobile */
   }
 
-  .nav-item {
-    margin-left: 10px; /* Adjust spacing */
+  .menu-icon {
+    right: 10px;
   }
 
-  .three-dot-menu {
-    font-size: 20px; /* Slightly smaller icon size */
-  }
-
-  .three-dot-dropdown a {
-    font-size: 0.9em; /* Smaller font for dropdown */
-  }
-
-  .dropdown-menu {
-    left: auto;
-    right: 0;
-    width: 100%; /* Ensure dropdown takes full width on smaller screens */
-    text-align: center; /* Center the text */
-  }
-
-  .dropdown-menu li a {
-    padding: 10px 0;
+  .modern-menu {
+    width: 220px; /* Slightly smaller menu on mobile */
   }
 }

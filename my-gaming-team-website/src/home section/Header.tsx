@@ -1,118 +1,112 @@
-import React, { useEffect, useState } from "react";
-import './Header.css';
-import gsap from "gsap";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from '../hooks/useAuth'; // Import the useAuth hook
+import useAuth from "../hooks/useAuth";
+import gsap from "gsap";
+import "./Header.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGhost, faX } from "@fortawesome/free-solid-svg-icons";
+
 
 const Header: React.FC = () => {
-  const { isAuthenticated, logout } = useAuth(); // Destructure necessary values from useAuth
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isTipsDropdownVisible, setTipsDropdownVisible] = useState(false);
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
 
+  // GSAP Header Animation on Scroll
   useEffect(() => {
-    const header = document.querySelector('.header') as HTMLElement;
-
+    const header = document.querySelector(".header") as HTMLElement;
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-        gsap.to(header, { duration: 0.3, backgroundColor: "rgba(15, 30, 45, 0.9)" });
-      } else {
-        header.classList.remove('scrolled');
-        gsap.to(header, { duration: 0.3, backgroundColor: "rgba(15, 30, 45, 0.8)" });
-      }
+      gsap.to(header, {
+        duration: 0.3,
+        backgroundColor: window.scrollY > 50 ? "rgba(15, 30, 45, 0.9)" : "rgba(15, 30, 45, 0.8)",
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [isTeamsDropdownVisible, setTeamsDropdownVisible] = useState(false);
-
-  const handleTeamsMouseEnter = () => {
-    setTeamsDropdownVisible(true);
-    gsap.to('.dropdown-menu', { duration: 0.3, height: 'auto', opacity: 1 });
+  // Tips Dropdown Animation using useRef
+  const handleTipsMouseEnter = () => {
+    setTipsDropdownVisible(true);
+    if (dropdownRef.current) {
+      gsap.to(dropdownRef.current, { duration: 0.3, height: "auto", opacity: 1, display: "block" });
+    }
   };
 
-  const handleTeamsMouseLeave = () => {
-    setTeamsDropdownVisible(false);
-    gsap.to('.dropdown-menu', { duration: 0.3, height: 0, opacity: 0 });
+  const handleTipsMouseLeave = () => {
+    setTipsDropdownVisible(false);
+    if (dropdownRef.current) {
+      gsap.to(dropdownRef.current, { duration: 0.3, height: 0, opacity: 0, display: "none" });
+    }
   };
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, { opacity: 1, duration: 0.3 });
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, { opacity: 0.8, duration: 0.3 });
-  };
-
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  // Toggle Modern Menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    gsap.to('.three-dot-dropdown', {
-      duration: 0.3,
-      height: menuOpen ? 0 : 'auto',
-      opacity: menuOpen ? 0 : 1,
-    });
+    gsap.to(".modern-menu", { duration: 0.4, x: menuOpen ? "100%" : "0%" });
   };
 
+  // Handle Logout
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
-
-  const navigate = useNavigate(); // Import useNavigate for navigation
 
   return (
     <header className="header">
       <nav className="navbar">
-        <Link className="navbar-brand" to="/">Outkast</Link>
+        <Link className="navbar-brand" to="/">Warriors Of Heritage</Link>
         <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link className="nav-link" to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Home</Link>
-          </li>
-          <li
-            className="nav-item"
-            onMouseEnter={handleTeamsMouseEnter}
-            onMouseLeave={handleTeamsMouseLeave}
-          >
-            <span className="nav-link">Teams Info</span>
-            {isTeamsDropdownVisible && (
-              <ul className="dropdown-menu">
-                <li><Link to="/teams/apex">Apex Legends</Link></li>
-                <li><Link to="/teams/cod">Call of Duty Warzone</Link></li>
-                <li><Link to="/teams/fc24">FC24</Link></li>
-                <li><Link to="/teams/mk">Mortal Kombat</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
+
+          {/* Tips Dropdown */}
+          <li className="nav-item" onMouseEnter={handleTipsMouseEnter} onMouseLeave={handleTipsMouseLeave}>
+            <span className="nav-link">Tips</span>
+            {isTipsDropdownVisible && (
+              <ul className="dropdown-menu" ref={dropdownRef}>
+                {[
+                  { path: "/tips/zenless", name: "Zenless Zone Zero" },
+                  { path: "/tips/fortnite", name: "Fortnite" }, // Fixed typo
+                  { path: "/tips/apex", name: "Apex Legends" },
+                  { path: "/tips/mk", name: "Mortal Kombat" },
+                  { path: "/tips/delta", name: "Delta Force" }, // Fixed typo
+                ].map((game, index) => (
+                  <li key={index}>
+                    <Link to={game.path}>{game.name}</Link>
+                  </li>
+                ))}
               </ul>
             )}
           </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/contact" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Contact</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/upcomingsessions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Upcoming Events</Link>
-          </li>
+
+          <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/upcomingsessions">Upcoming Events</Link></li>
         </ul>
-        <div className="three-dot-menu" onClick={toggleMenu}>⋮</div>
-        <div className={`three-dot-dropdown ${menuOpen ? 'show' : ''}`}>
-          {!isAuthenticated ? (
-            <>
-              <Link to="/signup" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Sign Up</Link>
-              <Link to="/login" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Log In</Link>
-            </>
-          ) : (
-            <>
-              <Link to="/admin" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Admin Dashboard</Link>
-              <button onClick={handleLogout} className="logout-button">Logout</button>
-            </>
-          )}
+
+        {/* Modern Menu Icon */}
+        <div className="menu-icon" onClick={toggleMenu}>
+          <FontAwesomeIcon icon={faGhost} size="1x" color="white"/>
         </div>
       </nav>
+
+      {/* Modern Sliding Menu */}
+      <div className={`modern-menu ${menuOpen ? "open" : ""}`}>
+        <button className="close-menu" onClick={toggleMenu}>
+          <FontAwesomeIcon icon={faX} size="1x" color="white"/>
+        </button>
+        {!isAuthenticated ? (
+          <Link to="/login">Log In</Link>
+        ) : (
+          <>
+            <Link to="/admin">Admin Dashboard</Link>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+          </>
+        )}
+      </div>
     </header>
   );
 };

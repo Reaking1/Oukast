@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Route, Routes, Navigate } from 'react-router-dom';
 import Home from './home section/home';
-import Teams from './Teams/teams';
+
 import About from './About/about';
 import Contact from './Contact/contact';
 import UpcomingSessions from './Dash/Events/EventPage';
@@ -21,7 +21,6 @@ const App: React.FC = () => {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/teams" element={<Teams />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/upcomingsessions" element={<UpcomingSessions />} />
