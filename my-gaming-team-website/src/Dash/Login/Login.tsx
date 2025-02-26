@@ -15,22 +15,28 @@ const Login: React.FC = () => {
 
     // GSAP animations when component mounts
     useEffect(() => {
+        const loginPage = document.querySelector(".login-page") as HTMLElement;
         const container = document.querySelector(".login-container") as HTMLElement;
-         // Ensure container is visible (e.g., set opacity to 1)
-  gsap.set(container, { opacity: 1, height: "auto" });
-        gsap.from(".login-container", { 
-            opacity: 0, 
-            y: -30,  // Reduce distance to avoid excessive delay
-            duration: 0.5,  // Faster animation
-            ease: "power2.out" 
+    
+        // Ensure visibility before animation starts
+        gsap.set(loginPage, { opacity: 1, height: "auto" });
+        gsap.set(container, { opacity: 1 });
+    
+        // Animate login-page first
+        gsap.from(loginPage, {
+            opacity: 0,
+            y: -50,  // More movement for dramatic effect
+            duration: 0.6,
+            ease: "power2.out",
         });
-        
-        gsap.from(".login-form", { 
-            opacity: 0, 
-            scale: 0.95,  // Less shrink effect to speed up
-            duration: 0.6,  // Faster effect
-            ease: "back.out(1.4)", 
-            delay: 0.2  // Reduce delay
+    
+        // Animate login-container inside it
+        gsap.from(container, {
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.7,
+            ease: "back.out(1.4)",
+            delay: 0.2,
         });
     }, []);
     
@@ -55,36 +61,37 @@ const Login: React.FC = () => {
 
     return (
         <div className={`login-page ${userRole === 'admin' ? 'admin-login' : userRole === 'super-admin' ? 'super-admin-login' : ''}`}>
-           <div className="login-container">
-                <h2>Login</h2> {/* ✅ Ensure h2 is here */}
-                <form onSubmit={handleSubmit} className="login-form">
-                    {error && <p className="error">{error}</p>}
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            autoComplete="email"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            autoComplete="current-password"
-                        />
-                    </div>
-                    <button type="submit">Login</button>
-                </form>
-            </div>
+        <div style={{ minHeight: "1px" }}></div> {/* Keeps parent from collapsing */}
+        <div className="login-container">
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit} className="login-form">
+                {error && <p className="error">{error}</p>}
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        autoComplete="email"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        autoComplete="current-password"
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
         </div>
+    </div>
     );
 };
 
