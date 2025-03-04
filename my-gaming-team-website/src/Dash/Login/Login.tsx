@@ -6,24 +6,20 @@ import axios from 'axios';
 import './login.css';
 
 const Login: React.FC = () => {
-    const { login, user } = useAuth();
+    const { login } = useAuth(); // Removed userRole for now
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const userRole = user?.role || 'default';
-
     useEffect(() => {
-        const loginPage = document.querySelector('.login-page') as HTMLElement;
-        const container = document.querySelector('.login-container') as HTMLElement;
+        console.log('GSAP loaded');
 
-        gsap.set([loginPage, container], { opacity: 0 });
+        const loginContainer = document.querySelector('.login-container') as HTMLElement;
 
-        const timeline = gsap.timeline({ defaults: { ease: 'power2.out' } });
-        timeline
-            .to(loginPage, { opacity: 1, duration: 0.5 })
-            .from(container, { y: -50, duration: 0.5 }, '-=0.3')
-            .from('.login-form', { opacity: 0, scale: 0.9, duration: 0.5 }, '-=0.3');
+        if (loginContainer) {
+            gsap.set(loginContainer, { opacity: 1, scale: 1 }); // Ensure visibility before animation
+            gsap.from(loginContainer, { opacity: 0.8,scale: 0.9, y: -30, duration: 0.5, ease: 'power2.out' });
+        }
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -41,9 +37,9 @@ const Login: React.FC = () => {
             toast.error('Login failed. Please check your credentials');
         }
     };
- //the login container was the problem from the begin with and the login page
+
     return (
-        <div className={`login-page ${userRole}-login`}>
+        <div className="login-page">
             <div className="login-container">
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit} className="login-form">
