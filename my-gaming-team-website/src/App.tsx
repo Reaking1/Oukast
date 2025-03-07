@@ -7,6 +7,8 @@ import Header from './home section/Header';
 import ProtectedRoute from './components/ProtectedRoute';
 import EventPage from './Dash/Events/EventPage';
 import Login from './Dash/Login/Login';
+import SuperAdminDashboard from './Dash/SuperAdmin/SuperAdmin-Dasboard';
+import AdminDashboard from './Dash/Admin/Admin-Dashboard';
 
 
 const App: React.FC = () => {
@@ -19,7 +21,13 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+
+             {/* 🛠️ Protected Event Page */}
           <Route path="/events" element={<ProtectedRoute roles={["admin", "superadmin"]}><EventPage /></ProtectedRoute>} />
+
+            {/* 🛠️ Add the Dashboard Routes */}
+            <Route path="/superadmin-dashboard" element={<ProtectedRoute roles={["superadmin"]}><SuperAdminDashboard /></ProtectedRoute>} />
+           // <Route path="/admin-dashboard" element={<ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
