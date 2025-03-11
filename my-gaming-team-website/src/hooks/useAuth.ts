@@ -32,16 +32,19 @@ const { isAuthenticated, user, handleLogin,handleLogout} = auth;
         email: string,
         password: string,
     ) => {
-        
+      console.log("🟠 [useAuth] Attempting login for:", email);
         try {
           await handleLogin(email,password);
-
+          console.log("✅ [useAuth] Login successful. User:", auth.user);
           if(auth.user?.role === "superadmin") {
+            console.log("🔵 [useAuth] Redirecting to Super Admin Dashboard");
             navigate("/superadmin-dashboard");
           } else {
+            console.log("🔵 [useAuth] Redirecting to Admin Dashboard");
             navigate("/admin-dashboard");
           }
         } catch (error) {
+          console.error("❌ [useAuth] Login failed:", error);
            toast.error('Login failed. Please try again.');
         }
     };
@@ -51,6 +54,7 @@ const { isAuthenticated, user, handleLogin,handleLogout} = auth;
    */
 
     const logout = () => {
+      console.log("🟠 [useAuth] Logging out...");
        handleLogout();
        navigate("/login");
     }

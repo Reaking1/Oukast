@@ -30,13 +30,38 @@ api.interceptors.request.use(
 
 //Auth API endpoints
 export const AuthAPI = {
-  login: (credentials: LoginCredentials) => 
-    api.post<{token: string; admin: Admin}>('/auth/login', credentials),
+  login: async (credentials: LoginCredentials) => {
+    console.log("🟠 [AuthAPI.login] Sending login request", credentials);
+    try {
+      const response = await api.post<{token: string; admin: Admin}>('/auth/login', credentials);
+      console.log("✅ [AuthAPI.login] Login successful. Response:", response.data);
+      return response;
+    } catch (error) {
+      console.error("❌ [AuthAPI.login] Login failed:", error);
+      throw error;
+    }
+  },
+    
+
   logout: () => {
-    localStorage.removeItem('authToken'); // Clear Token
+    localStorage.removeItem('authToken'); // Clear Token\
     return Promise.resolve();
   },
-  fetchCurrentAdmin: () => api.get<Admin>('/auth/me'), // Fetch details of logged-in admin
+  fetchCurrentAdmin: async () => {
+    //First, try fetching from /admins
+    try {
+      const response = await api.get<Admin>('/admins/me');
+      return response.data;
+    } catch (error) {
+      try {
+        //If the first request fails, try fecthing from /super-admins
+        const response = await api.get<Admin>('/super-admins/me');
+        return response.data;
+      } catch (error) {
+        throw new Error('Failed to fetch current admin')
+      }
+    }
+  }, // Fetch details of logged-in admin
 
 };
 

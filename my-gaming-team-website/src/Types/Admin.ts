@@ -4,6 +4,7 @@ export interface AdminData {
     email: string;
     password: string;
     role: string;
+    dateOfBirth: string; // Optional timestamp
   }
   
   export interface UpdateAdminData {
@@ -12,5 +13,6 @@ export interface AdminData {
     email?: string;
     password?: string;
     role?: string;
+    dateOfBirth?: string; // Optional timestamp
   }
   

@@ -9,6 +9,6 @@ export interface LoginCredentials {
     surname: string;
     email: string;
     role: string;
-    createdAt?: string; // Optional timestamp
+    dateOfBirth: string; // Optional timestamp
   }
   

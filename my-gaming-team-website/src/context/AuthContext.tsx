@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (email: string, password: string): Promise<void> => {
     try {
-      const token = await AuthService.login(email,password);
+      const {token, role} = await AuthService.login(email,password);
       const user = await AuthService.fetchCurrentAdmin();
 
       setAuthState({
@@ -35,7 +35,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         token,
       });
 
-     // localStorage.setItem('authToken', token);
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userRole', role);
 
       toast.success("Logged in successfully!");
     } catch (error) {
@@ -50,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const handleLogout = () => {
     AuthService.logout();
     setAuthState({ isAuthenticated: false, user: null, token: ""});
+    localStorage.removeItem("userRole");
     toast.info("logged out successfully.");
   };
 
@@ -58,7 +60,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loadUserFromToken = async () => {
       const token = localStorage.getItem("authToken");
-      if(token) {
+      const role = localStorage.getItem("userRole")
+      if(token && role) {
         try {
          const user = await AuthService.fetchCurrentAdmin();
          setAuthState({isAuthenticated: true, user, token}) 

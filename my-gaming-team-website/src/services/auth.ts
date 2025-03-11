@@ -11,16 +11,22 @@ export const AuthService = {
    * @param password - Admin's password.
    */
 
-  login: async (email: string, password: string): Promise<string> => {
+  login: async (email: string, password: string): Promise<{token: string, role: string}> => {
     try {
       const credentials: LoginCredentials = {email,password};
       const response = await AuthAPI.login(credentials);
-      const {token} = response.data;
+      const {token,admin} = response.data;
+      console.log('Received admin data:', admin);
+
+      if(!admin || !admin.role) {
+        throw new Error('Invalid admin data received.')
+      }
 
       //Save the token in localStorage
+      localStorage.setItem('userRole', admin.role)
       localStorage.setItem('authToken', token);
 
-      return token;
+      return { token, role: admin.role};
       
     } catch (error) {
       console.error('Login failed', error);
@@ -48,8 +54,8 @@ export const AuthService = {
 
     fetchCurrentAdmin: async (): Promise<Admin> => {
       try {
-        const response = await AuthAPI.fetchCurrentAdmin();
-        return response.data as Admin;
+        const admins = await AuthAPI.fetchCurrentAdmin();
+        return admins;
       } catch (error) {
         console.error('Fetching admin details failed:', error);
         throw new Error('Unable to fetch admin details.')
@@ -63,7 +69,8 @@ export const AuthService = {
 
   isAuthenticated: (): boolean => {
     const token = localStorage.getItem('authToken');
-    return Boolean(token); // Returns true if token exists
+    const role = localStorage.getItem('userRole');
+    return Boolean(token && role); // Returns true if token exists
   },
 
 
