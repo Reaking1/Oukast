@@ -6,7 +6,6 @@ let socket: Socket | null = null;
 
 // SocketEvents Interface
 interface SocketEvents {
-  [key: string]: unknown; // All keys are guaranteed to be strings
   message: { text: string; userId: string };
   userJoined: { userId: string; username: string };
   userLeft: { userId: string };
@@ -15,7 +14,7 @@ interface SocketEvents {
  * Initializes a socket connection.
  */
 export const initializeSocket = (): Socket => {
-  if (!socket) {
+  if (!socket || !socket.connected) {
     socket = io(SERVER_URL, {
       transports: ["websocket"],
       autoConnect: true,
@@ -25,8 +24,17 @@ export const initializeSocket = (): Socket => {
       console.log("Socket connected:", socket?.id);
     });
 
+    socket.on("disconnect", (reason) => {
+      console.warn("Socket connection error:", reason);
+      setTimeout(() => {
+        if(!socket?.connected) {
+          console.log("Reconnectiong:", reason);
+          socket?.connect();
+        }
+      }, 3000)
+    });
     socket.on("connect_error", (error) => {
-      console.error("Socket connection error:", error);
+      console.error("Socket connection error:", error)
     });
   }
   return socket;
