@@ -1,12 +1,29 @@
+import { approveAdmin } from '@/services/api';
 import React from 'react';
 
 const SuperAdminDashboard: React.FC = () => {
+  const handleApprove = async (adminId: string) => {
+    try {
+      await approveAdmin(adminId, superAdminToken);
+      alert('Admin approved successfully!');
+      fetchAdmins(); // Refresh the list after approval
+    } catch (error) {
+      alert('Failed to approve admin');
+    }
+  };
+  
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1 style={{ fontSize: '3rem', color: '#333' }}>Super Admin Dashboard</h1>
-      <p style={{ fontSize: '1.5rem', color: '#555' }}>This page is under construction. See you tomorrow!</p>
+    <div>
+      {admins.map((admin) => (
+        <div key={admin._id}>
+          <p>{admin.name} {admin.surname} - {admin.email}</p>
+          {!admin.isApproved && (
+            <button onClick={() => handleApprove(admin._id)}>Approve</button>
+          )}
+        </div>
+      ))}
     </div>
-  );
-};
+  ); //issue with api
 
+}
 export default SuperAdminDashboard;

@@ -92,5 +92,22 @@ export const AdminAPI = {
   deleteAdmin: (id: string) => api.delete<void>(`/admins/${id}`),
 };
 
+export async function approveAdmin(adminId: string, token: string) {
+  const response = await fetch(`${BASE_URL}/admin/approve/${adminId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`, // Ensure super-admin is authenticated
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to approve admin');
+  }
+
+  return response.json();
+}
+
+
 
 export default api
