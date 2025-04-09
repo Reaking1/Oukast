@@ -4,9 +4,9 @@ import Home from './home section/home';
 import About from './About/about';
 import Contact from './Contact/contact';
 import Header from './home section/Header';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './auth/components/ProtectedRoute';
 import EventPage from './Dash/Events/EventPage';
-import Login from './Dash/Login/Login';
+import Login from './auth/pages/Login';
 import SuperAdminDashboard from './Dash/SuperAdmin/SuperAdmin-Dasboard';
 import AdminDashboard from './Dash/Admin/Admin-Dashboard';
 

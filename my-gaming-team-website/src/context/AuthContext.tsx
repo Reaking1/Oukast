@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       localStorage.setItem('authToken', token);
       localStorage.setItem('userRole', role);
+      console.log('Token saved:', localStorage.getItem('authToken'));
+
 
       toast.success("Logged in successfully!");
     } catch (error) {

@@ -4,11 +4,14 @@ export interface LoginCredentials {
   }
   
   export interface Admin {
-    id: string;
+    _id: string; // <-- This matches the backend!
     name: string;
     surname: string;
     email: string;
     role: string;
-    dateOfBirth: string; // Optional timestamp
+    dateOfBirth: string;
+    isApproved: boolean;
+    createdAt?: string;
+    updatedAt?: string;
   }
   
