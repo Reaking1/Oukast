@@ -32,6 +32,11 @@ api.interceptors.request.use(
 
 //Auth API endpoints
 export const AuthAPI = {
+
+
+  /**
+   * Logs in the admin
+   */
   login: async (credentials: LoginCredentials) => {
     console.log("🟠 [AuthAPI.login] Sending login request", credentials);
     try {
@@ -44,26 +49,45 @@ export const AuthAPI = {
     }
   },
     
+   /**
+   * Logs out the admin
+   */
 
   logout: () => {
     localStorage.removeItem('authToken'); // Clear Token\
     return Promise.resolve();
   },
+
+  /**
+   * Fetches the currently logged-in regular admin's profile
+   */
   fetchCurrentAdmin: async () => {
     //First, try fetching from /admins
     try {
       const response = await api.get<Admin>('/admins/me');
       return response.data;
     } catch (error) {
-      try {
-        //If the first request fails, try fecthing from /super-admins
-        const response = await api.get<Admin>('/super-admins/me');
-        return response.data;
-      } catch (error) {
-        throw new Error('Failed to fetch current admin')
-      }
+    console.error("❌ [AuthAPI.fetchCurrentAdmin] Error:", error);
+    throw error;
     }
-  }, // Fetch details of logged-in admin
+  },
+
+   /**
+   * Fetches the currently logged-in super admin's profile
+   */
+
+   fetchSuperAdmin: async () => {
+    try {
+      const response = await api.get<Admin>("/admins/super-admins/me");
+      return response.data
+    } catch (error) {
+      console.error("❌ [AuthAPI.fetchSuperAdmin] Error:", error);
+      throw error;
+    }
+   }
+
+
+
 
 };
 

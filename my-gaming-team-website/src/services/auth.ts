@@ -45,5 +45,43 @@ export const authService = {
     } catch (error) {
       console.error("🔴 Logout failed:", error);
     }
-   }
+   },
+
+
+
+   fetchCurrentAdmin: async (): Promise<Admin> => {
+    const token = localStorage.getItem("authToken");
+
+    if(!token) {
+      throw new Error("No auth token found");
+    }
+
+
+    try {
+      return await AuthAPI.fetchCurrentAdmin()
+    } catch (adminError) {
+      console.warn("Admin profile fetch failed. Trying super admin route...")
+    }
+
+    try {
+     return await AuthAPI.fetchSuperAdmin()
+    } catch (superAdminError) {
+      console.error("Super admin profile fetch failed:", superAdminError);
+      throw new Error("Failed to fetch current admin profile")
+    }
+   },
+
+/**
+   * Checks if the user is authenticated.
+   * @returns true if a valid token and role exist
+   */
+
+isAuthenticated: (): boolean => {
+  const token = localStorage.getItem("authToken");
+  const role = localStorage.getItem("userRole");
+
+
+  return Boolean(token && role);
+}
+
 }
