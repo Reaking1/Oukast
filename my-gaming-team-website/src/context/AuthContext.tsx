@@ -1,4 +1,4 @@
-import { AuthService } from '../services/auth';
+import { authService } from '../services/auth';
 import { Admin } from '../Types/Auth';
 import { createContext, useState, useEffect, ReactNode } from 'react';
 
@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (email: string, password: string): Promise<void> => {
     try {
-      const {token, role} = await AuthService.login(email,password);
-      const user = await AuthService.fetchCurrentAdmin();
+      const {token, admin.role} = await authService.login(email,password);
+      const user = await authService.fetchCurrentAdmin();
 
       setAuthState({
         isAuthenticated: true,
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleLogout = () => {
-    AuthService.logout();
+    authService.logout();
     setAuthState({ isAuthenticated: false, user: null, token: ""});
     localStorage.removeItem("userRole");
     toast.info("logged out successfully.");
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const role = localStorage.getItem("userRole")
       if(token && role) {
         try {
-         const user = await AuthService.fetchCurrentAdmin();
+         const user = await authService.fetchCurrentAdmin();
          setAuthState({isAuthenticated: true, user, token}) 
         } catch (error) {
           console.error("Failed to fetch user profile:", error)
