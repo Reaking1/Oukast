@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (email: string, password: string): Promise<void> => {
     try {
-      const {token, admin.role} = await authService.login(email,password);
+      const {token, admin} = await authService.login(email,password);
       const user = await authService.fetchCurrentAdmin();
 
       setAuthState({
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       localStorage.setItem('authToken', token);
-      localStorage.setItem('userRole', role);
+      localStorage.setItem('userRole', admin.role);
       console.log('Token saved:', localStorage.getItem('authToken'));
 
 

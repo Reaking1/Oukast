@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../auth/hooks/useAuth";
+import {useAuth }from "../auth/hooks/useAuth";
 import gsap from "gsap";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
