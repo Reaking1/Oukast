@@ -41,6 +41,12 @@ export const AuthAPI = {
     console.log("🟠 [AuthAPI.login] Sending login request", credentials);
     try {
       const response = await api.post<{token: string; admin: Admin}>('/auth/login', credentials);
+      const {token} = response.data;
+
+      if(!token) throw new Error("Ivaild login response from server");
+
+       // 🔥 Store token
+       localStorage.setItem('authToken', token);
       console.log("✅ [AuthAPI.login] Login successful. Response:", response.data);
       return response;
     } catch (error) {
