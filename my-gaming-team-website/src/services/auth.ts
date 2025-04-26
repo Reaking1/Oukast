@@ -23,7 +23,7 @@ export const authService = {
       }
 
          // Save token & role to localStorage
-         localStorage.setItem("authToken", token);
+         localStorage.setItem('authToken', token);
          localStorage.setItem("userRole", admin.role);
 
          return {token, admin}
