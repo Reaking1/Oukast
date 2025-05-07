@@ -15,18 +15,21 @@ export const authService = {
   login: async (email: string, password: string): Promise<{token: string, admin: Admin}> => {
     try {
       const credentials: LoginCredentials = {email,password};
+
       const response = await AuthAPI.login(credentials);
-      const {token,admin} = response.data;
-      
-      if(!admin || !admin.role || !token) {
+
+      const {accessToken, user} = response.data;
+   const admin = user
+    
+      if(!admin || !accessToken) {
         throw new Error("Invalid login response from server.")
       }
 
          // Save token & role to localStorage
-         localStorage.setItem('authToken', token);
+         localStorage.setItem('authToken', accessToken);
          localStorage.setItem("userRole", admin.role);
 
-         return {token, admin}
+         return {token: accessToken, admin}
     } catch (error) {
       console.error("🔴 Login failed:", error);
       throw new Error("Invalid credentials or server error.");

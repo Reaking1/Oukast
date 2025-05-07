@@ -40,13 +40,13 @@ export const AuthAPI = {
   login: async (credentials: LoginCredentials) => {
     console.log("🟠 [AuthAPI.login] Sending login request", credentials);
     try {
-      const response = await api.post<{token: string; admin: Admin}>('/auth/login', credentials);
-      const {token} = response.data;
+      const response = await api.post<{accessToken: string; user: Admin}>('/auth/login', credentials);
+      const {accessToken} = response.data;
 
-      if(!token) throw new Error("Ivaild login response from server");
+      if(!accessToken) throw new Error("Ivaild login response from server");
 
        // 🔥 Store token
-       localStorage.setItem('authToken', token);
+       localStorage.setItem('authToken', accessToken);
       console.log("✅ [AuthAPI.login] Login successful. Response:", response.data);
       return response;
     } catch (error) {
