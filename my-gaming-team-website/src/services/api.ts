@@ -128,6 +128,13 @@ export async function approveAdmin(adminId: string) {
   return response
 }
 
+const API = {
+  AuthAPI,
+  EventAPI,
+  AdminAPI,
+  approveAdmin
+}
+
 
 
 export default api
