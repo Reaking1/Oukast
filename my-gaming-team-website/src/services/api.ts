@@ -8,7 +8,7 @@ const BASE_URL ='http://localhost:5000';
 
 
 //Axios instance with defualt settings
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -17,7 +17,8 @@ const api = axios.create({
 
 
 //Attach token to every request if available
-api.interceptors.request.use(
+
+axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken'); 
     console.log("Stored Token:", localStorage.getItem("authToken"));
@@ -40,7 +41,7 @@ export const AuthAPI = {
   login: async (credentials: LoginCredentials) => {
     console.log("🟠 [AuthAPI.login] Sending login request", credentials);
     try {
-      const response = await api.post<{accessToken: string; user: Admin}>('/auth/login', credentials);
+      const response = await axiosInstance.post<{accessToken: string; user: Admin}>('/auth/login', credentials);
       const {accessToken} = response.data;
 
       if(!accessToken) throw new Error("Ivaild login response from server");
@@ -70,7 +71,7 @@ export const AuthAPI = {
   fetchCurrentAdmin: async () => {
     //First, try fetching from /admins
     try {
-      const response = await api.get<Admin>('/admins/me');
+      const response = await axiosInstance.get<Admin>('/admins/me');
       return response.data;
     } catch (error) {
     console.error("❌ [AuthAPI.fetchCurrentAdmin] Error:", error);
@@ -84,7 +85,7 @@ export const AuthAPI = {
 
    fetchSuperAdmin: async () => {
     try {
-      const response = await api.get<Admin>("/admins/super-admins/me");
+      const response = await axiosInstance.get<Admin>("/admins/super-admins/me");
       return response.data
     } catch (error) {
       console.error("❌ [AuthAPI.fetchSuperAdmin] Error:", error);
@@ -100,41 +101,41 @@ export const AuthAPI = {
 
 //Event Api endpoints
 export const EventAPI = {
-  getAllEvents: () => api.get<EventData[]>('/events'),
+  getAllEvents: () => axiosInstance.get<EventData[]>('/events'),
   createEvent: (eventData: CreateEventData ) =>
-    api.post<EventData>('/events', eventData, {
+    axiosInstance.post<EventData>('/events', eventData, {
       headers: { 'Content-Type': 'multipart/form-data'}, //For uploading files
     }),
 
     updateEvent: (id: string, eventData: EventUpdateData) => 
-      api.put<EventData>(`/events/${id}`, eventData, {
+      axiosInstance.put<EventData>(`/events/${id}`, eventData, {
         headers: {'Content-Type': 'multipart/form-data'},
       }),
-      deleteEvent:(id: string) => api.delete<void>(`/events/${id}`),
+      deleteEvent:(id: string) => axiosInstance.delete<void>(`/events/${id}`),
 };
 
 
 //Admins API endpoints
 export const AdminAPI = {
-  getAllAdmins: () => api.get<Admin[]>('/admins'),
-  createAdmin: (adminData: AdminData) => api.post<Admin>('/admins', adminData),
-  updateAdmin: (id: string, adminData: UpdateAdminData) => api.put<Admin>(`/admins/${id}`, adminData),
-  deleteAdmin: (id: string) => api.delete<void>(`/admins/${id}`),
+  getAllAdmins: () =>axiosInstance.get<Admin[]>('/admins'),
+  createAdmin: (adminData: AdminData) =>axiosInstance.post<Admin>('/admins', adminData),
+  updateAdmin: (id: string, adminData: UpdateAdminData) => axiosInstance.put<Admin>(`/admins/${id}`, adminData),
+  deleteAdmin: (id: string) =>axiosInstance.delete<void>(`/admins/${id}`),
 };
 
 export async function approveAdmin(adminId: string) {
- const response = await api.patch(`admins/approve/${adminId}`)
+ const response = await axiosInstance.patch(`admins/approve/${adminId}`)
 
   return response
 }
 
-const API = {
-  AuthAPI,
-  EventAPI,
-  AdminAPI,
-  approveAdmin
-}
+//const API = {
+ // AuthAPI,
+ // EventAPI,
+ // AdminAPI,
+  //approveAdmin
+//}
 
 
 
-export default api
+export default axiosInstance
