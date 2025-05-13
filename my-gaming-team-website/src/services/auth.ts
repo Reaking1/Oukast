@@ -87,4 +87,5 @@ isAuthenticated: (): boolean => {
   return Boolean(token && role);
 }
 
+
 }

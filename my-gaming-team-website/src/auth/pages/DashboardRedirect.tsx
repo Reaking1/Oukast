@@ -16,13 +16,13 @@ const DashboardRedirect: React.FC = () => {
         if(loading) return;
         if(!isAuthenticated || !currentAdmin) {
             navigate("/login");
-            return;
+            return; 
         }
 
         if(currentAdmin.role === "super-admin") {
-            navigate("/super-admin/dashboard");
+            navigate("/super-admin/me");
         } else if (currentAdmin.role === "admin") {
-            navigate("/admin/dashboard");
+            navigate("/admin/me");
         } else {
             console.warn("Unknow role, redirecting to login");
             navigate("/login");

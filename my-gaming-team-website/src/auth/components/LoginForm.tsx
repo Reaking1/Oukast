@@ -7,12 +7,12 @@ import { LoginCredentials } from "@/Types/Auth";
 
 
 const LoginForm: React.FC = () => {
-    const {login, loading} = useAuth();
+    const {login, loading} = useAuth(); 
     const navigate = useNavigate();
 
 
     const [credentials, setCredentials] = useState<LoginCredentials>({
-        email: "",
+        email: "", 
         password: "",
     });
     const [error,setError] = useState<string | null>(null);

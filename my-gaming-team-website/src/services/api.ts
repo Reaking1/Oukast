@@ -69,13 +69,17 @@ export const AuthAPI = {
    * Fetches the currently logged-in regular admin's profile
    */
   fetchCurrentAdmin: async () => {
-    //First, try fetching from /admins
+    const token = localStorage.getItem("authToken");
     try {
-      const response = await axiosInstance.get<Admin>('/admins/me');
+      const response = await axiosInstance.get<Admin>("/admins/me", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
       return response.data;
     } catch (error) {
-    console.error("❌ [AuthAPI.fetchCurrentAdmin] Error:", error);
-    throw error;
+      console.error("❌ [AuthAPI.fetchCurrentAdmin] Error:", error);
+      throw error;
     }
   },
 
@@ -84,12 +88,17 @@ export const AuthAPI = {
    */
 
    fetchSuperAdmin: async () => {
+    const token = localStorage.getItem("authToken");
     try {
-      const response = await axiosInstance.get<Admin>("/admins/super-admins/me");
+      const response = await axiosInstance.get<Admin>("/admins/super-admins/me", {
+           headers: {
+            Authorization: `Bearer ${token}`,
+           },
+      });
       return response.data
     } catch (error) {
       console.error("❌ [AuthAPI.fetchSuperAdmin] Error:", error);
-      throw error;
+    throw error;
     }
    }
 

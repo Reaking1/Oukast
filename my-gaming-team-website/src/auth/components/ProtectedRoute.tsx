@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
     children: JSX.Element;
     allowedRoles?: string[];
 
-}
+} 
 
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children, allowedRoles}) => {
