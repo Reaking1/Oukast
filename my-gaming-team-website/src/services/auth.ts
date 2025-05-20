@@ -64,6 +64,8 @@ export const authService = {
       return await AuthAPI.fetchCurrentAdmin()
     } catch (adminError) {
       console.warn("Admin profile fetch failed. Trying super admin route...")
+      console.log('Sending token in header:', token);
+
     }
 
     try {
@@ -71,6 +73,8 @@ export const authService = {
     } catch (superAdminError) {
       console.error("Super admin profile fetch failed:", superAdminError);
       throw new Error("Failed to fetch current admin profile")
+      console.log('Sending token in header:', token);
+
     }
    },
 

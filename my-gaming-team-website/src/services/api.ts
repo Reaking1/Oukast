@@ -70,12 +70,16 @@ export const AuthAPI = {
    */
   fetchCurrentAdmin: async () => {
     const token = localStorage.getItem("authToken");
+      console.log("🔐 [fetchCurrentAdmin] Token:", token);
     try {
       const response = await axiosInstance.get<Admin>("/admins/me", {
         headers: {
           Authorization: `Bearer ${token}`
         },
       });
+        // ✅ Log what comes back
+    console.log("✅ [fetchCurrentAdmin] Response data:", response.data);
+
       return response.data;
     } catch (error) {
       console.error("❌ [AuthAPI.fetchCurrentAdmin] Error:", error);
@@ -89,12 +93,16 @@ export const AuthAPI = {
 
    fetchSuperAdmin: async () => {
     const token = localStorage.getItem("authToken");
+     console.log("🔐 [fetchSuperAdmin] Token:", token);
     try {
       const response = await axiosInstance.get<Admin>("/admins/super-admins/me", {
            headers: {
             Authorization: `Bearer ${token}`,
            },
       });
+      
+    console.log("✅ [fetchSuperAdmin] Response data:", response.data);
+    
       return response.data
     } catch (error) {
       console.error("❌ [AuthAPI.fetchSuperAdmin] Error:", error);
