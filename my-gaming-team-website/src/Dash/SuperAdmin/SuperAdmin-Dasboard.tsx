@@ -4,7 +4,7 @@ import { FullAdmin } from '../../Types/Admin';
 import React, { useEffect, useState } from 'react';
 
 const SuperAdminDashboard: React.FC = () => {
-  const [admins, setAdmins] = useState<FullAdmin[]>([]);
+  const [admins, setAdmins] = useState<FullAdmin[]>([]); 
 
   const fecthAdmins = async () => {
     try {
