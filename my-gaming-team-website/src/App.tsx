@@ -29,21 +29,16 @@ const App: React.FC = () => {
           }
           
           />
-          <Route path='/admin-dashboard' element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-          
-          />
-          <Route path='/super-admin-dashboard' element={
-            <ProtectedRoute allowedRoles={['super-admin']}>
-              <SuperAdminDashboard />
-            </ProtectedRoute>
-          }
-          
-          />
-          
+      <Route path='/super-admin/*' element={
+        <ProtectedRoute allowedRoles={['super-admin']}>
+          <SuperAdminDashboard />
+        </ProtectedRoute>
+      } />
+            <Route path='/admin/*' element={
+              <ProtectedRoute  allowedRoles={['admins']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />  
          
           
         </Routes>
