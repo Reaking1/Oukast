@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import './Home.css';
+
 import MK1 from '../assets/thumb-1920-1331503.jpg'
 import FC24 from '../assets/fc-24-gameplay-demo.jpg'
 import Apex from '../assets/1078124.jpg'

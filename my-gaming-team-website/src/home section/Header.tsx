@@ -2,30 +2,39 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {useAuth }from "../auth/hooks/useAuth";
 import gsap from "gsap";
-import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGhost, faX } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 
 const Header: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const headerRef =useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTipsDropdownVisible, setTipsDropdownVisible] = useState(false);
   const dropdownRef = useRef<HTMLUListElement | null>(null);
 
   // GSAP Header Animation on Scroll
   useEffect(() => {
-    const header = document.querySelector(".header") as HTMLElement;
-    const handleScroll = () => {
-      gsap.to(header, {
-        duration: 0.3,
-        backgroundColor: window.scrollY > 50 ? "rgba(15, 30, 45, 0.9)" : "rgba(15, 30, 45, 0.8)",
-      });
-    };
+   let lastScrollY = window.scrollY;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+   const updateHeader = () => {
+    const currentScrollY = window.scrollY;
+    const header = headerRef.current;
+
+    if(!header) return;
+
+    if(currentScrollY > lastScrollY) {
+      gsap.to(header, {y: "-100%", duration: 0.4});
+    } else {
+      gsap.to(header, {y: "0%", duration: 0.4});
+    }
+
+    lastScrollY = currentScrollY;
+   }
+
+    window.addEventListener("scroll", updateHeader);
+    return () => window.removeEventListener("scroll", updateHeader);
   }, []);
 
   // Tips Dropdown Animation using useRef
@@ -46,7 +55,7 @@ const Header: React.FC = () => {
   // Toggle Modern Menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    gsap.to(".modern-menu", { duration: 0.4, x: menuOpen ? "100%" : "0%" });
+    gsap.to(".mobile-menu", { duration: 0.4, x: menuOpen ? "100%" : "0%" });
   };
 
   // Handle Logout
@@ -56,54 +65,58 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="header">
-      <nav className="navbar">
-        <Link className="navbar-brand" to="/">Warriors Of Heritage</Link>
-        <ul className="navbar-nav">
-          <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
+    <header ref={headerRef} className="fixed w-full top-0 left-0 bg-white border shadow-lg rounded-md overflow-hidden opacity-100 transition-all duration-300">
+     <nav className="flex justify-between items-center px-6 py-4">
+      <Link to="/" className="text-black font-bold text-xl tracking-wide">Warrios Of Heritage</Link>
+      <ul className="hidden md:flex gap-8 text-black font-medium">
+        <li><Link to="/">Home</Link></li>
+        <li
+        onMouseEnter={handleTipsMouseEnter}
+        onMouseLeave={handleTipsMouseLeave}
+        className="relative cursor-pointer"
+        >
+          <span>Tips</span>
+          {isTipsDropdownVisible && (
+            <ul 
+            ref={dropdownRef}
+            className="absolute left-0 top-full w-56 bg-white border shadow-lg rounded-md overflow-hidden opacity-0 transition-all duration-300">
+   {[
+    { path: "/tips/zenless", name: "Zenless Zone Zero"},
+    {path: "/tips/Apexlegends", name: "Apex Legends"},
+    {path: "/tips/Delta force", name: "Delta Force"},
+    {path: "/tips/fiber", name: "Getting fibre"}
+   ].map((game, index) => (
+    <li key={index} className="hover:bg-gray-100 px-4 py-2 text-sm">
+      <Link to={game.path}>{game.name}</Link>
+    </li>
+   ))}
+            </ul>
+          )}
+        </li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+        <li><Link to="/upcomingsessions">Upcoming Events</Link></li>
+      </ul>
 
-          {/* Tips Dropdown */}
-          <li className="nav-item" onMouseEnter={handleTipsMouseEnter} onMouseLeave={handleTipsMouseLeave}>
-            <span className="nav-link">Tips</span>
-            {isTipsDropdownVisible && (
-              <ul className="dropdown-menu" ref={dropdownRef}>
-                {[
-                  { path: "/tips/zenless", name: "Zenless Zone Zero" },
-                  { path: "/tips/fortnite", name: "Fortnite" }, // Fixed typo
-                  { path: "/tips/apex", name: "Apex Legends" },
-                  { path: "/tips/mk", name: "Mortal Kombat" },
-                  { path: "/tips/delta", name: "Delta Force" }, // Fixed typo
-                ].map((game, index) => (
-                  <li key={index}>
-                    <Link to={game.path}>{game.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-
-          <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/upcomingsessions">Upcoming Events</Link></li>
-        </ul>
-
-        {/* Modern Menu Icon */}
-        <div className="menu-icon" onClick={toggleMenu}>
-          <FontAwesomeIcon icon={faGhost} size="1x" color="white"/>
-        </div>
-      </nav>
-
-      {/* Modern Sliding Menu */}
-      <div className={`modern-menu ${menuOpen ? "open" : ""}`}>
-        <button className="close-menu" onClick={toggleMenu}>
-          <FontAwesomeIcon icon={faX} size="1x" color="white"/>
+      {/** Hamburger Icon */}
+      <button onClick={toggleMenu} className="md:hidden text-black">
+        <FontAwesomeIcon icon={faBars} size='lg' />
+      </button>
+</nav>
+      {/** Moblie Sliding Menu */}
+      <div className="moblie-menu fixed top-0 right-0 h-screen w-64 bg-black text-white flex flex-col gap-6 p-6 transform translate-x-full md:hidden">
+        <button onClick={toggleMenu} className="self-end text-white">
+          <FontAwesomeIcon icon={faXmark} size="lg" />
         </button>
+
         {!isAuthenticated ? (
-          <Link to="/login">Log In</Link>
-        ) : (
+          <Link to="/login" className="hover:text-gray-400">Log In</Link>
+        ): (
           <>
-            <Link to="/admin">Admin Dashboard</Link>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
+          <Link to="/admin" className="hover:text-gray-400">Admin Dashboard</Link>
+          <button onClick={handleLogout} className="mt-4 bg-red-500 px-4 py-2 rounded hover:bg-red-600">
+            Logout
+          </button>
           </>
         )}
       </div>

@@ -21,7 +21,7 @@
     "@tailwindcss/cli": "^4.1.4",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
-    "gsap": "^3.12.5",
+    "gsap": "^3.13.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
@@ -34,6 +34,7 @@
     "socket.io-client": "^4.8.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.7",
     "@types/axios": "^0.14.0",
     "@types/leaflet": "^1.9.12",
     "@types/node": "^22.1.0",
