@@ -1,7 +1,9 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
+@import "tailwindcss";
 
 /* You can now add your own custom styles below */
 body {
   font-family: 'Inter', sans-serif;
+  background-color: aquamarine;
 }
