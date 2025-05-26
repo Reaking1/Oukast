@@ -2,8 +2,38 @@
 @import "tailwindcss/utilities";
 @import "tailwindcss";
 
-/* You can now add your own custom styles below */
+/* Set up a soft purple background and black text for the body */
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: aquamarine;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #ba75fe 25%,
+    #ffffff 50%,
+    #ba75fe 75%,
+    #ffffff 100%
+  );
+  color: #111111;
+}
+
+.link-rainbow {
+  position: relative;
+}
+
+.link-rainbow::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.link-rainbow:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
 }

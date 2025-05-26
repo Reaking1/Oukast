@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/hooks/useAuth";
 import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import '../index.css'
 
 const Header: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -64,11 +65,11 @@ const Header: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full bg-white border-b shadow-md z-50 transition-transform duration-300 ${
-        scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
+      className={`fixed top-0 left-0 w-full bg-gray-300 border-b shadow-md z-50 transition-transform duration-300 font-ancizar ${
+  scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <nav className="flex justify-between items-center px-6 py-4">
+      <nav className="flex justify-between items-center  px-6 py-4">
         <Link
           to="/"
           className="text-black font-bold text-xl tracking-wide uppercase"
@@ -78,13 +79,13 @@ const Header: React.FC = () => {
 
         {/* Desktop Nav */}
         <ul className="hidden md:flex gap-8 text-black font-medium items-center">
-          <li><Link to="/" className="hover:underline">Home</Link></li>
+          <li><Link to="/" className="link-rainbow">Home</Link></li>
           <li
             onMouseEnter={handleTipsMouseEnter}
             onMouseLeave={handleTipsMouseLeave}
             className="relative cursor-pointer"
           >
-            <span className="hover:underline">Tips</span>
+            <span className="link-rainbow">Tips</span>
             <ul
               ref={dropdownRef}
               className="absolute left-0 top-full mt-2 w-56 bg-white border shadow-lg rounded-md overflow-hidden z-50 transition-all duration-300"
@@ -102,13 +103,13 @@ const Header: React.FC = () => {
               ))}
             </ul>
           </li>
-          <li><Link to="/about" className="hover:underline">About</Link></li>
-          <li><Link to="/contact" className="hover:underline">Contact</Link></li>
-          <li><Link to="/upcomingsessions" className="hover:underline">Upcoming Events</Link></li>
+          <li><Link to="/about" className="link-rainbow">About</Link></li>
+          <li><Link to="/contact" className="link-rainbow">Contact</Link></li>
+          <li><Link to="/upcomingsessions" className="link-rainbow">Upcoming Events</Link></li>
         </ul>
 
         {/* Mobile Menu Button */}
-        <button onClick={toggleMenu} className="md:hidden z-50 text-white">
+        <button onClick={toggleMenu} className="z-50 text-black text-2xl p-2">
           <FontAwesomeIcon icon={isMenuOpen ? faXmark : faBars} size="lg" />
         </button>
       </nav>
@@ -123,25 +124,23 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`mobile-menu fixed top-0 right-0 h-screen w-64 bg-white p-6 shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`mobile-menu fixed top-0 right-0  w-64 bg-gray-300 p-6 shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <ul className="flex flex-col gap-4 text-black font-medium mt-12">
-          <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
-          <li><Link to="/tips/zenless" onClick={toggleMenu}>Zenless Zone Zero</Link></li>
-          <li><Link to="/tips/Apexlegends" onClick={toggleMenu}>Apex Legends</Link></li>
-          <li><Link to="/tips/Delta force" onClick={toggleMenu}>Delta Force</Link></li>
-          <li><Link to="/tips/fiber" onClick={toggleMenu}>Getting fibre</Link></li>
-          <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
-          <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
-          <li><Link to="/upcomingsessions" onClick={toggleMenu}>Upcoming Events</Link></li>
+        <ul className="flex flex-col gap-6 text-black font-medium mt-24">
 
           {!isAuthenticated ? (
-            <li><Link to="/login" onClick={toggleMenu}>Log In</Link></li>
+            <li><Link to="/login" onClick={toggleMenu} className="flex items-center gap-2 text-lg px-4 py-2 rounded hover:bg-white/50 transition duration-200">
+              <FontAwesomeIcon icon={faUser} className="text-black" />
+    
+           <span className="text-black">Log In</span>
+              
+              </Link></li>
           ) : (
             <>
-              <li><Link to="/admin" onClick={toggleMenu}>Admin Dashboard</Link></li>
+                  {/* Copy the login class */}
+              <li><Link to="/admin" onClick={toggleMenu} className="text-lg hover:underline">Admin Dashboard</Link></li>
               <li>
                 <button
                   onClick={() => {
