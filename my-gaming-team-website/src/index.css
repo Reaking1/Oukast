@@ -13,6 +13,7 @@ body {
     #ffffff 100%
   );
   color: #111111;
+   overflow-x: hidden;
 }
 
 .link-rainbow {
