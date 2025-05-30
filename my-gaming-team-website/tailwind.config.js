@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        ancizar:['Ancizar Sans', 'sans-serif']
+        ancizar:['Ancizar Sans', 'sans-serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
       },
     },
   },
