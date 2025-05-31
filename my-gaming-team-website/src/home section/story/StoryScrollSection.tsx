@@ -24,7 +24,7 @@ const storyBlocks = [
   },
   {
     text: "Having the highest lag well we are practicing our aim",
-    img: "/assets/Screenshots/Delta force-13.jpeg",
+    img: "/assets/Screenshots/Delta Force-13.jpeg",
     side: "right",
   },
 

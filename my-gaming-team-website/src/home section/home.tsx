@@ -1,10 +1,10 @@
 // Home.tsx
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Delta from "../assets/DELTA2.jpeg";
-import Apex1 from "../assets/APEX.jpg";
-import Zen from "../assets/ZEN.jpg";
-import heroImg from "../assets/logo.png";
+import Delta from "../../public/assets/DELTA2.jpeg";
+import Apex1 from "../../public/assets/APEX.jpg";
+import Zen from "../../public/assets/ZEN4.jpg";
+import heroImg from "../../public/assets/ZEN3.png";
 import StoryScrollSection from "./story/StoryScrollSection";
 
 const backgroundImages = [heroImg, Delta, Apex1, Zen];
@@ -14,22 +14,28 @@ const Home: React.FC = () => {
   const bgRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    const timeline = gsap.timeline({ repeat: -1 });
+  const timeline = gsap.timeline({ repeat: -1 });
 
-    bgRefs.current.forEach((bg, index) => {
-      timeline.to(
-        bg,
-        { opacity: 1, duration: 1.5, ease: "power2.inOut" },
-        index * 4
-      );
-      timeline.to(
-        bg,
-        { opacity: 0, duration: 1.5, ease: "power2.inOut" },
-        index * 4 + 2.5
-      );
-    });
+  backgroundImages.forEach((_, index) => {
+    const current = bgRefs.current[index];
+    const next = bgRefs.current[(index + 1) % backgroundImages.length];
+
+    if (current && next) {
+      timeline
+        .to(next, {
+          opacity: 1,
+          duration: 1.5,
+          ease: "power2.inOut",
+        }, ">") // starts as soon as the last animation finishes
+        .to(current, {
+          opacity: 0,
+          duration: 1.5,
+          ease: "power2.inOut",
+        }, "<"); // fade out at the same time as fade in
+    }
+  });
   }, []);
-
+  
   return (
     <div className="flex flex-col w-full">
     <div
