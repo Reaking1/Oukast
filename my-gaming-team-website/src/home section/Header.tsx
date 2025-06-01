@@ -65,7 +65,7 @@ const Header: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full bg-gray-300 border-b shadow-md z-50 transition-transform duration-300 font-ancizar ${
+      className={`fixed top-0 left-0 w-full bg-gray-300 border-b shadow-md z-50 transition-transform duration-300 font-unbuntu ${
   scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
       }`}
     >

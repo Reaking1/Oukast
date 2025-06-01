@@ -5,12 +5,12 @@
 /* Set up a soft purple background and black text for the body */
 body {
   background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #8c70a8 25%,
-    #ffffff 50%,
-    #8c70a8 75%,
-    #ffffff 100%
+135deg,
+    #8c70a8 0%,
+    #bfa2d8 25%,
+    #8c70a8 50%,
+    #bfa2d8 75%,
+    #8c70a8 100%
   );
   color: #111111;
    overflow-x: hidden;
