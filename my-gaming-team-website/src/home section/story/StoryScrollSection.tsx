@@ -10,32 +10,32 @@ const storyBlocks = [
  {
     text: "Training our aim under extreme lag — because easy mode is too boring.",
     img: "/assets/Screenshots/Apex Legends-03.jpeg", // ✅ corrected
-    side: "left",
+    side: "right",
   },
   {
     text: "Randoms with stats so strange, I had to double-check",
     img: "/assets/Screenshots/Apex Legends-005.jpeg",
-    side: "right",
+    side: "left",
   },
   {
     text: "Total madness: bots on one side, sweats on the other — welcome to Delta Force",
     img: "/assets/Screenshots/Delta Force-09.jpeg",
-    side: "left",
+    side: "right",
   },
   {
     text: "Our Delta Force loadouts consistently land us in the top 5 — South Africa’s in the game",
     img: "/assets/Screenshots/Delta Force-13.jpeg",
-    side: "right",
+    side: "left",
   },
    {
     text: "Ultimate abilities? We’re going full Gooner mode in Zenless Zone Zero.",
     img: "/assets/zen less zero g.jpg",
-    side: "left",
+    side: "right",
   },
    {
     text: "Every boss in Zenless Zone Zero brought a warzone straight from hell.",
     img: "/assets/zen game 2.jpg",
-    side: "right",
+    side: "left",
   },
 
 ];
@@ -86,7 +86,7 @@ export default function StoryScrollSection() {
         });
     }, [])
     return (
-         <section className="w-full py-24 space-y-32 font-ubuntu text-[#fff] relative z-10"
+         <section className="w-full py-24 space-y-32 font-ubuntu text-[#e4dddd] relative z-10"
         >
       {storyBlocks.map((block, i) => (
        <div

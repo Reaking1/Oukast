@@ -1,20 +1,25 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
 
 /* Set up a soft purple background and black text for the body */
 body {
   background: linear-gradient(
-135deg,
-    #8c70a8 0%,
-    #bfa2d8 25%,
-    #8c70a8 50%,
-    #bfa2d8 75%,
-    #8c70a8 100%
+    135deg,
+    #3c2c52 0%,
+    #1f1b2e 25%,
+    #3c2c52 50%,
+    #1f1b2e 75%,
+    #3c2c52 100%
   );
-  color: #111111;
-   overflow-x: hidden;
+  color: #ffffff;
+  overflow-x: hidden;
 }
+
+
+
 
 .link-rainbow {
   position: relative;
