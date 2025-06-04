@@ -14,7 +14,7 @@ module.exports = {
       },
       animation: {
         orbit: "orbit 12s linear infinite",
-       'orbit-slow': 'orbit 18s linear infinite',
+        'orbit-slow': 'orbit 18s linear infinite',
         "orbit-slower": "orbit 24s linear infinite",
       },
       fontFamily: {
@@ -23,4 +23,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

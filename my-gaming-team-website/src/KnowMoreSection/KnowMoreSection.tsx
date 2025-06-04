@@ -28,19 +28,25 @@ export default function KnowMoreSection() {
       <div className="text-center mb-16 relative flex justify-center items-center h-[200px]">
         {/* Center Planet */}
         <h2 className="text-3xl md:text-5xl font-bold z-10">Know More About Us</h2>
-
         {/* Orbiting Icons */}
-        <div className="absolute w-[250px] h-[250px]">
-          <div className="absolute top-1/2 left-1/2 origin-center animate-orbit">
-            <FontAwesomeIcon icon={faTwitch} size="lg" className="text-purple-700" />
-          </div>
-          <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-slow">
-            <FontAwesomeIcon icon={faTiktok} size="lg" className="text-black" />
-          </div>
-          <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-slower">
-            <FontAwesomeIcon icon={faInstagram} size="lg" className="text-pink-500" />
-          </div>
-        </div>
+     <div className="absolute w-[300px] h-[300px]">
+  {/* Clockwise */}
+  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-cw">
+    <FontAwesomeIcon icon={faTwitch} size="2x" className="text-purple-700" />
+  </div>
+  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-cw-45">
+    <FontAwesomeIcon icon={faInstagram} size="2x" className="text-pink-500" />
+  </div>
+
+  {/* Counterclockwise */}
+  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-ccw">
+    <FontAwesomeIcon icon={faTiktok} size="2x" className="text-black" />
+  </div>
+  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-ccw-135">
+    <FontAwesomeIcon icon={faTwitch} size="2x" className="text-purple-500" />
+  </div>
+</div>
+
       </div>
             {/**Cards */}
             <div className="grid md:grid-cols-3 gap-10 px-6 md:px-20">

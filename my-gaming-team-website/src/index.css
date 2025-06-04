@@ -3,24 +3,48 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
 
-
-/* Set up a soft purple background and black text for the body */
 body {
   background: linear-gradient(
     135deg,
-    #3c2c52 0%,
-    #1f1b2e 25%,
-    #3c2c52 50%,
-    #1f1b2e 75%,
-    #3c2c52 100%
+    #db2777 0%,
+    #d946ef 25%,
+    #fb7185 50%,
+    #d946ef 75%,
+    #db2777 100%
   );
   color: #ffffff;
   overflow-x: hidden;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 
+@keyframes orbit-cw {
+  0%   { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
 
+@keyframes orbit-ccw {
+  0%   { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(-360deg) translateX(120px) rotate(360deg); }
+}
 
+/* Different angles */
+@keyframes orbit-cw-45 {
+  0%   { transform: rotate(45deg) translateX(120px) rotate(-45deg); }
+  100% { transform: rotate(405deg) translateX(120px) rotate(-405deg); }
+}
+@keyframes orbit-ccw-135 {
+  0%   { transform: rotate(135deg) translateX(120px) rotate(-135deg); }
+  100% { transform: rotate(-225deg) translateX(120px) rotate(225deg); }
+}
+
+/* Utility classes */
+.animate-orbit-cw     { animation: orbit-cw 10s linear infinite; }
+.animate-orbit-ccw    { animation: orbit-ccw 14s linear infinite; }
+.animate-orbit-cw-45  { animation: orbit-cw-45 12s linear infinite; }
+.animate-orbit-ccw-135{ animation: orbit-ccw-135 16s linear infinite; }
+
+/* Fancy hover effect */
 .link-rainbow {
   position: relative;
 }
@@ -44,7 +68,7 @@ body {
   transform: scaleX(1);
 }
 
-
+/* 3D image behavior */
 img {
   transform-style: preserve-3d;
   backface-visibility: hidden;
