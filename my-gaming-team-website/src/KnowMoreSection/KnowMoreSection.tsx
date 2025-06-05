@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faTiktok, faTwitch } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 const infoCards = [
     {
@@ -30,21 +31,44 @@ export default function KnowMoreSection() {
         <h2 className="text-3xl md:text-5xl font-bold z-10">Know More About Us</h2>
         {/* Orbiting Icons */}
      <div className="absolute w-[300px] h-[300px]">
-  {/* Clockwise */}
-  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-cw">
-    <FontAwesomeIcon icon={faTwitch} size="2x" className="text-purple-700" />
-  </div>
-  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-cw-45">
-    <FontAwesomeIcon icon={faInstagram} size="2x" className="text-pink-500" />
+ {/* Clockwise orbit layer */}
+  <div className="absolute inset-0 animate-orbit-cw">
+    {[0, 90, 180, 270].map((angle, i) => (
+      <div
+        key={`cw-${i}`}
+        className="absolute top-1/2 left-1/2"
+        style={{
+          transform: `rotate(${angle}deg) translateY(-120px) rotate(-${angle}deg)`
+        }}
+      >
+        <FontAwesomeIcon
+          icon={[faTwitch, faGamepad, faInstagram, faTiktok][i]}
+          size="2x"
+          className="text-white icon-glow"
+        />
+      </div>
+    ))}
   </div>
 
-  {/* Counterclockwise */}
-  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-ccw">
-    <FontAwesomeIcon icon={faTiktok} size="2x" className="text-black" />
+  {/* Counter-clockwise orbit layer */}
+  <div className="absolute inset-0 animate-orbit-ccw">
+    {[45, 135, 225, 315].map((angle, i) => (
+      <div
+        key={`ccw-${i}`}
+        className="absolute top-1/2 left-1/2"
+        style={{
+          transform: `rotate(${angle}deg) translateY(-90px) rotate(-${angle}deg)`
+        }}
+      >
+        <FontAwesomeIcon
+          icon={[faGamepad, faTwitch, faInstagram, faTiktok][i]}
+          size="2x"
+          className="text-white icon-glow"
+        />
+      </div>
+    ))}
   </div>
-  <div className="absolute top-1/2 left-1/2 origin-center animate-orbit-ccw-135">
-    <FontAwesomeIcon icon={faTwitch} size="2x" className="text-purple-500" />
-  </div>
+
 </div>
 
       </div>

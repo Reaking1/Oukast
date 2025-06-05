@@ -18,25 +18,30 @@ body {
 }
 
 
+/* Orbit Animations */
 @keyframes orbit-cw {
-  0%   { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes orbit-ccw {
-  0%   { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-  100% { transform: rotate(-360deg) translateX(120px) rotate(360deg); }
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
 }
 
-/* Different angles */
-@keyframes orbit-cw-45 {
-  0%   { transform: rotate(45deg) translateX(120px) rotate(-45deg); }
-  100% { transform: rotate(405deg) translateX(120px) rotate(-405deg); }
+.animate-orbit-cw {
+  animation: orbit-cw 20s linear infinite;
 }
-@keyframes orbit-ccw-135 {
-  0%   { transform: rotate(135deg) translateX(120px) rotate(-135deg); }
-  100% { transform: rotate(-225deg) translateX(120px) rotate(225deg); }
+
+.animate-orbit-ccw {
+  animation: orbit-ccw 25s linear infinite;
 }
+
+/* Glow Effect */
+.icon-glow {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
 
 /* Utility classes */
 .animate-orbit-cw     { animation: orbit-cw 10s linear infinite; }
