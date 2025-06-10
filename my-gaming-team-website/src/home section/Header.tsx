@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import '../index.css'
+import logoGif from '../../public/assets/logo.gif'
 
 const Header: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -70,11 +71,10 @@ const Header: React.FC = () => {
       }`}
     >
       <nav className="flex justify-between items-center  px-6 py-4">
-        <Link
-          to="/"
-          className="text-black font-bold text-xl tracking-wide uppercase"
-        >
-          Warriors Of Heritage
+        <Link to="/" className="flex items-center gap-2">
+       <img src={logoGif} alt="Outkast Logo" className="h-10 w-auto object-contain" />
+       <span className="text-black font-bold text-xl tracking-wide uppercase hidden sm:inline">Warriors of Heritage</span>
+      
         </Link>
 
         {/* Desktop Nav */}
