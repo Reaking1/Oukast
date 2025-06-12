@@ -114,7 +114,8 @@ export default function StoryScrollSection() {
         </div>
       ))}
 
-      {/* Overlay effects */}
+      {/*dontforget the images
+      */}
 
     </section>
     )
