@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInstagram,
   faTiktok,
-  faTwitch,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -33,12 +33,13 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
           <div className="flex space-x-4 text-2xl">
-            <a href="#" aria-label="Twitch">
-              <FontAwesomeIcon icon={faTwitch} className="hover:text-purple-400 transition" />
+            <a href="http://www.youtube.com/@Theghostking2003" aria-label="YouTube">
+              <FontAwesomeIcon icon={faYoutube} className="hover:text-purple-400 transition" />
             </a>
-            <a href="#" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@theghostking2003?is_from_webapp=1&sender_device=pc" aria-label="TikTok">
               <FontAwesomeIcon icon={faTiktok} className="hover:text-pink-400 transition" />
             </a>
+            {/* I can't find link for gram */}
             <a href="#" aria-label="Instagram">
               <FontAwesomeIcon icon={faInstagram} className="hover:text-fuchsia-400 transition" />
             </a>

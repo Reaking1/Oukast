@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 
 const infoCards = [
   {
-    img: "/assets/about.jpg",
+    img: "/assets/WhatsApp.jpg",
     text: "Learn about our mission and journey.",
     link: "/about",
   },
   {
-    img: "/assets/tips.jpg",
+    img: "/assets/stream2.jpeg",
     text: "Get pro-level tips on your favorite games.",
     link: "/tips",
   },
   {
-    img: "/assets/events.jpg",
+    img: "/assets/stream.png",
     text: "Stay updated with our latest events and tournaments.",
     link: "/events",
   },
