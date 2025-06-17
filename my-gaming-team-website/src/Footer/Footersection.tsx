@@ -16,6 +16,9 @@ export default function Footer() {
           <p className="text-sm text-gray-400">
             A gaming team & community built on skill, unity, and legacy.
           </p>
+            <p className="text-xs text-gray-500 mt-3 italic">
+        Due to complicated reasons and the rise of cyber threats, the team's location and identity will remain hidden.
+      </p>
         </div>
 
         {/* Navigation Links */}
