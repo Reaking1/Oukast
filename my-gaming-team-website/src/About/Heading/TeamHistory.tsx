@@ -6,21 +6,21 @@ import React from "react";
 const historyData = [
   {
     icon: <FontAwesomeIcon icon={faGamepad} size="xl" className="text-rose-500" />,
-    title: "The Beginning (2021)",
+    title: "The Start (2023)",
     description:
-      "Started by a tight group of gaming friends frustrated by the lack of recognition in tournaments and local communities. OutKast was born out of rebellion.",
+      "It all began in 2023 — just me, my dreams, and the struggle of grinding through the unemployment line. While coding and studying, I started building the foundation of Warriors of Heritage.",
   },
   {
     icon: <FontAwesomeIcon icon={faUser} size="xl" className="text-purple-500" />,
-    title: "The Rise (2022)",
+    title: "The Spark (2024)",
     description:
-      "With TikTok clips, custom logos, and late-night grind sessions, OutKast started gaining followers and recognition — not for wins, but for heart.",
+      "Things changed in 2024 when I met my second-in-command, Bobby. That’s when TikTok content started rolling out, and the vision became obvious — this team was more than just a side hustle.",
   },
   {
-    icon: <FontAwesomeIcon icon={faFire}  size="xl" className="text-yellow-500" />,
-    title: "Legacy Mode (2024+)",
+    icon: <FontAwesomeIcon icon={faFire} size="xl" className="text-yellow-500" />,
+    title: "Grinding for Legacy (2025+)",
     description:
-      "Today, the mission is clear — build a legacy. OutKast trains together, streams together, and competes to become legends known beyond ranks.",
+      "Now in 2025, we’re all-in. Grinding daily on TikTok, ranking up in Apex, and welcoming new members. Warriors of Heritage is growing stronger with every post, every match, every day.",
   },
 ];
 const TeamHistory: React.FC = () =>  {
