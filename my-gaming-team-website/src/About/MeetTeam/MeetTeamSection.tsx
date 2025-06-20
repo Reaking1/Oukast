@@ -5,38 +5,53 @@ const teamMembers = [
     name: "Kaos",
     role: "Founder / Captain",
     game: "Apex Legends, ZZZ, Delta Force, Fortnite",
-    image: "/images/kaos.jpg",
+    image: "/assets/Me.jpg",
     quote: "Built from lag, trained by pain.",
   },
   {
     name: "DayDreamz",
     role: "Health and Support",
     game: "Apex Legends, Fortnite",
-    image: "/images/grim.jpg",
+    image: "/assets/Bobby.jpg",
     quote: "I am the chilled guy of the squad here.",
   },
   {
     name: "Batman",
     role: "Attacker",
     game: "Apex Legends",
-    image: "/images/phantom.jpg",
+    image: "/assets/Batman.jpg",
     quote: "One shot, one win.",
   },
     {
     name: "Juicy",
     role: "Good luck charm",
     game: "Apex Legends",
-    image: "/images/phantom.jpg",
+    image: "/assets/Juicy.jpg",
     quote: "I am a newbie in this agme but bring the vibes",
   },
     {
     name: "Zexxy",
     role: "Attacker and hunter",
     game: "Apex Legends",
-    image: "/images/phantom.jpg",
+    image: "/assets/Zexxy.jpg",
     quote: "Playing on a potato PC but I am still better",
   },
   // Add more members here as needed
+   {
+    name: "Falcon",
+    role: "Attacker and beam god",
+    game: "Apex Legends, Delta Force",
+    image: "/assets/falcon.jpg",
+    quote: "I am on off but i am still the Goat",
+  },
+   {
+    name: "Todo",
+    role: "Just the cat guy of the squad",
+    game: "Apex Legends, Roblox, any scary game",
+    image: "/assets/Todo.jpg",
+    quote: "I am here for vibes and stuff",
+  },
+
 ];
 
 const MeetTheTeam: React.FC = () => {

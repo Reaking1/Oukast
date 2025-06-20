@@ -8,7 +8,7 @@ const FounderSection: React.FC = () => {
         alt="Founder of OutKast Gaming"
         className="w-40 h-40 rounded-full mx-auto mb-6 shadow-lg object-cover"
       />
-      <h2 className="text-3xl md:text-4xl font-bold ">Founder of OutKast Gaming Team</h2>
+      <h2 className="text-3xl md:text-4xl font-bold ">Founder of Warrios Of Heritage Team</h2>
     </section>
   );
 };
