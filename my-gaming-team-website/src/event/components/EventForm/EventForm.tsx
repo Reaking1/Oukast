@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './EventForm.css';
 import { toast } from 'react-toastify';
-import { EventService } from '../../services/eventService';
-import { CreateEventData, EventData, EventUpdateData } from '../../Types/Event';
+import { EventService } from '../../../services/eventService';
+import { CreateEventData, EventData, EventUpdateData } from '../../../Types/Event';
 
 
 
