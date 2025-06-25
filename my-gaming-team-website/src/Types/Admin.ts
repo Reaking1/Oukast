@@ -28,4 +28,4 @@ export interface UpdateAdminData {
   role?: string;
   dateOfBirth?: string;
   isApproved?: boolean;
-}
+} 
