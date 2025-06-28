@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { EventService } from "../../services/eventService";
-import { EventData } from "../../Types/Event"; // Import renamed type
+import { EventService } from "../../../services/eventService";
+import { EventData } from "../../../Types/Event"; // Import renamed type
 import { toast } from "react-toastify";
 
 const useFetchEvents = () => {

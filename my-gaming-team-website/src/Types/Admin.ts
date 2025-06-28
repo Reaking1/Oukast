@@ -4,7 +4,7 @@ export interface AdminData {
     email: string;
     password: string;
     role: string;
-    dateOfBirth: string; // Optional timestamp
+    dateOfBirth: Date; // Optional timestamp
   }
 // For full admin data (backend -> frontend)
 export interface FullAdmin {

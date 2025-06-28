@@ -1,14 +1,16 @@
 export interface EventData {
-    id: string;
-    name: string;
-    description: string;
-    location: string;
-    date: string;
-    image?: File; // Optional file property
+    _id: string;
+  eventName: string;
+  description: string;
+  location: string;
+  date: string;
+  imageName?: string;
+  createdBy?: string;
+  status?: 'pending' | 'approved' | 'rejected';
   }
   
   export interface CreateEventData {
-    name: string;
+    eventName: string;
     description: string;
     location: string;
     date: string;
@@ -16,10 +18,10 @@ export interface EventData {
   }
   
   export interface EventUpdateData {
-    id: string;
-    name?: string; // All fields optional for partial updates
-    description?: string;
-    date?: string;
-    location?: string;
-    image?: File | null;
+    eventName?: string;
+  description?: string;
+  date?: string;
+  location?: string;
+  image?: File | null;
+  status?: 'pending' | 'approved' | 'rejected';
   }

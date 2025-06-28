@@ -36,23 +36,20 @@ const CreateAdminForm: React.FC = () => {
         setSuccess(null);
         setError(null);
 
-           try {
-        await AdminAPI.createAdmin(formData) //adjust please
-        setSuccess("Admin created successfully");
-        setFormData({
-            name: "",
-    surname: "",
-    email: "",
-    password: "",
-    role: "admin",
-    dateOfBirth: "",
-        });
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to create admin.";
-      setError(errorMessage);
-    } finally {
-        setLoading(false);
-    }
+        try {
+    const payload = {
+      ...formData,
+      dateOfBirth: new Date(formData.dateOfBirth),
+    };
+    await AdminAPI.createAdmin(payload);
+    setSuccess("Admin created successfully");
+    setFormData({ name: "", surname: "", email: "", password: "", role: "admin", dateOfBirth: "" });
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : "Failed to create admin.";
+    setError(errorMessage);
+  } finally {
+    setLoading(false);
+  }
     }
  return(
     <form onSubmit={handleSubmit} className="space-y-6 max-w-xl">
