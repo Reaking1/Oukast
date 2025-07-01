@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList,TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateAdminForm from "../Admin Fourm/CreateAdminForm";
+import ApproveEventsForm from "../Approve Event/ApproveEventsForm";
+//import EventHistoryForm from "../History/History";
 
 
 const SuperAdminDashboard: React.FC = () => {
@@ -60,7 +62,7 @@ const SuperAdminDashboard: React.FC = () => {
               <CardTitle>Approve or Post Events</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">Pending event requests table will go here.</p>
+             <ApproveEventsForm />
             </CardContent>
           </Card>
         </TabsContent>
@@ -72,7 +74,7 @@ const SuperAdminDashboard: React.FC = () => {
               <CardTitle>Event History</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">Table of past events with status and admin info.</p>
+            
             </CardContent>
           </Card>
         </TabsContent>
