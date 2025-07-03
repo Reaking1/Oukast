@@ -26,9 +26,11 @@ export const EventService = {
    * @param eventData - Data for the new event.
    */
 
- createEvent: async (eventData: CreateEventData): Promise<EventData> => {
+ createEvent: async (eventData: CreateEventData | FormData): Promise<EventData> => {
   try {
-   const response = await EventAPI.createEvent(eventData);
+
+    const isFormData = eventData instanceof FormData;
+   const response = await EventAPI.createEvent(eventData, isFormData);
     return response.data;
   } catch (error) {
     console.error('Failed to create event:', error);

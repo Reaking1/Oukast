@@ -14,7 +14,8 @@ export interface EventData {
     description: string;
     location: string;
     date: string;
-    image?: File | null; // Optional file property
+    imageName?: File | null; // Optional file property
+     status?: 'pending' | 'approved' | 'rejected';
   }
   
   export interface EventUpdateData {
@@ -22,6 +23,6 @@ export interface EventData {
   description?: string;
   date?: string;
   location?: string;
-  image?: File | null;
+  imageName?: File | null;
   status?: 'pending' | 'approved' | 'rejected';
   }

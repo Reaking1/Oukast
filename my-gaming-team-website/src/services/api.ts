@@ -119,17 +119,28 @@ export const AuthAPI = {
 //Event Api endpoints
 export const EventAPI = {
   getAllEvents: () => axiosInstance.get<EventData[]>('/events'),
-  createEvent: (eventData: CreateEventData ) =>
-    axiosInstance.post<EventData>('/events', eventData, {
-      headers: { 'Content-Type': 'multipart/form-data'}, //For uploading files
-    }),
 
-    updateEvent: (id: string, eventData: EventUpdateData) => 
-      axiosInstance.put<EventData>(`/events/${id}`, eventData, {
-        headers: {'Content-Type': 'multipart/form-data'},
+  createEvent: (eventData: CreateEventData | FormData, isFormData = false) =>
+    axiosInstance.post<EventData>('/events', eventData, {
+      headers:
+     {
+      ...(isFormData ? {"Content-Type": "multipart/form-data"} : {}),
+     },
+    }),
+    
+     updateEvent: (id: string, eventData: EventUpdateData | FormData, isFormData = false) => 
+
+      axiosInstance.put<EventData>(`/event/${id}`, eventData, {
+        headers: {
+          ...(isFormData ? {"Content-Type": "multipart/form-data"}: {})
+        },
       }),
-      deleteEvent:(id: string) => axiosInstance.delete<void>(`/events/${id}`),
-};
+    
+      deleteEvent: (id: string) => axiosInstance.delete<void>(`/events/${id}`),
+
+    }
+
+
 
 
 //Admins API endpoints

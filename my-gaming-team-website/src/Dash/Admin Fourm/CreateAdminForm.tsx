@@ -3,19 +3,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AdminAPI } from "@/services/api";
+import { AdminData } from "@/Types/Admin";
 import React, { useState } from "react";
 
 
 
 
 const CreateAdminForm: React.FC = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<AdminData>({
    name: "",
     surname: "",
     email: "",
     password: "",
     role: "admin",
-    dateOfBirth: "",
+    dateOfBirth: new Date(),
     });
 
     const [loading, setLoading] = useState(false);
@@ -23,10 +24,16 @@ const CreateAdminForm: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value});
+       const {name, value} = e.target;
+
+       if(name === "dateOfBirth") {
+        setFormData({...formData, [name]: new Date(value)});
+       } else {
+        setFormData({...formData, [name]: value });
+       }
     };
 
-    const handleRoleChange = (value: string) => {
+    const handleRoleChange = (value: 'admin' | 'super-admin') => {
         setFormData({ ...formData, role: value})
     }
 
@@ -37,13 +44,10 @@ const CreateAdminForm: React.FC = () => {
         setError(null);
 
         try {
-    const payload = {
-      ...formData,
-      dateOfBirth: new Date(formData.dateOfBirth),
-    };
-    await AdminAPI.createAdmin(payload);
+  
+    await AdminAPI.createAdmin(formData);
     setSuccess("Admin created successfully");
-    setFormData({ name: "", surname: "", email: "", password: "", role: "admin", dateOfBirth: "" });
+    setFormData({ name: "", surname: "", email: "", password: "", role: "admin", dateOfBirth: new Date(),});
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : "Failed to create admin.";
     setError(errorMessage);
@@ -57,6 +61,29 @@ const CreateAdminForm: React.FC = () => {
         <Label htmlFor="name">Name</Label>
         <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
       </div>
+   
+   <div>
+  <Label htmlFor="surname">Surname</Label>
+  <Input
+    id="surname"
+    name="surname"
+    value={formData.surname}
+    onChange={handleChange}
+    required
+  />
+</div>
+
+<div>
+  <Label htmlFor="dateOfBirth">Date of Birth</Label>
+  <Input
+    id="dateOfBirth"
+    name="dateOfBirth"
+    type="date"
+    value={formData.dateOfBirth.toISOString().split("T")[0]}
+    onChange={handleChange}
+    required
+  />
+</div>
 
       <div>
         <Label htmlFor="email">Email</Label>
