@@ -1,28 +1,32 @@
+// Data coming from the backend
 export interface EventData {
-    _id: string;
+  _id: string;
   eventName: string;
   description: string;
   location: string;
   date: string;
-  imageName?: string;
+  imageName: string; // ✅ This is a string (filename)
   createdBy?: string;
   status?: 'pending' | 'approved' | 'rejected';
-  }
-  
-  export interface CreateEventData {
-    eventName: string;
-    description: string;
-    location: string;
-    date: string;
-    imageName?: File | null; // Optional file property
-     status?: 'pending' | 'approved' | 'rejected';
-  }
-  
-  export interface EventUpdateData {
-    eventName?: string;
-  description?: string;
-  date?: string;
-  location?: string;
-  imageName?: File | null;
+}
+
+// Data used when creating a new event (includes file)
+export interface CreateEventData {
+  eventName: string;
+  description: string;
+  location: string;
+  date: string;
+  imageName: File | null; // ✅ File is uploaded here
   status?: 'pending' | 'approved' | 'rejected';
-  }
+}
+
+// Data used when updating an event (includes file)
+export interface EventUpdateData {
+  _id?: string;
+  eventName?: string;
+  description?: string;
+  location?: string;
+  date?: string;
+  imageName?: File | null; // ✅ Same type as in creation
+  status?: 'pending' | 'approved' | 'rejected';
+}

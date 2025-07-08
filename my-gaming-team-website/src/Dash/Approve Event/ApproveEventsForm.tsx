@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EventService } from "@/services/eventService"; // Corrected import
-import { EventData } from "@/Types/Event";
+import { CreateEventData, EventData } from "@/Types/Event";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -10,7 +10,7 @@ const ApproveEventsForm: React.FC = () => {
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [newEvent, setNewEvent] = useState({ eventName: "", description: "", location: "", date: "", imageName: null});
+  const [newEvent, setNewEvent] = useState<CreateEventData>({ eventName: "", description: "", location: "", date: "", imageName: null, status: "approved"});
 const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventData[]>([]);
 
   useEffect(() => {
@@ -38,7 +38,11 @@ const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventDa
   setApprovedOrRejectedEvents(filtered);
 };
   const handleNewEventChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
+    const {name, value } = e.target;
+    if (name !== "image") {
+      setNewEvent({ ...newEvent, [name]: value });
+    }
+  //setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
 };
 
   const handleCreateEvent = async () => {
@@ -54,7 +58,7 @@ const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventDa
       }
       formData.append("status", "approved");
       await EventService.createEvent(formData);
-      setNewEvent({  eventName: "", description: "", location: "", date: "", imageName: null});
+      setNewEvent({  eventName: "", description: "", location: "", date: "", imageName: null, status: "approved"});
       fetchPendingEvents();
     } catch (error) {
        alert("Failed to create event.");
@@ -123,7 +127,7 @@ const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventDa
   name="image"
   accept="image/*"
   onChange={(e) =>
-    setNewEvent({ ...newEvent, imageName: e.target.files?.[0] || null })
+    setNewEvent({ ...newEvent, imageName: e.target.files?.[0] ?? null })
   }
 />
 
@@ -160,14 +164,50 @@ const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventDa
 
               {/**  3. Approved/Rejected Events List (optional, but useful) ✅  */}
               {/* Section 3: Approved & Rejected Events */}
+{/* Section 3: Approved & Rejected Events */}
 <div>
-  <h3 className="text-xl font-bold mb-2">Approved/Rejected Events</h3>
-  {approvedOrRejectedEvents.map((event) => (
-    <div key={event._id} className="border p-4 rounded bg-slate-100 mb-2">
-      <h4>{event.eventName}</h4>
-      <p>Status: <strong>{event.status}</strong></p>
-    </div>
-  ))}
+  <h3 className="text-xl font-bold mb-4">Reviewed Events</h3>
+
+  {approvedOrRejectedEvents.length === 0 ? (
+    <p className="text-gray-600">No events have been reviewed yet.</p>
+  ) : (
+    approvedOrRejectedEvents.map((event) => (
+      <div
+        key={event._id}
+        className={`border p-4 rounded-lg mb-4 shadow-sm ${
+          event.status === "approved" ? "bg-green-50" : "bg-red-50"
+        }`}
+      >
+        <div className="flex flex-col sm:flex-row gap-4">
+          {/* Thumbnail preview if image exists */}
+          {event.imageName && (
+            <img
+              src={`http://localhost:5000/uploads/${event.imageName}`}
+              alt={event.eventName}
+              className="w-full sm:w-40 h-32 object-cover rounded-md border"
+            />
+          )}
+
+          <div className="flex-1">
+            <h4 className="text-lg font-semibold text-gray-800">{event.eventName}</h4>
+            <p className="text-sm text-gray-600 mb-1">{event.description}</p>
+            <p className="text-sm text-gray-500">📍 Location: {event.location}</p>
+            <p className="text-sm text-gray-500">📅 Date: {new Date(event.date).toLocaleDateString()}</p>
+            <p className="text-sm mt-2">
+              Status:{" "}
+              <span
+                className={`font-bold ${
+                  event.status === "approved" ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {event.status === "approved" ? "✅ Approved" : "❌ Rejected"}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
 </div>
 
       </CardContent>

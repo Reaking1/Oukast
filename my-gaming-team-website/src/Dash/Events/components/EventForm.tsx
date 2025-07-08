@@ -14,11 +14,11 @@ type EventFormProps = {
 
 const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
   const [formData, setFormData] = useState<CreateEventData>({
-    name: event?.name || '',
+    eventName: event?.eventName || '',
     description: event?.description || '',
     location: event?.location || '',
     date: event?.date || '',
-    image: null as File | null,
+    imageName: null as File | null,
   });
    
 
@@ -44,15 +44,15 @@ const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
     try {
       if (event) {
        const updatedEventData: EventUpdateData = {
-        id: event.id,
-        name: formData.name,
+        _id: event._id,
+        eventName: formData.eventName,
         description: formData.description,
         location: formData.location,
         date: formData.date,
-        image: formData.image
+        imageName: formData.imageName
        };
 
-       await EventService.updateEvent(event.id, updatedEventData);
+       await EventService.updateEvent(event._id, updatedEventData);
        toast.success('Event update successfully')
       } else {
         await EventService.createEvent(formData);
@@ -76,7 +76,7 @@ const EventForm: React.FC<EventFormProps> = ({ event, onSubmitSuccess}) => {
           type="text"
           id="name"
           name="name"
-          value={formData.name}
+          value={formData.eventName}
           onChange={handleChange}
           required
         />
