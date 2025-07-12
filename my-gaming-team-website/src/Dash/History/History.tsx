@@ -16,9 +16,17 @@ const EventHistoryForm: React.FC = () => {
     fetchAllEvents();
   }, []);
 
-  useEffect(() => {
-    filterEvents();
-  }, [searchTerm, events]);
+ useEffect(() => {
+  const lowerSearch = searchTerm.toLowerCase();
+  const filtered = events.filter((event) => {
+    return (
+      event.eventName.toLowerCase().includes(lowerSearch) ||
+      event.date?.toLowerCase().includes(lowerSearch)
+    );
+  });
+  setFilteredEvents(filtered);
+}, [searchTerm, events]); // ✅ runs only when these change
+
 
   const fetchAllEvents = async () => {
     setLoading(true);
@@ -32,17 +40,7 @@ const EventHistoryForm: React.FC = () => {
     }
   };
 
-  const filterEvents = () => {
-    const lowerSearch = searchTerm.toLowerCase();
-    const filtered = events.filter((event) => {
-      return (
-        event.eventName.toLowerCase().includes(lowerSearch) ||
-        event.date?.toLowerCase().includes(lowerSearch)
-      );
-    });
-    setFilteredEvents(filtered);
-  };
-
+ 
   const statusColor = (status: string) => {
     switch (status) {
       case "approved":
@@ -81,7 +79,7 @@ const EventHistoryForm: React.FC = () => {
               key={event._id}
               className="border p-4 rounded-md bg-white text-black shadow-sm"
             >
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center"> 
                 <h3 className="text-lg font-bold">{event.eventName}</h3>
                 <Badge className={statusColor(event.status || "pending")}>
                   {event.status}
@@ -92,7 +90,11 @@ const EventHistoryForm: React.FC = () => {
                 📍 {event.location} | 📅 {new Date(event.date).toLocaleDateString("en-ZA")}
               </p>
               <p className="text-xs text-gray-500">
-                Posted by: <span className="font-medium">{event.createdBy || "Unknown"}</span>
+                Posted by: <span className="font-medium">
+                  {typeof event.createdBy === "object"
+                  ? event.createdBy.name || event.createdBy.email 
+                  : event.createdBy || "Unkown"
+                }</span>
               </p>
               {event.createdAt && (
                 <p className="text-xs text-gray-400">

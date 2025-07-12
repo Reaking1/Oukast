@@ -119,26 +119,29 @@ export const AuthAPI = {
 //Event Api endpoints
 export const EventAPI = {
   getAllEvents: () => axiosInstance.get<EventData[]>('/events'),
-
-  createEvent: (eventData: CreateEventData | FormData, isFormData = false) =>
-    axiosInstance.post<EventData>('/events', eventData, {
-      headers:
-     {
-      ...(isFormData ? {"Content-Type": "multipart/form-data"} : {}),
-     },
-    }),
     
-     updateEvent: (id: string, eventData: EventUpdateData | FormData, isFormData = false) => 
 
-      axiosInstance.put<EventData>(`/event/${id}`, eventData, {
-        headers: {
-          ...(isFormData ? {"Content-Type": "multipart/form-data"}: {})
-        },
+  createEvent: (eventData: CreateEventData | FormData, isFormData = false) => 
+    axiosInstance.post<EventData>(`/events`, eventData, {
+    headers: isFormData ? {'Content-Type': 'multipart/form-data'} : {}
+  }),
+  
+  updateEvent: (eventId: string, eventData: EventUpdateData | FormData, isFormData = false ) =>
+      axiosInstance.put<EventData>(`/events/${eventId}`, eventData, {
+        headers: isFormData ? {'Content-Type' : 'multipart/form-data'} : {},
       }),
-    
-      deleteEvent: (id: string) => axiosInstance.delete<void>(`/events/${id}`),
 
+      approveEvent: (eventId: string) =>
+        axiosInstance.put(`/events/${eventId}/approve` ),
+
+        rejectEvent :(eventId: string) =>
+          axiosInstance.put(`/events/${eventId}/reject`),
+
+        deleteEvent: (eventId: string) =>
+          axiosInstance.delete<void>(`/events/${eventId}`)
     }
+
+  
 
 
 

@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList,TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateAdminForm from "../Admin Fourm/CreateAdminForm";
 import ApproveEventsForm from "../Approve Event/ApproveEventsForm";
+import EventHistoryForm from "../History/History";
 //import EventHistoryForm from "../History/History";
 
 
@@ -74,7 +75,7 @@ const SuperAdminDashboard: React.FC = () => {
               <CardTitle>Event History</CardTitle>
             </CardHeader>
             <CardContent>
-            
+            <EventHistoryForm />
             </CardContent>
           </Card>
         </TabsContent>

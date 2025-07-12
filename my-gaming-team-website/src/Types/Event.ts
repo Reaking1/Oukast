@@ -6,9 +6,10 @@ export interface EventData {
   location: string;
   date: string;
   imageName: string; // ✅ This is a string (filename)
-  createdBy?: string;
+  createdBy?: string | { name?: string; email?: string }; // Updated
   status?: 'pending' | 'approved' | 'rejected';
-}
+  createdAt: string; // ✅ Added this line for event creation timestamp
+} 
 
 // Data used when creating a new event (includes file)
 export interface CreateEventData {

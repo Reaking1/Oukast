@@ -57,6 +57,35 @@ export const EventService = {
     }
    },
 
+   /**
+ * Approves a pending event by ID.
+ * @param eventId - ID of the event to approve.
+ */
+approveEvent: async (eventId: string): Promise<EventData> => {
+  try {
+    const response = await EventAPI.approveEvent(eventId);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to approve event:', error);
+    throw new Error('Unable to approve event');
+  }
+},
+
+/**
+ * Rejects a pending event by ID.
+ * @param eventId - ID of the event to reject.
+ */
+rejectEvent: async (eventId: string): Promise<EventData> => {
+  try {
+    const response = await EventAPI.rejectEvent(eventId);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to reject event:', error);
+    throw new Error('Unable to reject event');
+  }
+},
+
+
     /**
    * Deletes an event by ID.
    * @param eventId - ID of the event to delete.
