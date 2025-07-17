@@ -9,7 +9,7 @@ import AdminDashboard from './Dash/Admin/Admin-Dashboard';
 import SuperAdminDashboard from './Dash/SuperAdmin/SuperAdmin-Dasboard';
 import Login from './auth/pages/Login';
 import DashboardRedirect from './auth/pages/DashboardRedirect';
-
+import { Toaster } from "@/components/ui/sonner"
 
 
 const App: React.FC = () => {
@@ -43,6 +43,9 @@ const App: React.FC = () => {
           
         </Routes>
       </div>
+   {/* ✅ Add this at the root (bottom of the tree) */}
+      <Toaster richColors closeButton />
+      
     </>
   );
 };

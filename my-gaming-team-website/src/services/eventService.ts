@@ -84,7 +84,7 @@ rejectEvent: async (eventId: string): Promise<EventData> => {
     throw new Error('Unable to reject event');
   }
 },
-
+  
 
     /**
    * Deletes an event by ID.
