@@ -10,6 +10,7 @@ import SuperAdminDashboard from './Dash/SuperAdmin/SuperAdmin-Dasboard';
 import Login from './auth/pages/Login';
 import DashboardRedirect from './auth/pages/DashboardRedirect';
 import { Toaster } from "@/components/ui/sonner"
+import UpcomingEvents from './Upcoming Events/UpcomingEvents';
 
 
 const App: React.FC = () => {
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path='/upcomingevents'  element={<UpcomingEvents />} />
           <Route path='/login' element={<Login/>} />
           <Route path='/dashboard' element={
             <ProtectedRoute>

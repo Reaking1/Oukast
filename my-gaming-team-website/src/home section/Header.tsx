@@ -105,7 +105,7 @@ const Header: React.FC = () => {
           </li>
           <li><Link to="/about" className="link-rainbow">About</Link></li>
           <li><Link to="/contact" className="link-rainbow">Contact</Link></li>
-          <li><Link to="/upcomingsessions" className="link-rainbow">Upcoming Events</Link></li>
+          <li><Link to="/upcomingevents" className="link-rainbow">Upcoming Events</Link></li>
         </ul>
 
         {/* Mobile Menu Button */}
