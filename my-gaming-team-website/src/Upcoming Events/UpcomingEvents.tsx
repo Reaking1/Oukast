@@ -8,6 +8,7 @@ import fallbackImage from '../../public/assets/react.svg'; // if imageName is mi
 const UpcomingEvents: React.FC = () => {
   const [events, setEvents] = useState<EventData[]>([]);
 
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -35,7 +36,8 @@ const UpcomingEvents: React.FC = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
           >
            <img
-  src={`http://localhost:5000/uploads/${event.imageName}`}
+src={`http://localhost:5000/uploads/events/${event.imageName}`}
+
   alt={event.eventName}
   onError={(e) => {
     e.currentTarget.src = fallbackImage;
