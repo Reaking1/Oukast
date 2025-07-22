@@ -4,9 +4,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateAdminForm from "../Admin Fourm/CreateAdminForm";
 import ApproveEventsForm from "../Approve Event/ApproveEventsForm";
 import EventHistoryForm from "../History/History";
+import { AdminData, FullAdmin } from "@/Types/Admin";
+import { AdminAPI } from "@/services/api";
 
 const SuperAdminDashboard: React.FC = () => {
   const [clock, setClock] = useState("");
+   const [adminList, setAdminList] = useState<FullAdmin[]>([]);
+
+   useEffect(() => {
+    const fetchAdmins = async () => {
+      const data = await AdminAPI.getAllAdmins(); // assume this returns FullAdmin[]
+      setAdminList(data);
+    };
+
+    fetchAdmins();
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -23,6 +35,21 @@ const SuperAdminDashboard: React.FC = () => {
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleCreateAdmin = async (data: AdminData) => {
+  try {
+    // Call your backend service here
+    console.log("Creating admin with data:", data);
+    // Example: await adminService.createAdmin(data);
+
+    // Show a toast or success message if using sonner:
+    // toast.success("Admin created successfully");
+  } catch (error) {
+    console.error("Failed to create admin:", error);
+    // toast.error("Failed to create admin");
+  }
+};
+
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#f0f4f8] via-[#e6e9ef] to-[#f5f7fa] text-gray-800 p-6 md:p-10 font-ubuntu">
@@ -68,7 +95,7 @@ const SuperAdminDashboard: React.FC = () => {
                 <CardTitle className="text-2xl font-semibold">Create Admin / Super Admin</CardTitle>
               </CardHeader>
               <CardContent>
-                <CreateAdminForm />
+                <CreateAdminForm onCreateAdmin={handleCreateAdmin} admins={adminList}/>
               </CardContent>
             </Card>
           </TabsContent>

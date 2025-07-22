@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AdminData, UpdateAdminData } from "../Types/Admin";
+import { AdminData, FullAdmin, UpdateAdminData } from "../Types/Admin";
 import { Admin, LoginCredentials } from "../Types/Auth";
 import { EventData, CreateEventData, EventUpdateData } from "../Types/Event";
 import axios from "axios"
@@ -148,10 +148,18 @@ export const EventAPI = {
 
 //Admins API endpoints
 export const AdminAPI = {
-  getAllAdmins: () =>axiosInstance.get<Admin[]>('/admins'),
-  createAdmin: (adminData: AdminData) =>axiosInstance.post<Admin>('/admins', adminData),
-  updateAdmin: (id: string, adminData: UpdateAdminData) => axiosInstance.put<Admin>(`/admins/${id}`, adminData),
-  deleteAdmin: (id: string) =>axiosInstance.delete<void>(`/admins/${id}`),
+  getAllAdmins: () => axiosInstance.get<FullAdmin[]>('/admins').then(res => res.data),
+
+  createAdmin: (adminData: AdminData) =>
+    axiosInstance.post<FullAdmin>('/admins', adminData).then(res => res.data),
+
+  updateAdmin: (id: string, adminData: UpdateAdminData) =>
+    axiosInstance.put<FullAdmin>(`/admins/${id}`, adminData).then(res => res.data),
+
+  deleteAdmin: (id: string) => axiosInstance.delete<void>(`/admins/${id}`),
+
+  approveAdmin: (adminId: string) =>
+    axiosInstance.patch<FullAdmin>(`/admins/approve/${adminId}`).then(res => res.data),
 };
 
 export async function approveAdmin(adminId: string) {
