@@ -84,134 +84,91 @@ const [approvedOrRejectedEvents, setApprovedOrRejectedEvents] = useState<EventDa
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Event Management</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {/** 1. Event Creation Form (for super admins) ✅  */}
-   {/* Section 1: Event Creation */}
-<div className="mb-6">
-  <h3 className="text-xl font-bold mb-2">Create New Event</h3>
-  <Input
-    name="eventName"
-    placeholder="Event Name"
-    value={newEvent.eventName}
-    onChange={handleNewEventChange}
-    className="mb-2"
-  />
-  <Input
-  name="location"
-  placeholder="Location"
-  value={newEvent.location}
-  onChange={handleNewEventChange}
- />
-
-<Input
-  name="date"
-  placeholder="Date"
-  type="date"
-  value={newEvent.date}
-  onChange={handleNewEventChange}
-/>
-
-  <Textarea
-    name="description"
-    placeholder="Event Description"
-    value={newEvent.description}
-    onChange={handleNewEventChange}
-    className="mb-2"
-  />
-  <Input
-  type="file"
-  name="image"
-  accept="image/*"
-  onChange={(e) =>
-    setNewEvent({ ...newEvent, imageName: e.target.files?.[0] ?? null })
-  }
-/>
-
-  <Button onClick={handleCreateEvent}>Create Event</Button>
-</div>
-
-           {/**   2. Pending Event Approvals (if you're a super admin) ✅ */}
-           {/* Section 2: Pending Event Approvals */}
-<div className="mb-6">
-  <h3 className="text-xl font-bold mb-2">Pending Event Requests</h3>
-  {loading && <p>Loading events...</p>}
-  {error && <p className="text-red-600">{error}</p>}
-  {!loading && events.length === 0 && <p>No pending events.</p>}
-
-  {!loading &&
-    events.map((event) => (
-      <div
-        key={event._id}
-        className="border p-4 rounded-md shadow-sm bg-white text-black mb-4"
-      >
-        <h4 className="text-lg font-semibold">{event.eventName}</h4>
-        <p className="text-sm text-gray-600">{event.description}</p>
-        <div className="flex gap-3 mt-4">
-          <Button onClick={() => handleApprove(event._id)} variant="default">
-            Approve
-          </Button>
-          <Button onClick={() => handleReject(event._id)} variant="destructive">
-            Reject
-          </Button>
-        </div>
+    <Card className="space-y-10 p-6">
+  {/* Section 1: Create Event */}
+  <Card>
+    <CardHeader>
+      <CardTitle>Create New Event</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Input name="eventName" placeholder="Event Name" value={newEvent.eventName} onChange={handleNewEventChange} />
+        <Input name="location" placeholder="Location" value={newEvent.location} onChange={handleNewEventChange} />
+        <Input name="date" placeholder="Date" type="date" value={newEvent.date} onChange={handleNewEventChange} />
+        <Input type="file" name="image" accept="image/*" onChange={(e) => setNewEvent({ ...newEvent, imageName: e.target.files?.[0] ?? null })} />
       </div>
-    ))}
-</div>
+      <Textarea name="description" placeholder="Event Description" value={newEvent.description} onChange={handleNewEventChange} />
+      <Button onClick={handleCreateEvent}>Create Event</Button>
+    </CardContent>
+  </Card>
 
-              {/**  3. Approved/Rejected Events List (optional, but useful) ✅  */}
-              {/* Section 3: Approved & Rejected Events */}
-{/* Section 3: Approved & Rejected Events */}
-<div>
-  <h3 className="text-xl font-bold mb-4">Reviewed Events</h3>
-
-  {approvedOrRejectedEvents.length === 0 ? (
-    <p className="text-gray-600">No events have been reviewed yet.</p>
-  ) : (
-    approvedOrRejectedEvents.map((event) => (
-      <div
-        key={event._id}
-        className={`border p-4 rounded-lg mb-4 shadow-sm ${
-          event.status === "approved" ? "bg-green-50" : "bg-red-50"
-        }`}
-      >
-        <div className="flex flex-col sm:flex-row gap-4">
-          {/* Thumbnail preview if image exists */}
-          {event.imageName && (
-            <img
-              src={`http://localhost:5000/uploads/${event.imageName}`}
-              alt={event.eventName}
-              className="w-full sm:w-40 h-32 object-cover rounded-md border"
-            />
-          )}
-
-          <div className="flex-1">
-            <h4 className="text-lg font-semibold text-gray-800">{event.eventName}</h4>
-            <p className="text-sm text-gray-600 mb-1">{event.description}</p>
-            <p className="text-sm text-gray-500">📍 Location: {event.location}</p>
-            <p className="text-sm text-gray-500">📅 Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p className="text-sm mt-2">
-              Status:{" "}
-              <span
-                className={`font-bold ${
-                  event.status === "approved" ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {event.status === "approved" ? "✅ Approved" : "❌ Rejected"}
-              </span>
-            </p>
+  {/* Section 2: Pending Event Approvals */}
+  <Card>
+    <CardHeader>
+      <CardTitle>Pending Event Approvals</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      {loading ? (
+        <p>Loading events...</p>
+      ) : events.length === 0 ? (
+        <p className="text-muted-foreground">No pending events.</p>
+      ) : (
+        events.map((event) => (
+          <div key={event._id} className="border p-4 rounded-md shadow-sm bg-white">
+            <h4 className="font-semibold">{event.eventName}</h4>
+            <p className="text-sm text-gray-600">{event.description}</p>
+            <div className="flex gap-4 mt-4">
+              <Button onClick={() => handleApprove(event._id)}>Approve</Button>
+              <Button variant="destructive" onClick={() => handleReject(event._id)}>Reject</Button>
+            </div>
           </div>
-        </div>
-      </div>
-    ))
-  )}
-</div>
+        ))
+      )}
+    </CardContent>
+  </Card>
 
-      </CardContent>
-    </Card>
+  {/* Section 3: Reviewed Events */}
+  <Card>
+    <CardHeader>
+      <CardTitle>Reviewed Events</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      {approvedOrRejectedEvents.length === 0 ? (
+        <p className="text-muted-foreground">No events have been reviewed yet.</p>
+      ) : (
+        approvedOrRejectedEvents.map((event) => (
+          <div
+            key={event._id}
+            className={`border p-4 rounded-md shadow-sm flex flex-col sm:flex-row gap-4 ${
+              event.status === "approved" ? "bg-green-50" : "bg-red-50"
+            }`}
+          >
+            {event.imageName && (
+              <img
+                src={`http://localhost:5000/uploads/${event.imageName}`}
+                alt={event.eventName}
+                className="w-full sm:w-40 h-32 object-cover rounded-md border"
+              />
+            )}
+            <div className="flex-1">
+              <h4 className="font-semibold">{event.eventName}</h4>
+              <p className="text-sm text-gray-600">{event.description}</p>
+              <p className="text-sm">📍 {event.location}</p>
+              <p className="text-sm">📅 {new Date(event.date).toLocaleDateString()}</p>
+              <p className="text-sm mt-1 font-semibold">
+                Status:{" "}
+                <span className={event.status === "approved" ? "text-green-600" : "text-red-600"}>
+                  {event.status === "approved" ? "✅ Approved" : "❌ Rejected"}
+                </span>
+              </p>
+            </div>
+          </div>
+        ))
+      )}
+    </CardContent>
+  </Card>
+</Card>
+
   );
 };
 

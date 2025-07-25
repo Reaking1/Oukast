@@ -98,28 +98,29 @@ const CreateAdminForm: React.FC<Props> = ({ onCreateAdmin, admins }) => {
           />
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="role">Role</Label>
-          <Select value={formData.role} onValueChange={handleRoleChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a role" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="super-admin">Super Admin</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+<div className="space-y-1 relative z-50">
+  <Label htmlFor="role">Role</Label>
+  <Select value={formData.role} onValueChange={handleRoleChange}>
+    <SelectTrigger className="w-full">
+      <SelectValue placeholder="Select a role" />
+    </SelectTrigger>
+    <SelectContent className="z-50">
+      <SelectItem value="admin">Admin</SelectItem>
+      <SelectItem value="super-admin">Super Admin</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
 
-        <div className="pt-4">
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-black hover:bg-gray-800 text-white text-md font-semibold"
-          >
-            {loading ? "Creating..." : "🚀 Create Admin"}
-          </Button>
-        </div>
+<div className="pt-6">
+  <Button
+    type="submit"
+    disabled={loading}
+    className="w-full bg-black hover:bg-gray-800 text-white text-md font-semibold"
+  >
+    {loading ? "Creating..." : "🚀 Create Admin"}
+  </Button>
+</div>
+
       </form>
 
       <div className="mt-10 max-w-xl">
