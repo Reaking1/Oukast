@@ -43,19 +43,27 @@ export const EventService = {
    * @param eventId - ID of the event to update.
    * @param eventData - Updated event data.
    */
+updateEvent: async (
+  eventId: string,
+  eventData: EventUpdateData | FormData
+): Promise<EventData> => {
+  try {
+    const isFormData = eventData instanceof FormData;
 
-   updateEvent: async (
-    eventId: string,
-    eventData: EventUpdateData
-   ): Promise<EventData> => {
-    try {
-    const response = await EventAPI.updateEvent(eventId, eventData);
+    const response = await EventAPI.updateEvent(eventId, eventData, {
+      headers: {
+        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+      },
+    });
+
     return response.data;
-    } catch (error) {
-      console.error('Failed to update event:', error);
-      throw new Error('Unable to update event')
-    }
-   },
+  } catch (error) {
+    console.error('Failed to update event:', error);
+    throw new Error('Unable to update event');
+  }
+},
+
+  
 
    /**
  * Approves a pending event by ID.

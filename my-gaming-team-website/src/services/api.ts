@@ -2,7 +2,7 @@
 import { AdminData, FullAdmin, UpdateAdminData } from "../Types/Admin";
 import { Admin, LoginCredentials } from "../Types/Auth";
 import { EventData, CreateEventData, EventUpdateData } from "../Types/Event";
-import axios from "axios"
+import axios, { AxiosRequestConfig } from "axios"
 
 const BASE_URL ='http://localhost:5000';
 
@@ -126,8 +126,8 @@ export const EventAPI = {
     headers: isFormData ? {'Content-Type': 'multipart/form-data'} : {}
   }),
   
-  updateEvent: (eventId: string, eventData: EventUpdateData | FormData, isFormData = false ) =>
-      axiosInstance.put<EventData>(`/events/${eventId}`, eventData, {
+  updateEvent: (eventId: string, eventData: EventUpdateData | FormData, isFormData = false, config?: AxiosRequestConfig ) =>
+      axiosInstance.put<EventData>(`/events/${eventId}`, eventData, config, {
         headers: isFormData ? {'Content-Type' : 'multipart/form-data'} : {},
       }),
 
