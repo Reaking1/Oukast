@@ -16,9 +16,7 @@ import {
 import { MoreVertical } from "lucide-react";
 import { EventService } from "@/services/eventService";
 import { EventData, EventUpdateData } from "@/Types/Event";
-import { toast } from "react-toastify";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import EditEventForm from "../EditForm/EditEventForm";
 
 const EventHistoryForm: React.FC = () => {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -63,31 +61,20 @@ const EventHistoryForm: React.FC = () => {
   };
 
   const handleEdit = (event: EventData) => {
-    setSelectedEvent(event)
+    const { _id, eventName, description, location, date, status }  = event;
+    setSelectedEvent({
+      _id,
+      eventName,
+      description,
+      location,
+      date,
+      imageName: undefined,
+      status
+    })
   };
-const handleUpdateEvent = async () => {
- if (!selectedEvent || !selectedEvent._id) return;
 
-  const formData = new FormData();
-
-  // Append only fields that are present
-  if (selectedEvent.eventName) formData.append("eventName", selectedEvent.eventName);
-  if (selectedEvent.description) formData.append("description", selectedEvent.description);
-  if (selectedEvent.location) formData.append("location", selectedEvent.location);
-  if (selectedEvent.date) formData.append("date", selectedEvent.date);
-  if (selectedEvent.status) formData.append("status", selectedEvent.status);
-  if (selectedEvent.imageName instanceof File) {
-    formData.append("imageName", selectedEvent.imageName);
-  }
-
-  try {
-    await EventService.updateEvent(selectedEvent._id, formData);
-    toast.success("Event updated successfully");
-    fetchAllEvents();
-    setSelectedEvent(null); // ✅ Reset edit form
-  } catch (err) {
-    toast.error("Failed to update event");
-  }
+const handleEditClose = () => {
+  setSelectedEvent(null); // closes the edit form
 };
 
 
@@ -151,10 +138,10 @@ return (
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleEdit(event)}>
+                    <DropdownMenuItem onClick={() => handleEdit(event)} className="text-black">
                       ✏️ Edit
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDelete(event._id)}>
+                    <DropdownMenuItem onClick={() => handleDelete(event._id)} className="text-black">
                       🗑️ Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -187,64 +174,8 @@ return (
 
     {/* 🔹 Edit Form Section (conditionally shown) */}
     {selectedEvent && (
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Edit Event</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            name="eventName"
-            placeholder="Event Name"
-            value={selectedEvent.eventName}
-            onChange={(e) =>
-              setSelectedEvent({ ...selectedEvent, eventName: e.target.value })
-            }
-          />
-          <Input
-            name="location"
-            placeholder="Location"
-            value={selectedEvent.location}
-            onChange={(e) =>
-              setSelectedEvent({ ...selectedEvent, location: e.target.value })
-            }
-          />
-          <Input
-            name="date"
-            type="date"
-            value={selectedEvent.date}
-            onChange={(e) =>
-              setSelectedEvent({ ...selectedEvent, date: e.target.value })
-            }
-          />
-
-          <Input
-           type="file"
-             accept="image/*"
-             onChange={(e) =>
-           setSelectedEvent({
-            ...selectedEvent!,
-              imageName: e.target.files?.[0] || null,
-    })
-  }
-/>
-
-
-          <Textarea
-            name="description"
-            placeholder="Event Description"
-            value={selectedEvent.description}
-            onChange={(e) =>
-              setSelectedEvent({ ...selectedEvent, description: e.target.value })
-            }
-          />
-          <Button
-            onClick={handleUpdateEvent}
-            className="bg-black hover:bg-gray-800 text-white font-semibold w-full"
-          >
-            💾 Save Changes
-          </Button>
-        </CardContent>
-      </Card>
+    
+        <EditEventForm event={selectedEvent} onClose={handleEditClose} onSave={fetchAllEvents} />
     )}
   </>
 );

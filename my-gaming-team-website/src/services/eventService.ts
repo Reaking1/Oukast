@@ -50,11 +50,13 @@ updateEvent: async (
   try {
     const isFormData = eventData instanceof FormData;
 
-    const response = await EventAPI.updateEvent(eventId, eventData, {
-      headers: {
-        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-      },
-    });
+    const response = await EventAPI.updateEvent(eventId, eventData, isFormData,
+       {
+    headers: {
+      'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+    }
+  }
+    );
 
     return response.data;
   } catch (error) {

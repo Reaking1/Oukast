@@ -126,10 +126,22 @@ export const EventAPI = {
     headers: isFormData ? {'Content-Type': 'multipart/form-data'} : {}
   }),
   
-  updateEvent: (eventId: string, eventData: EventUpdateData | FormData, isFormData = false, config?: AxiosRequestConfig ) =>
-      axiosInstance.put<EventData>(`/events/${eventId}`, eventData, config, {
-        headers: isFormData ? {'Content-Type' : 'multipart/form-data'} : {},
-      }),
+  updateEvent: (
+    eventId: string,
+    eventData: EventUpdateData | FormData,
+    isFormData = false,
+    config: AxiosRequestConfig = {}
+  ) => axiosInstance.put<EventData>(
+    `/events/${eventId}`,
+    eventData,
+    {
+      ...config,
+      headers: {
+        ...(config.headers || {}),
+        ...(isFormData ? {'Content-Type': 'multipart/form-data'} : {})
+      }
+    }
+  ),
 
       approveEvent: (eventId: string) =>
         axiosInstance.put(`/events/${eventId}/approve` ),
