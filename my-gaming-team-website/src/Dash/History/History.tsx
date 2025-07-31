@@ -115,7 +115,7 @@ return (
 
         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
           {filteredEvents.map((event) => (
-            <div
+            <div 
               key={event._id}
               className="border p-4 rounded-lg bg-white shadow-sm relative"
             >
