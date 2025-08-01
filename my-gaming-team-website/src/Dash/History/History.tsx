@@ -20,7 +20,6 @@ import EditEventForm from "../EditForm/EditEventForm";
 
 const EventHistoryForm: React.FC = () => {
   const [events, setEvents] = useState<EventData[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<EventData[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<EventUpdateData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,14 +29,6 @@ const EventHistoryForm: React.FC = () => {
     fetchAllEvents();
   }, []);
 
-  useEffect(() => {
-    const lowerSearch = searchTerm.toLowerCase();
-    const filtered = events.filter((event) =>
-      event.eventName.toLowerCase().includes(lowerSearch) ||
-      event.date?.toLowerCase().includes(lowerSearch)
-    );
-    setFilteredEvents(filtered);
-  }, [searchTerm, events]);
 
   const fetchAllEvents = async () => {
     setLoading(true);
@@ -109,12 +100,12 @@ return (
       <CardContent>
         {loading && <p className="text-gray-600">Loading event history...</p>}
         {error && <p className="text-red-600">{error}</p>}
-        {!loading && filteredEvents.length === 0 && (
+        {!loading && events.length === 0 && (
           <p>No matching events found.</p>
         )}
 
         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-          {filteredEvents.map((event) => (
+          {events.map((event) => (
             <div 
               key={event._id}
               className="border p-4 rounded-lg bg-white shadow-sm relative"

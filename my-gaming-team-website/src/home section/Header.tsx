@@ -140,7 +140,7 @@ const Header: React.FC = () => {
           ) : (
             <>
                   {/* Copy the login class */}
-              <li><Link to="/admin" onClick={toggleMenu} className="text-lg hover:underline">Admin Dashboard</Link></li>
+              <li><Link to="/super-admin/*" onClick={toggleMenu} className="text-lg hover:underline">Admin Dashboard</Link></li>
               <li>
                 <button
                   onClick={() => {
