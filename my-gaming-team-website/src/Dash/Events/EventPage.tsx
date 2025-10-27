@@ -53,14 +53,14 @@ const EventPage: React.FC = () => {
        ):(
         <div className="event-container">
           {events.map(event => (
-            <div key={event.id} className="event-card">
-              {event.image ? (
-                <img src={URL.createObjectURL(event.image)} alt={event.name} className='event-image' />
+            <div key={event._id} className="event-card">
+              {event.imageName ? (
+                <img src={URL.createObjectURL(event.imageName)} alt={event.imageName} className='event-image' />
               ) : (
                 <div className="placeholder-image">No Image Available</div>
               )}
               <div className="event-info">
-                <h3 className="event-name">{event.name}</h3>
+                <h3 className="event-name">{event.eventName}</h3>
                 <p className="event-date">{new Date(event.date).toLocaleDateString()}</p>
                 <p className="event-description">{event.description}</p>
                 <p className="event-location">📍{event.location}</p>

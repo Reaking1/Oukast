@@ -96,6 +96,7 @@ const Header: React.FC = () => {
                 { path: "/tips/Apexlegends", name: "Apex Legends" },
                 { path: "/tips/Delta force", name: "Delta Force" },
                 { path: "/tips/fiber", name: "Getting fibre" },
+                { path: "/tips/streaming", name: "Streaming" },
               ].map((game, index) => (
                 <li key={index} className="hover:bg-gray-100 px-4 py-2 text-sm">
                   <Link to={game.path}>{game.name}</Link>
