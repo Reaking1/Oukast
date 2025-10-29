@@ -10,35 +10,35 @@ const tips = [
     image: "/images/zenless.jpg",
     description:
       "Master the chaos of New Eridu! Learn advanced combat techniques, team synergies, and upgrade routes to dominate the battlefield.",
-    link: "/tips/For each game/ZenlessZoneZero",
+    link: "/tips/ZenlessZoneZero",
   },
   {
     title: "Apex Legends",
     image: "/images/apex.jpg",
     description:
       "Sharpen your aim and strategy! Our Apex Legends guide covers legends, weapons, and ranked play tips to boost your RP fast.",
-    link: "/tips/For each game/ApexLegends",
+    link: "/tips/ApexLegends",
   },
   {
     title: "Streaming Setup",
     image: "/images/streaming.jpg",
     description:
       "Thinking of going live? Here’s how to build a clean, lag-free streaming setup with OBS, overlays, and pro-level audio settings.",
-    link: "/tips/For each game/Streaming",
+    link: "/tips/Streaming",
   },
   {
     title: "Delta Force",
     image: "/images/deltaforce.jpg",
     description:
       "Learn tactical positioning, communication, and loadout optimization to become an unstoppable squad leader in Delta Force.",
-    link: "/tips/For each game/DeltaForce",
+    link: "/tips/DeltaForce",
   },
   {
     title: "Getting Fibre",
     image: "/images/fibre.jpg",
     description:
       "Tired of lag spikes? This guide explains how to choose the right fibre plan, router setup, and ISP for seamless gaming.",
-    link: "/tips/For each game/GettingFibre",
+    link: "/tips/GettingFibre",
   },
 ];
 

@@ -15,6 +15,8 @@ import Tips from './Tips/Tips';
 import ApexLegends from './Tips/For each game/ApexLegends';
 import ZenlessZoneZero from './Tips/For each game/ZenlessZoneZero';
 import DeltaForce from './Tips/For each game/DeltaForce';
+import Streaming from './Tips/For each game/Streaming';
+import GettingFibre from './Tips/For each game/GettingFibre';
 
 
 const App: React.FC = () => {
