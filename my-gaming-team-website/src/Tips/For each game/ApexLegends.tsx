@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const ApexLegends: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800 text-white pt-24">
       {/* 🔹 Header Section */}
       <header className="text-center py-14">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
@@ -21,7 +21,7 @@ const ApexLegends: React.FC = () => {
       {/* 🔹 Banner Image */}
       <section className="max-w-5xl mx-auto px-6 mb-12">
         <img
-          src="/images/apex-banner.jpg"
+          src="/assets/APEX7.jpg"
           alt="Apex Legends Banner"
           className="rounded-lg w-full h-72 object-cover shadow-lg"
         />

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Streaming: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white  pt-24">
       {/* 🔹 Header */}
       <header className="text-center py-14">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
@@ -21,7 +21,7 @@ const Streaming: React.FC = () => {
       {/* 🔹 Banner Image */}
       <section className="max-w-5xl mx-auto px-6 mb-12">
         <img
-          src="/images/streaming-setup.jpg"
+          src="/assets/streaming.jpg"
           alt="Streamer setup with lights and mic"
           className="rounded-lg w-full h-72 object-cover shadow-lg"
         />

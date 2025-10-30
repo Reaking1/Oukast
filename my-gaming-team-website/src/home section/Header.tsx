@@ -78,7 +78,7 @@ const Header: React.FC = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex gap-8 text-black font-medium items-center">
+        <ul className="hidden md:flex gap-6 text-black font-medium items-center text-base">
           <li><Link to="/" className="link-rainbow">Home</Link></li>
           <li
             onMouseEnter={handleTipsMouseEnter}
@@ -86,23 +86,28 @@ const Header: React.FC = () => {
             className="relative cursor-pointer"
           >
             <span className="link-rainbow">Tips</span>
-            <ul
-              ref={dropdownRef}
-              className="absolute left-0 top-full mt-2 w-56 bg-white border shadow-lg rounded-md overflow-hidden z-50 transition-all duration-300"
-              style={{ height: 0, opacity: 0, display: "none" }}
-            >
-              {[
-                { path: "/tips/ZenlessZoneZero" , name: "Zenless Zone Zero" },
-                { path: "/tips/Apexlegends", name: "Apex Legends" },
-                { path: "/tips/DeltaForce", name: "Delta Force" },
-                { path: "/tips/GettingFibre", name: "Getting fibre" },
-                { path: "/tips/Streaming", name: "Streaming" },
-              ].map((game, index) => (
-                <li key={index} className="hover:bg-gray-100 px-4 py-2 text-sm">
-                  <Link to={game.path}>{game.name}</Link>
-                </li>
-              ))}
-            </ul>
+           <ul
+  ref={dropdownRef}
+  className="absolute left-0 top-full mt-2 w-56 bg-white border shadow-xl rounded-md overflow-hidden z-[9999] transition-all duration-300"
+  style={{ height: 0, opacity: 0, display: "none" }}
+>
+  {[
+    { path: "/tips/ZenlessZoneZero", name: "Zenless Zone Zero" },
+    { path: "/tips/ApexLegends", name: "Apex Legends" },
+    { path: "/tips/DeltaForce", name: "Delta Force" },
+    { path: "/tips/GettingFibre", name: "Getting Fibre" },
+    { path: "/tips/Streaming", name: "Streaming" },
+  ].map((game, index) => (
+    <li
+      key={index}
+      className="hover:bg-gray-100 px-4 py-2 text-sm cursor-pointer"
+    >
+      <Link to={game.path} className="block w-full h-full">
+        {game.name}
+      </Link>
+    </li>
+  ))}
+</ul>
           </li>
           <li><Link to="/about" className="link-rainbow">About</Link></li>
           <li><Link to="/contact" className="link-rainbow">Contact</Link></li>

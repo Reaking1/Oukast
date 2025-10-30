@@ -21,3 +21,21 @@ body {
   font-family: 'Ubuntu', sans-serif;
 }
 
+.link-rainbow {
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.link-rainbow:hover {
+  color: #2563eb; /* blue-600 */
+}
+
+.mobile-menu a,
+.mobile-menu button {
+  font-size: 1rem;
+}
+
+header * {
+  pointer-events: auto !important;
+}

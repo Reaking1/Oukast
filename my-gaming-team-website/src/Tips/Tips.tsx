@@ -7,35 +7,35 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const tips = [
       {
     title: "Zenless Zone Zero",
-    image: "/images/zenless.jpg",
+    image: "/assets/zenGoon.jpeg",
     description:
       "Master the chaos of New Eridu! Learn advanced combat techniques, team synergies, and upgrade routes to dominate the battlefield.",
     link: "/tips/ZenlessZoneZero",
   },
   {
     title: "Apex Legends",
-    image: "/images/apex.jpg",
+    image: "/assets/APEX1.jpg",
     description:
       "Sharpen your aim and strategy! Our Apex Legends guide covers legends, weapons, and ranked play tips to boost your RP fast.",
     link: "/tips/ApexLegends",
   },
   {
     title: "Streaming Setup",
-    image: "/images/streaming.jpg",
+    image: "/assets/stream1.jpg",
     description:
       "Thinking of going live? Here’s how to build a clean, lag-free streaming setup with OBS, overlays, and pro-level audio settings.",
     link: "/tips/Streaming",
   },
   {
     title: "Delta Force",
-    image: "/images/deltaforce.jpg",
+    image: "/assets/DELAT3.jpg",
     description:
       "Learn tactical positioning, communication, and loadout optimization to become an unstoppable squad leader in Delta Force.",
     link: "/tips/DeltaForce",
   },
   {
     title: "Getting Fibre",
-    image: "/images/fibre.jpg",
+    image: "/assets/Firber.jpg",
     description:
       "Tired of lag spikes? This guide explains how to choose the right fibre plan, router setup, and ISP for seamless gaming.",
     link: "/tips/GettingFibre",
@@ -46,7 +46,7 @@ const tips = [
 const Tips: React.FC = () => {
     return(
         <div className=
-        "min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800 text-white">
+        "min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800 text-white pt-24">
               {/* 🧠 Section 1 - Intro */}
       <header className="text-center py-16">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
