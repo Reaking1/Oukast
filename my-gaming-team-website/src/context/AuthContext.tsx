@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 interface AuthState {
   isAuthenticated: boolean;
-  user: Admin | null;
+  user: Admin | null; 
   token: string;
 }
 
