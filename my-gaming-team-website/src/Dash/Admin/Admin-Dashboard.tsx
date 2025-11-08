@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import EventHistoryForm from "../History/History";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner"; // ✅ Import toast, NOT Toaster
+import { toast } from "sonner";
 import PostEventForm from "../PosteventForum/PostEventForum";
+import { useAuth } from "@/auth/hooks/useAuth"; // ✅ Use your hook
 
 const AdminDashboard: React.FC = () => {
   const [clock, setClock] = useState("");
-  
+  const navigate = useNavigate();
+  const { logout } = useAuth(); // ✅ Your hook exposes logout
 
-  // Clock logic
+  // 🕒 Live clock logic
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -27,9 +30,16 @@ const AdminDashboard: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Example toast trigger (optional for form success feedback)"Your event has been sent for approval."
+  // ✅ Clean logout logic
+  const handleLogout = () => {
+    logout(); // clears state + token
+    toast.info("Logged out successfully.");
+    navigate("/login"); // redirect
+  };
+
+  // ✅ Example success toast for form
   const handleTestToast = () => {
-     toast.success("Your event has been sent for approval.");
+    toast.success("Your event has been sent for approval.");
   };
 
   return (
@@ -37,11 +47,15 @@ const AdminDashboard: React.FC = () => {
       <header className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-sm text-gray-600">Post events and view event history</p>
+          <p className="text-sm text-gray-600">
+            Post events and view event history
+          </p>
         </div>
         <div className="flex items-center gap-4">
           <span className="font-mono text-lg">{clock}</span>
-          <Button variant="outline">Logout</Button>
+          <Button variant="outline" onClick={handleLogout}>
+            Logout
+          </Button>
         </div>
       </header>
 
