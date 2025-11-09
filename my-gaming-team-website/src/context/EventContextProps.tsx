@@ -74,7 +74,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
     try {
       const event = await EventService.updateEvent(eventId, updatedEvent); // ✅ Use EventData
       setEvents((prevEvents) =>
-        prevEvents.map((ev) => (ev.id === updatedEvent.id ? event : ev))
+        prevEvents.map((ev) => (ev._id === updatedEvent._id ? event : ev))
       );
       toast.success('Event updated successfully!');
     } catch (error) {
@@ -93,7 +93,7 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
   const removeEvent = async (eventId: string): Promise<void> => {
     try {
       await EventService.deleteEvent(eventId);
-      setEvents((prevEvents) => prevEvents.filter((ev) => ev.id !== eventId));
+      setEvents((prevEvents) => prevEvents.filter((ev) => ev._id !== eventId));
       toast.success('Event deleted successfully!');
     } catch (error) {
       if(error instanceof Error) {
