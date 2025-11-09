@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faInstagram,
+  faLinkedinIn,
   faTiktok,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
@@ -27,7 +27,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li><Link to="/about" className="hover:text-rose-400 transition">About Us</Link></li>
             <li><Link to="/tips" className="hover:text-rose-400 transition">Tips</Link></li>
-            <li><Link to="/events" className="hover:text-rose-400 transition">Events</Link></li>
+            <li><Link to="/upcomingevents" className="hover:text-rose-400 transition">Events</Link></li>
             <li><Link to="/contact" className="hover:text-rose-400 transition">Contact</Link></li>
           </ul>
         </div>
@@ -43,8 +43,8 @@ export default function Footer() {
               <FontAwesomeIcon icon={faTiktok} className="hover:text-pink-400 transition" />
             </a>
             {/* I can't find link for gram */}
-            <a href="#" aria-label="Instagram">
-              <FontAwesomeIcon icon={faInstagram} className="hover:text-fuchsia-400 transition" />
+            <a href="https://www.linkedin.com/in/ramoswane-reabetswe-b0a769242?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B7rh0SwfJSXijS2zNsVT%2FAA%3D%3D" aria-label="LinkedIn">
+              <FontAwesomeIcon icon={faLinkedinIn} className="hover:text-fuchsia-400 transition" />
             </a>
           </div>
         </div>

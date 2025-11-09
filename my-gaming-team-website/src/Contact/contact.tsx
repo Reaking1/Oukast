@@ -5,84 +5,99 @@ const Contact: React.FC = () => {
   return (
     <>
       <section className="bg-[#f5f5f5] text-black py-20 px-6 md:px-20 font-ubuntu">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 mt-6">Contact Us</h2>
-        <p className="text-center text-gray-700 mb-12">
-          Have a question, idea, or want to join the team? Let’s talk!
-        </p>
+        <div className="max-w-5xl mx-auto text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
+          <p className="text-gray-700 text-base md:text-lg">
+            Have a question, idea, or want to join the team? Let’s talk!
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto items-start">
           {/* Contact Form */}
-          <form className="space-y-6">
+          <form
+            className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 space-y-6"
+          >
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-800">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-800 mb-1">
                 Name
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter your name"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none transition"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-800">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-800 mb-1">
                 Email
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter your email"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none transition"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-800">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-800 mb-1">
                 Message
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows={5}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Type your message here..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none transition resize-none"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition"
+              className="w-full bg-purple-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-purple-700 transition-colors duration-300"
             >
               Send Message
             </button>
           </form>
 
           {/* Contact Info */}
-          <div className="flex flex-col justify-center space-y-6">
+          <div className="flex flex-col justify-center bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 space-y-6">
             <div>
-              <h3 className="text-xl font-semibold">Email</h3>
+              <h3 className="text-xl font-semibold mb-1 text-purple-700">Email</h3>
               <p className="text-gray-700">warriorsofheritage@gmail.com</p>
             </div>
             <div>
-              <h3 className="text-xl font-semibold">Location</h3>
-              <p className="text-gray-700">Remote / Online — built in South Africa, connected worldwide</p>
+              <h3 className="text-xl font-semibold mb-1 text-purple-700">Location</h3>
+              <p className="text-gray-700">
+                Remote / Online — built in South Africa, connected worldwide
+              </p>
             </div>
             <div>
-              <h3 className="text-xl font-semibold">Socials</h3>
+              <h3 className="text-xl font-semibold mb-2 text-purple-700">Socials</h3>
               <ul className="text-gray-700 space-y-1">
-                <li><strong>TikTok:</strong> @woh_team</li>
-                <li><strong>YouTube:</strong> Warriors of Heritage</li>
-                <li><strong>Discord:</strong> Coming Soon</li>
+                <li>
+                  <strong>TikTok:</strong> @theghostking2003
+
+                </li>
+                <li>
+                  <strong>YouTube:</strong> The Ghostking
+                </li>
+                <li>
+                  <strong>Discord:</strong> Coming Soon
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Now the footer is cleanly placed after the content section */}
       <Footer />
     </>
   );
