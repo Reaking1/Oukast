@@ -72,14 +72,29 @@ const UpcomingEvents: React.FC = () => {
                 onError={(e) => { e.currentTarget.src = fallbackImage; }}
                 className="h-52 w-full object-cover"
               />
-              <div className="p-5">
-                <h3 className="text-xl font-semibold text-purple-800 mb-1">{event.eventName}</h3>
-                <p className="text-sm text-gray-700">{event.location}</p>
-                <p className="text-sm text-purple-600 mt-1">{new Date(event.date).toDateString()}</p>
-                <p className="text-xs text-gray-500 mt-3">
-                  Organized by {typeof event.createdBy === 'string' ? event.createdBy : event.createdBy?.name ?? 'Unknown'}
-                </p>
-              </div>
+             <div className="p-5">
+  <h3 className="text-xl font-semibold text-purple-800 mb-1">
+    {event.eventName}
+  </h3>
+
+  {/* ✅ Event Description */}
+  <p className="text-sm text-gray-800 mb-2 line-clamp-3">
+    {event.description || "No description provided."}
+  </p>
+
+  <p className="text-sm text-gray-700">{event.location}</p>
+  <p className="text-sm text-purple-600 mt-1">
+    {new Date(event.date).toDateString()}
+  </p>
+
+  <p className="text-xs text-gray-500 mt-3">
+    Organized by{" "}
+    {typeof event.createdBy === "string"
+      ? event.createdBy
+      : event.createdBy?.name ?? "Unknown"}
+  </p>
+</div>
+
             </motion.div>
           ))
         ) : (

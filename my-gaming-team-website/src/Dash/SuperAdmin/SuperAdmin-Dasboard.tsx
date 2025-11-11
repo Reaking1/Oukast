@@ -6,17 +6,18 @@ import ApproveEventsForm from "../Approve Event/ApproveEventsForm";
 import EventHistoryForm from "../History/History";
 import { AdminData, FullAdmin } from "@/Types/Admin";
 import { AdminAPI } from "@/services/api";
+import { useAuth } from "../../auth/hooks/useAuth"; // ✅ import your auth hook
 
 const SuperAdminDashboard: React.FC = () => {
   const [clock, setClock] = useState("");
-   const [adminList, setAdminList] = useState<FullAdmin[]>([]);
+  const [adminList, setAdminList] = useState<FullAdmin[]>([]);
+  const { logout, currentAdmin } = useAuth(); // ✅ access logout + currentAdmin
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchAdmins = async () => {
-      const data = await AdminAPI.getAllAdmins(); // assume this returns FullAdmin[]
+      const data = await AdminAPI.getAllAdmins();
       setAdminList(data);
     };
-
     fetchAdmins();
   }, []);
 
@@ -37,41 +38,54 @@ const SuperAdminDashboard: React.FC = () => {
   }, []);
 
   const handleCreateAdmin = async (data: AdminData) => {
-  try {
-    // Call your backend service here
-    console.log("Creating admin with data:", data);
-    // Example: await adminService.createAdmin(data);
+    try {
+      console.log("Creating admin with data:", data);
+      // await adminService.createAdmin(data);
+      // toast.success("Admin created successfully");
+    } catch (error) {
+      console.error("Failed to create admin:", error);
+      // toast.error("Failed to create admin");
+    }
+  };
 
-    // Show a toast or success message if using sonner:
-    // toast.success("Admin created successfully");
-  } catch (error) {
-    console.error("Failed to create admin:", error);
-    // toast.error("Failed to create admin");
-  }
-};
-
+  // ✅ Handle logout click
+  const handleLogout = () => {
+    logout(); // clear session
+    window.location.href = "/login"; // redirect to login
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#f0f4f8] via-[#e6e9ef] to-[#f5f7fa] text-gray-800 p-6 md:p-10 font-ubuntu">
       {/* Header */}
-  <header className="mb-6 border-b pb-4">
-  <div className="mb-2">
-   <h1 className="text-4xl font-bold tracking-tight text-black font-poppins">
-  Super Admin Dashboard
-</h1>
-<p className="text-md text-gray-600 font-poppins font-medium">
-  Manage admins, approve events, and monitor history
-</p>
-  </div>
+      <header className="mb-6 border-b pb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div className="mb-4 md:mb-0">
+          <h1 className="text-4xl font-bold tracking-tight text-black font-poppins">
+            Super Admin Dashboard
+          </h1>
+          <p className="text-md text-gray-600 font-poppins font-medium">
+            Manage admins, approve events, and monitor history
+          </p>
+          {currentAdmin && (
+            <p className="text-sm text-gray-500 mt-1">
+              Logged in as: <span className="font-semibold">{currentAdmin.name}</span>
+            </p>
+          )}
+        </div>
 
-  {/* Move Clock Below Header */}
-  <div className="mt-4">
-    <span className="font-mono text-lg bg-white shadow px-4 py-2 rounded-md inline-block">
-      {clock}
-    </span>
-  </div>
-</header>
+        <div className="flex items-center space-x-4">
+          <span className="font-mono text-lg bg-white shadow px-4 py-2 rounded-md inline-block">
+            {clock}
+          </span>
 
+          {/* ✅ Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow transition font-medium"
+          >
+            Logout
+          </button>
+        </div>
+      </header>
 
       {/* Tabs Navigation */}
       <div className="bg-white rounded-xl shadow-lg p-6">
@@ -95,7 +109,7 @@ const SuperAdminDashboard: React.FC = () => {
                 <CardTitle className="text-2xl font-semibold">Create Admin / Super Admin</CardTitle>
               </CardHeader>
               <CardContent>
-                <CreateAdminForm onCreateAdmin={handleCreateAdmin} admins={adminList}/>
+                <CreateAdminForm onCreateAdmin={handleCreateAdmin} admins={adminList} />
               </CardContent>
             </Card>
           </TabsContent>

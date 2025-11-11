@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './EventPage.css';
 import io from 'socket.io-client'; // Importing socket.io-client
 import { EventService } from '../../services/eventService';
 import { EventData } from '@/Types/Event';
-import './EventPage.css'
+
 
 const socket = io('http://localhost:5000'); // Initialize the socket connection (adjust the URL as per your server)
 
@@ -44,7 +43,7 @@ const EventPage: React.FC = () => {
 
   return (
     <div className="event-page">
-       <h1 className="event-title">Unpcoming Events</h1>
+       <h1 className="event-title">Unpcoming Events</h1> 
 
        {loading ? (
         <p className="loading-text">Loading events...</p>
@@ -55,7 +54,7 @@ const EventPage: React.FC = () => {
           {events.map(event => (
             <div key={event._id} className="event-card">
               {event.imageName ? (
-                <img src={URL.createObjectURL(event.imageName)} alt={event.imageName} className='event-image' />
+                <img src={`http://localhost:5000/uploads/events/${event.imageName}`} alt={event.imageName} className='event-image' />
               ) : (
                 <div className="placeholder-image">No Image Available</div>
               )}
