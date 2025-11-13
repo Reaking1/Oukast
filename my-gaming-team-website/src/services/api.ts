@@ -4,7 +4,7 @@ import { Admin, LoginCredentials } from "../Types/Auth";
 import { EventData, CreateEventData, EventUpdateData } from "../Types/Event";
 import axios, { AxiosRequestConfig } from "axios"
 
-const BASE_URL ='https://oukast-backend.onrender.com';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 
 //Axios instance with defualt settings

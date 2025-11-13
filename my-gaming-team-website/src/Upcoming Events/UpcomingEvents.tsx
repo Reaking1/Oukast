@@ -66,12 +66,12 @@ const UpcomingEvents: React.FC = () => {
               transition={{ delay: index * 0.1 }}
               className="bg-white shadow-lg rounded-xl overflow-hidden border border-purple-200 hover:shadow-2xl transition-shadow duration-300"
             >
-              <img
-                src={`http://localhost:5000/uploads/events/${event.imageName}`}
-                alt={event.eventName}
-                onError={(e) => { e.currentTarget.src = fallbackImage; }}
-                className="h-52 w-full object-cover"
-              />
+           <img
+  src={`${import.meta.env.VITE_API_URL}/uploads/events/${event.imageName}`}
+  alt={event.eventName}
+  onError={(e) => { e.currentTarget.src = fallbackImage; }}
+  className="h-52 w-full object-cover"
+/>
              <div className="p-5">
   <h3 className="text-xl font-semibold text-purple-800 mb-1">
     {event.eventName}
